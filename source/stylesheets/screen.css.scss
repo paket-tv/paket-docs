@@ -4,6 +4,11 @@
 @import 'icon-font';
 // @import 'rtl'; // uncomment to switch to RTL format
 
+@import url("https://fonts.googleapis.com/css?family=Roboto");html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%
+}
 /*
 Copyright 2008-2013 Concur Technologies, Inc.
 
@@ -36,6 +41,11 @@ html, body {
   -webkit-text-size-adjust: none; /* Never autoresize text */
 }
 
+a {
+  color: $nav-active-text;
+  text-decoration: none;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 ////////////////////////////////////////////////////////////////////////////////
@@ -49,18 +59,18 @@ html, body {
 
 .toc-wrapper {
   transition: left 0.3s ease-in-out;
-
+  border-right: .25px solid $partition-lines;
   overflow-y: auto;
   overflow-x: hidden;
   position: fixed;
-  z-index: 30;
+  z-index: 2000;
   top: 0;
   left: 0;
   bottom: 0;
   width: $nav-width;
   background-color: $nav-bg;
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 14px;
+  // font-weight: bold;
 
   // language selector for mobile devices
   .lang-selector {
@@ -72,9 +82,16 @@ html, body {
   }
 
   // This is the logo at the top of the ToC
+  .logo-container {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: center;
+  }
+
   .logo {
-    display: block;
-    max-width: 100%;
+    max-width: 50%;
+    margin-top: $logo-margin;
     margin-bottom: $logo-margin;
   }
 
@@ -153,12 +170,17 @@ html, body {
 
   // This is the currently selected ToC entry
   .toc-link.active {
+    border: none;
+    border-radius: 6px;
+    margin: 0 10px;
     background-color: $nav-active-bg;
     color: $nav-active-text;
   }
 
   // this is parent links of the currently selected ToC entry
   .toc-link.active-parent {
+    border-radius: 6px;
+    margin: 0 10px;
     background-color: $nav-active-parent-bg;
     color: $nav-active-parent-text;
   }
@@ -171,7 +193,18 @@ html, body {
 
   .toc-h2 {
     padding-left: $nav-padding + $nav-indent;
-    font-size: 12px;
+    font-size: 13px;
+  }
+
+  .toc-list-h3 {
+    // display: none;
+    background-color: $nav-subitem-bg;
+    // font-weight: 500;
+  }
+
+  .toc-h3 {
+    padding-left: $nav-padding + $nav-padding + $nav-indent;
+    font-size: 13px;
   }
 
   .toc-footer {
@@ -197,6 +230,8 @@ html, body {
 }
 
 .toc-link, .toc-footer li {
+  border-radius: 6px;
+  margin: 0 10px;
   padding: 0 $nav-padding 0 $nav-padding;
   display: block;
   overflow-x: hidden;
@@ -253,7 +288,7 @@ html, body {
   z-index: 10;
   background-color: $main-bg;
   min-height: 100%;
-
+  margin-top: 56px;
   padding-bottom: 1px; // prevent margin overflow
 
   // The dark box is what gives the code samples their dark background.
@@ -273,7 +308,7 @@ html, body {
   .lang-selector {
     position: fixed;
     z-index: 50;
-    border-bottom: 5px solid $lang-select-active-bg;
+    border-bottom: 3px solid $lang-select-active-bg;
   }
 }
 
@@ -288,7 +323,7 @@ html, body {
     color: $lang-select-text;
     text-decoration: none;
     padding: 0 10px;
-    line-height: 30px;
+    line-height: 44px;
     outline: 0;
 
     &:active, &:focus {
@@ -316,6 +351,7 @@ html, body {
 
 .content {
   // fixes webkit rendering bug for some: see #538
+  padding-top: 30px;
   -webkit-transform: translateZ(0);
   // to place content above the dark box
   position: relative;
@@ -341,20 +377,18 @@ html, body {
   }
 
   // the div is the tocify hidden div for placeholding stuff
-  &>h1, &>h2, &>div {
+  &>h1, &>h2, &>h3, &>div {
     clear:both;
   }
 
   h1 {
     @extend %header-font;
     font-size: 25px;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
+    padding-top: 1.5em;
     margin-bottom: $h1-margin-bottom;
     margin-top: 2em;
     border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    background-color: #fdfdfd;
+    background-color: #fff;
   }
 
   h1:first-child, div:first-child + h1 {
@@ -373,6 +407,16 @@ html, body {
     background-image: linear-gradient(to bottom, rgba(#fff, 0.2), rgba(#fff, 0));
   }
 
+  h3 {
+    @extend %header-font;
+    font-size: 16px;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+    padding-top: 1.2em;
+    padding-bottom: 1.2em;
+    background-image: linear-gradient(to bottom, rgba(#fff, 0.2), rgba(#fff, 0));
+  }
+
   // h2s right after h1s should bump right up
   // against the h1s.
   h1 + h2, h1 + div + h2 {
@@ -380,7 +424,7 @@ html, body {
     border-top: none;
   }
 
-  h3, h4, h5, h6 {
+  h4, h5, h6 {
     @extend %header-font;
     font-size: 15px;
     margin-top: 2.5em;
@@ -398,6 +442,9 @@ html, body {
   }
 
   table {
+    &:last-of-type {
+      margin-bottom: 10em;
+    }
     margin-bottom: 1em;
     overflow: auto;
     th,td {
@@ -453,6 +500,7 @@ html, body {
     background-color: rgba(0,0,0,0.05);
     padding: 3px;
     border-radius: 3px;
+    word-break: keep-all;
     @extend %break-words;
     @extend %code-font;
   }
@@ -550,10 +598,50 @@ html, body {
     &>p {
       background-color: $code-annotation-bg;
       padding: $code-annotation-padding 2em;
-      color: #eee;
+      color: #fff;
     }
   }
 }
+
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 280px;
+  width: calc(100% - 280px);
+  height: 56px;
+  border-bottom: .25px solid $partition-lines;
+  background-color: #fff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 1000;
+}
+
+.footer-hidden {
+  display: none
+}
+
+.nav-header {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.nav-header li {
+  float: left;
+}
+
+.nav-header li a {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  font-weight: bolder;
+  text-decoration: none;
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // RESPONSIVE DESIGN
@@ -568,6 +656,14 @@ html, body {
     &.open {
       left: 0;
     }
+  }
+
+  .top-nav {
+    display: none;
+  }
+
+  .footer-hidden {
+    display: block
   }
 
   .page-wrapper {

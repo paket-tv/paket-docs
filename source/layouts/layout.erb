@@ -29,6 +29,7 @@ under the License.
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <%= favicon_tag 'favicon.ico' %>
     <% if current_page.data.key?('meta') %>
       <% current_page.data.meta.each do |meta| %>
         <meta
@@ -65,14 +66,25 @@ under the License.
   </head>
 
   <body class="<%= page_classes %>" data-languages="<%=h language_tabs.map{ |lang| lang.is_a?(Hash) ? lang.keys.first : lang }.to_json %>">
+    <div class="top-nav">
+      <% if current_page.data.nav_items %>
+        <ul class="nav-header">
+          <% current_page.data.nav_items.each do |nav_item| %>
+            <li><%= nav_item %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
     <a href="#" id="nav-button">
       <span>
-        NAV
+
         <%= image_tag('navbar.png') %>
       </span>
     </a>
     <div class="toc-wrapper">
-      <%= image_tag "logo.png", class: 'logo' %>
+      <span class="logo-container"> 
+        <%= image_tag "logo.svg", class: 'logo' %>
+      </span>
       <% if language_tabs.any? %>
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>
@@ -99,6 +111,15 @@ under the License.
                 <% h1[:children].each do |h2| %>
                   <li>
                     <a href="#<%= h2[:id] %>" class="toc-h2 toc-link" data-title="<%= h2[:title] %>"><%= h2[:content] %></a>
+                    <% if h2[:children].length > 0 %>
+                      <ul class="toc-list-h3">
+                        <% h2[:children].each do |h3| %>
+                          <li>
+                            <a href="#<%= h3[:id] %>" class="toc-h3 toc-link" data-title="<%= h3[:content] %>"><%= h3[:content] %></a>
+                          </li>
+                        <% end %>
+                      </ul>
+                    <% end %>
                   </li>
                 <% end %>
               </ul>

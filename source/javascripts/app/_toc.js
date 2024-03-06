@@ -38,7 +38,7 @@
       $toc.find(tocLinkSelector).each(function() {
         var targetId = $(this).attr('href');
         if (targetId[0] === "#") {
-          headerHeights[targetId] = $("#" + $.escapeSelector(targetId.substring(1))).offset().top;
+          headerHeights[targetId] = $("#" + $.escapeSelector(targetId.substring(1))).offset().top - 56;
         }
       });
     };
@@ -117,6 +117,10 @@
     window.recacheHeights = recacheHeights;
     window.refreshToc = refreshToc;
   }
+
+  window.addEventListener("hashchange", function () {
+    window.scrollTo(window.scrollX, window.scrollY - 56);
+  });
 
   window.loadToc = loadToc;
 })();
