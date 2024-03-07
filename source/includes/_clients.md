@@ -1,6 +1,6 @@
 # Clients
 
-To begin working with the Paket API, Partners must first create a Client in the Paket Developer Portal. 
+To begin working with the Paket API, Partners must first create a Client in the [Paket Developer Portal](https://developer.paket.tv). 
 
 Clients are used by Platforms and Publishers, respectively, to communicate with the Paket API and to exchange data with other Clients. 
 

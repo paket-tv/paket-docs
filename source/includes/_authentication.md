@@ -32,7 +32,7 @@ let api = kittn.authorize('meowmeowmeow');
 
 Authenticating via Basic Auth involves passing a Base64 encode of your Client's `username` and `password`, prefixed with `Basic` within the request's `Authorization` header.
 
-API credentials be found in the Paket Developer Portal within the Client's API Credentials tab. The `username` and `password` are itemized as 'API Username' and 'API Secret Key,' respectively:
+API credentials be found in the [Paket Developer Portal](https://developer.paket.tv) within the Client's API Credentials tab. The `username` and `password` are itemized as 'API Username' and 'API Secret Key,' respectively:
 
 ![Paket API Portal: Credentials](api_credentials.png)
 

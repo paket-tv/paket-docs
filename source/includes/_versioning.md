@@ -6,4 +6,4 @@ By default, requests made to the Paket API use your account’s default API vers
 
 Webhook events also use your account’s API version by default, unless you set an API version during endpoint creation.
 
-You can upgrade your API version in the Paket Developer Portal. As a precaution, use API versioning to test a new API version before committing to an upgrade.
+You can upgrade your API version in the [Paket Developer Portal](https://developer.paket.tv). As a precaution, use API versioning to test a new API version before committing to an upgrade.

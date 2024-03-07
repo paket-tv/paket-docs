@@ -1,0 +1,1865 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta property="og:image" content="images/og_image-8d192a19.jpg">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VX1FM3Z9BB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-VX1FM3Z9BB');
+    </script>
+    <link href="images/favicon-81d9f5dc.ico" rel="icon" type="image/ico" />
+        <meta
+            name="title"
+            content="Paket Docs :: API Documentation"
+        >
+        <meta
+            name="description"
+            content="Documentation site for the Paket Watch APIs"
+        >
+        <meta
+            name="keywords"
+            content="Paket,API,Documentation,Streaming,Watch"
+        >
+        <meta
+            name="robots"
+            content="index, follow"
+        >
+        <meta
+            name="language"
+            content="English"
+        >
+        <meta
+            name="revisit-after"
+            content="30 days"
+        >
+        <meta
+            name="author"
+            content="Paket Media, Inc."
+        >
+        <meta
+            property="og:title"
+            content="Paket Docs :: API Documentation"
+        >
+        <meta
+            property="og:description"
+            content="Documentation site for the Paket Watch APIs"
+        >
+        <meta
+            property="og:url"
+            content="https://docs.paket.tv"
+        >
+        <meta
+            property="og:type"
+            content="website"
+        >
+        <meta
+            name="twitter:card"
+            content="summary_large_image"
+        >
+    <title>Paket Docs :: API Documentation</title>
+
+    <style media="screen">
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cpf {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s, .highlight .sa, .highlight .dl {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf, .highlight .fm {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv, .highlight .vm {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #f92672;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <style media="print">
+      * {
+        -webkit-transition:none!important;
+        transition:none!important;
+      }
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #586e75;
+}
+.highlight .err {
+  color: #002b36;
+  background-color: #dc322f;
+}
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cpf, .highlight .c1, .highlight .cs {
+  color: #657b83;
+}
+.highlight .cp {
+  color: #b58900;
+}
+.highlight .nt {
+  color: #b58900;
+}
+.highlight .o, .highlight .ow {
+  color: #93a1a1;
+}
+.highlight .p, .highlight .pi {
+  color: #93a1a1;
+}
+.highlight .gi {
+  color: #859900;
+}
+.highlight .gd {
+  color: #dc322f;
+}
+.highlight .gh {
+  color: #268bd2;
+  background-color: #002b36;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #6c71c4;
+}
+.highlight .kc {
+  color: #cb4b16;
+}
+.highlight .kt {
+  color: #cb4b16;
+}
+.highlight .kd {
+  color: #cb4b16;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #859900;
+}
+.highlight .sa {
+  color: #6c71c4;
+}
+.highlight .sr {
+  color: #2aa198;
+}
+.highlight .si {
+  color: #d33682;
+}
+.highlight .se {
+  color: #d33682;
+}
+.highlight .nn {
+  color: #b58900;
+}
+.highlight .nc {
+  color: #b58900;
+}
+.highlight .no {
+  color: #b58900;
+}
+.highlight .na {
+  color: #268bd2;
+}
+.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx {
+  color: #859900;
+}
+.highlight .ss {
+  color: #859900;
+}
+    </style>
+    <link href="stylesheets/screen-96b2eb37.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print-ad6dbb10.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all-906c1e7c.js"></script>
+
+    <script>
+      $(function() { setupCodeCopy(); });
+    </script>
+  </head>
+
+  <body class="index" data-languages="[]">
+    <div class="top-nav">
+        <ul class="nav-header">
+            <li><a href='https://developer.paket.tv/api'>API Reference</a></li>
+            <li><a href='https://developer.paket.tv'>Dashboard →</a></li>
+        </ul>
+    </div>
+    <a href="#" id="nav-button">
+      <span>
+
+        <img src="images/navbar-cad8cdcb.png" alt="" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <a href="https://docs.paket.tv">
+        <span class="logo-container"> 
+          <img src="images/logo-031dbf17.svg" class="logo" alt="" />
+        </span>
+      </a>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <ul id="toc" class="toc-list-h1">
+          <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#clients" class="toc-h1 toc-link" data-title="Clients">Clients</a>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+          </li>
+          <li>
+            <a href="#security" class="toc-h1 toc-link" data-title="Security">Security</a>
+          </li>
+          <li>
+            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+          </li>
+          <li>
+            <a href="#idempotency" class="toc-h1 toc-link" data-title="Idempotency">Idempotency</a>
+          </li>
+          <li>
+            <a href="#platform-data" class="toc-h1 toc-link" data-title="Platform Data">Platform Data</a>
+          </li>
+          <li>
+            <a href="#pagination" class="toc-h1 toc-link" data-title="Pagination">Pagination</a>
+          </li>
+          <li>
+            <a href="#versioning" class="toc-h1 toc-link" data-title="Versioning">Versioning</a>
+          </li>
+          <li>
+            <a href="#core-api" class="toc-h1 toc-link" data-title="Core API">Core API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#core-api-api-status" class="toc-h2 toc-link" data-title="API Status">API Status</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#core-api-api-status-the-status-object" class="toc-h3 toc-link" data-title="The Status Object">The Status Object</a>
+                          </li>
+                          <li>
+                            <a href="#core-api-api-status-retrieve-api-status" class="toc-h3 toc-link" data-title="Retrieve API Status">Retrieve API Status</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                    <a href="#core-api-sessions" class="toc-h2 toc-link" data-title="Sessions">Sessions</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#core-api-sessions-the-session-object" class="toc-h3 toc-link" data-title="The Session Object">The Session Object</a>
+                          </li>
+                          <li>
+                            <a href="#core-api-sessions-the-session-participant-object" class="toc-h3 toc-link" data-title="The Session Participant Object">The Session Participant Object</a>
+                          </li>
+                          <li>
+                            <a href="#core-api-sessions-create-a-new-session" class="toc-h3 toc-link" data-title="Create a new Session">Create a new Session</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                    <a href="#core-api-participants" class="toc-h2 toc-link" data-title="Participants">Participants</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#core-api-participants-the-participant-object" class="toc-h3 toc-link" data-title="The Participant Object">The Participant Object</a>
+                          </li>
+                          <li>
+                            <a href="#core-api-participants-create-a-new-participant" class="toc-h3 toc-link" data-title="Create a new Participant">Create a new Participant</a>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#upnext-api" class="toc-h1 toc-link" data-title="UpNext API">UpNext API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#upnext-api-overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#upnext-api-overview-the-list-object" class="toc-h3 toc-link" data-title="The List Object">The List Object</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-overview-the-list-item-object" class="toc-h3 toc-link" data-title="The List Item Object">The List Item Object</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-overview-the-session-participants-object" class="toc-h3 toc-link" data-title="The Session Participants Object">The Session Participants Object</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-overview-platform-work-flow" class="toc-h3 toc-link" data-title="Platform Work Flow">Platform Work Flow</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-overview-publisher-work-flow" class="toc-h3 toc-link" data-title="Publisher Work Flow">Publisher Work Flow</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                    <a href="#upnext-api-sessions" class="toc-h2 toc-link" data-title="Sessions">Sessions</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#upnext-api-sessions-add-a-participant" class="toc-h3 toc-link" data-title="Add a Participant">Add a Participant</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-sessions-remove-a-participant" class="toc-h3 toc-link" data-title="Remove a Participant">Remove a Participant</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-sessions-get-an-aggregated-list" class="toc-h3 toc-link" data-title="Get an Aggregated List">Get an Aggregated List</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-sessions-get-a-specific-list" class="toc-h3 toc-link" data-title="Get a Specific List">Get a Specific List</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-sessions-get-session-participants" class="toc-h3 toc-link" data-title="Get Session Participants">Get Session Participants</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-sessions-hide-an-item-in-a-list" class="toc-h3 toc-link" data-title="Hide an Item in a List">Hide an Item in a List</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-sessions-remove-a-session" class="toc-h3 toc-link" data-title="Remove a Session">Remove a Session</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                    <a href="#upnext-api-participants" class="toc-h2 toc-link" data-title="Participants">Participants</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#upnext-api-participants-publisher-guidelines" class="toc-h3 toc-link" data-title="Publisher Guidelines">Publisher Guidelines</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-participants-add-item-to-list" class="toc-h3 toc-link" data-title="Add Item to List">Add Item to List</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-participants-remove-item-from-list" class="toc-h3 toc-link" data-title="Remove Item from List">Remove Item from List</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-participants-get-a-participant-list" class="toc-h3 toc-link" data-title="Get a Participant List">Get a Participant List</a>
+                          </li>
+                          <li>
+                            <a href="#upnext-api-participants-remove-participant-39-s-sessions" class="toc-h3 toc-link" data-title="Remove Participant's Sessions">Remove Participant's Sessions</a>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#bundle-api" class="toc-h1 toc-link" data-title="Bundle API">Bundle API</a>
+          </li>
+          <li>
+            <a href="#webhooks" class="toc-h1 toc-link" data-title="Webhooks">Webhooks</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#webhooks-configure-your-endpoints" class="toc-h2 toc-link" data-title="Configure your endpoints">Configure your endpoints</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#webhooks-configure-your-endpoints-verify-webhook-signature" class="toc-h3 toc-link" data-title="Verify webhook signature">Verify webhook signature</a>
+                          </li>
+                          <li>
+                            <a href="#webhooks-configure-your-endpoints-paket-ip-addresses" class="toc-h3 toc-link" data-title="Paket IP addresses">Paket IP addresses</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                    <a href="#webhooks-events" class="toc-h2 toc-link" data-title="Events">Events</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#webhooks-events-the-event-object" class="toc-h3 toc-link" data-title="The Event object">The Event object</a>
+                          </li>
+                          <li>
+                            <a href="#webhooks-events-types-of-events" class="toc-h3 toc-link" data-title="Types of events">Types of events</a>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+          </li>
+      </ul>
+        <ul class="toc-footer">
+            <li><div style="padding-bottom:20px">© 2024 Paket Media, Inc.</div></li>
+            <li><div class='footer-hidden'><a href='https://developer.paket.tv'>Paket Dashboard</a></div></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p>Welcome to Paket! This documentation explains key concepts and describes how Platforms and Publishers engage with the Paket Watch APIs.</p>
+
+<p><strong>So, what is it?</strong></p>
+
+<p>Paket is a universal engagement platform for Connected TVs and subscription marketplaces. We facilitate, through our suite of APIs, device and platform-agnostic features that help drive engagement through personalization, enhanced discovery, and advanced analytics.</p>
+
+<p>The Paket API is organized around <a href="https://en.wikipedia.org/wiki/REST">REST</a>. Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.</p>
+
+<blockquote>
+<p>Base URL</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>https://api.paket.tv/v1
+</code></pre></div>
+<p>There are two primary types of API consumers:</p>
+
+<p><strong>Platforms</strong><br>
+Platform partners are typically TV OEMs, platforms, operating systems, and marketplaces.</p>
+
+<p><strong>Publishers</strong><br>
+Publisher partners are typically publishers of streaming media or other subscription-based apps.</p>
+
+<p>How a partner engages with the API depends largely on whether they are a Platform or a Publisher. This designation is assigned in the <a href="https://developer.paket.tv">Paket Developer Portal</a> at the time of the Company&#39;s account setup.</p>
+<h1 id='clients'>Clients</h1>
+<p>To begin working with the Paket API, Partners must first create a Client in the <a href="https://developer.paket.tv">Paket Developer Portal</a>. </p>
+
+<p>Clients are used by Platforms and Publishers, respectively, to communicate with the Paket API and to exchange data with other Clients. </p>
+
+<p>It is at the Client level that API credentials are issued, webhooks are delivered, and API products - such as UpNext or Bundles - are configured.</p>
+
+<p>Clients should correlate broadly to an operating system or platform, in the case of Platform accounts; or to an application, in the case of Publisher accounts.</p>
+
+<aside class="notice">
+A Platform such as Samsung might create a client for Tizen OS, whereas a Publisher such as Disney Streaming Services might create discrete Clients each for Hulu, Disney+, and ESPN.
+</aside>
+<h1 id='authentication'>Authentication</h1>
+<p>The Paket API uses basic access authentication to authenticate all incoming API requests (please note there are additional <a href="#security">Security</a> protocols used to secure API requests).</p>
+
+<blockquote>
+<p>Authenticated Request:</p>
+</blockquote>
+
+<!-- ```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+``` -->
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl https://api.paket.tv/v1 <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: Basic [Base64 encoding of username and password]"</span>
+</code></pre></div>
+<!-- 
+```javascript
+const kittn = require('kittn');
+
+let api = kittn.authorize('meowmeowmeow');
+``` -->
+
+<p>Authenticating via Basic Auth involves passing a Base64 encode of your Client&#39;s <code>username</code> and <code>password</code>, prefixed with <code>Basic</code> within the request&#39;s <code>Authorization</code> header.</p>
+
+<p>API credentials be found in the <a href="https://developer.paket.tv">Paket Developer Portal</a> within the Client&#39;s API Credentials tab. The <code>username</code> and <code>password</code> are itemized as &#39;API Username&#39; and &#39;API Secret Key,&#39; respectively:</p>
+
+<p><img src="images/api_credentials-324b18bb.png" alt="Paket API Portal: Credentials" /></p>
+
+<aside class="notice">
+Rolled Secret Keys will remain valid for the duration specified before they are permanently expired.
+</aside>
+<h1 id='security'>Security</h1>
+<p>Securing API requests is critical to ensure data integrity. The Paket API employs the following methods to ensure that requests made to its API are authenticated and secure:</p>
+
+<ul>
+<li><strong>Forced HTTPS</strong>: Connections are strictly enforced over HTTPS at <code>https://api.paket.tv/v1</code>.</li>
+<li><strong>TLS/SSL</strong>: X.509 server certificates to validate server requests are authenticated as Paket Media, Inc.</li>
+<li><strong>Basic Auth</strong>: Basic authentication required for all API requests w/unique Client username and rollable secret keys. </li>
+<li><strong>IP Whitelisting</strong>: Restrict access to API requests to your server IP addresses designated at the Client level.</li>
+<li><strong>Encryption-at-rest</strong>: All data stored is encrypted-at-rest.</li>
+</ul>
+<h1 id='errors'>Errors</h1>
+<p>Paket uses conventional HTTP response codes to indicate the success or failure of an API request. In general: Codes in the <code>2xx</code> range indicate success. Codes in the <code>4xx</code> range indicate an error that failed given the information provided (e.g., a required parameter was omitted, etc.). Codes in the <code>5xx</code> range indicate an error with Paket&#39;s servers.</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>400</strong></td>
+<td>Bad Request -- Your request is invalid.</td>
+</tr>
+<tr>
+<td><strong>401</strong></td>
+<td>Unauthorized -- Your API credentials are wrong.</td>
+</tr>
+<tr>
+<td><strong>403</strong></td>
+<td>Forbidden -- You do not have permission to access the requested resource.</td>
+</tr>
+<tr>
+<td><strong>404</strong></td>
+<td>Not Found -- The specified resource could not be found.</td>
+</tr>
+<tr>
+<td><strong>500</strong></td>
+<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td><strong>503</strong></td>
+<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+</tr>
+</tbody></table>
+<h1 id='idempotency'>Idempotency</h1>
+<p>The Paket API supports idempotency for safely retrying requests without accidentally performing the same operation twice. When creating or updating an object, use an idempotency key. Then, if a connection error occurs, you can safely repeat the request without risk of creating a second object or performing the update twice.</p>
+
+<p>To perform an idempotent request, provide an additional <code>Idempotency-Key</code> element to the request header.</p>
+
+<p>Paket&#39;s idempotency works by saving the resulting status code and body of the first request made for any given idempotency key, regardless of whether it succeedes or fails. Subsequent requests with the same key return the same result.</p>
+
+<p>A requesting Client generates an idempotency key, which is a unique key that the server uses to recognize subsequent retries of the same request. How you create unique keys is up to you, but we suggest using V4 UUIDs, or another random string with enough entropy to avoid collisions. Idempotency keys are up to 255 characters long.</p>
+
+<p>We remove keys from the system automatically after they’re at least 24 hours old and will generate a new request if a key is reused after the original is pruned. The idempotency layer compares incoming parameters to those of the original request and errors if they’re the same to prevent accidental misuse.</p>
+
+<p>We save results only after the execution of an endpoint begins. If incoming parameters fail validation, or the request conflicts with another request that’s executing concurrently, we don’t save the idempotent result because no API endpoint initiates the execution. You can retry these requests.</p>
+
+<p>All POST requests accept idempotency keys. Don’t send idempotency keys in GET and DELETE requests because it has no effect. These requests are idempotent by definition.</p>
+<h1 id='platform-data'>Platform Data</h1>
+<p>Some Platforms will require custom attributes and schemas that are not available in an API product&#39;s default attribute set.</p>
+
+<p>To address this requirement, Platforms are able to configure custom app-level schemas and attributes to be provided by Publisher partners; as well as to define the regional availability of a Platform Client by region or specific countries.</p>
+
+<p>For example, a Platform Client may require a custom app identifier, <code>custom_app_id</code>, is returned in UpNext API responses. In order to ensure such custom app identifier is provided by a Publisher Client, the Platform will configure this custom attribute from within the Client in the <a href="https://developer.paket.tv">Paket Developer Portal</a>.</p>
+
+<blockquote>
+<p>Example <code>platform_data</code> attribute:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+    ...,
+    platform_data: {
+        custom_app_id: 12345,
+        deep_link: "app://12345/cid12345"
+    }
+}
+</code></pre></div>
+<p>When preparing to integrate with the Platform, the Publisher will configure the requested custom attribute, in this case the <code>custom_app_id</code>. This data will then be returned in subsequent Platform API responses under the <code>platform_data</code> attribute.</p>
+
+<p>Taking this example further, perhaps the Platform Client also requires a <code>deep_link</code> url attribute comprised of the custom attribute <code>custom_app_id</code> and the default attribute <code>content_id</code>. In this example, the data must be returned using the following schema: <code>app://custom_app_id/content_id</code>.</p>
+
+<p><img src="images/custom_schema-4c93bc8b.png" alt="Custom Schema Definition" /></p>
+
+<p>The Platform will also define this schema under the custom attribute <code>deep_link</code> and by using handlebars to define the schema: <code>app://{{custom_app_id}}/{{content_id}}</code>.</p>
+
+<p>If the value of an Publisher&#39;s <code>custom_app_id</code> is <code>12345</code> and an item&#39;s <code>content_id</code> is <code>cid12345</code>, the resulting <code>platform_data</code> attribute returned in an API response to the requesting Platform will look something like the example to the right.</p>
+<h1 id='pagination'>Pagination</h1>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+    "total": 24,
+    "next_key": 6,
+    "items": [
+        {...},
+        {...},
+        {...},
+        {...},
+        {...},
+    ]
+}
+</code></pre></div>
+<p>Many of our top-level API resources have support for bulk fetches through “list” API methods. For example, you can list Session Participants, Session Lists, and Participant Lists. These list API methods share a common structure and can accept the following two parameters: <code>limit</code>, and <code>next_key</code>.</p>
+
+<p>The <code>limit</code> parameter is provided at the time of the request and limits the number of items returned in the API response. By default, this value is <code>50</code>.</p>
+
+<p>The <code>next_key</code> parameter is returned in a response in which the total results exceed the default or specified <code>limit</code> and specifies the next item to be returned in a subsequent API request. Alternatively, a request can be made with any <code>next_key</code> value, however, there is no guarantee such an object will exist.</p>
+<h1 id='versioning'>Versioning</h1>
+<p>When backwards-incompatible changes are made to the API, we release a new, dated version. The current version is <code>2023-12-01</code>. For information on all API updates, view our API changelog.</p>
+
+<p>By default, requests made to the Paket API use your account’s default API version (controlled in the Developer Portal) unless you override it by setting the Paket-Version header.</p>
+
+<p>Webhook events also use your account’s API version by default, unless you set an API version during endpoint creation.</p>
+
+<p>You can upgrade your API version in the <a href="https://developer.paket.tv">Paket Developer Portal</a>. As a precaution, use API versioning to test a new API version before committing to an upgrade.</p>
+<h1 id='core-api'>Core API</h1>
+<p>The Core API includes requests that are used for more than one API product and, in many instances, across all of Paket&#39;s API products.</p>
+<h2 id='core-api-api-status'>API Status</h2>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>GET https://api.paket.tv/v1
+</code></pre></div>
+<p>Retrieves the API status by making an authenticated <code>GET</code> request to the API&#39;s root path.</p>
+<h3 id='core-api-api-status-the-status-object'>The Status Object</h3>
+<blockquote>
+<p>The Status Object</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+    "message": "The API is healthy!"
+}
+</code></pre></div>
+<p><strong>Attributes</strong></p>
+
+<p><strong><code>message</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The API Status.</p>
+<h3 id='core-api-api-status-retrieve-api-status'>Retrieve API Status</h3>
+<blockquote>
+<p>GET https://api.paket.tv/v1</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location 'https://api.paket.tv/v1' \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Basic &lt;credentials&gt;'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+    "message": "The API is healthy!"
+}
+</code></pre></div>
+<p><strong>Parameters</strong></p>
+
+<p>No parameters.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a status object.</p>
+<h2 id='core-api-sessions'>Sessions</h2>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>POST https://api.paket.tv/v1/sessions
+</code></pre></div>
+<p>A Session represents a Platform end user either at the account or profile level. Whether the Session is associated to the account or profile is, ultimately, up to the Platform to determine. For optimal flexibility, however, a Session ID should be created and stored by a Platform at the profile level.</p>
+
+<p>Ideally, a Session should be indefinitely associated with an end-user&#39;s account or profile. So long as the Session ID persists, all items associated with the Session will remain active.</p>
+<h3 id='core-api-sessions-the-session-object'>The Session Object</h3>
+<blockquote>
+<p>The Session Object</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "session_id": "faa37296-dc32-4cce-b8c0-47ac4bc032c1",
+  "client_type": "platform",
+  "client_id": "fab3d02606122a08",
+  "created_at": "2024-02-16T04:41:06.596Z"
+}
+</code></pre></div>
+<p><strong>Attributes</strong></p>
+
+<p><strong><code>session_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+A unique Session identifier.</p>
+
+<p><strong><code>client_type</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The requesting Client type.</p>
+
+<p><strong><code>client_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The requesting Client ID.</p>
+
+<p><strong><code>created_at</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The ISO 8601 timestamp when the Session was created.</p>
+<h3 id='core-api-sessions-the-session-participant-object'>The Session Participant Object</h3>
+<p>The Session Participant Object is created when a Participant is added to a Session and contains useful information related to a Participant&#39;s relationship to a Session.</p>
+
+<blockquote>
+<p>The Session Participant Object</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "app_id": "417f3625d067cbe3",
+  "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+  "session_id": "faa37296-dc32-4cce-b8c0-47ac4bc032c1",
+  "client_id": "fab3d02606122a08",
+  "created_at": "2024-02-16T04:41:06.596Z"
+}
+</code></pre></div>
+<p><strong>Attributes</strong></p>
+
+<p><strong><code>app_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The Publisher&#39;s Client ID to which the <code>participant_id</code> belongs.</p>
+
+<p><strong><code>participant_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+A unique Participant identifier.</p>
+
+<p><strong><code>session_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+A unique Session identifier.</p>
+
+<p><strong><code>client_type</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The requesting Client type.</p>
+
+<p><strong><code>client_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The requesting Client ID.</p>
+
+<p><strong><code>created_at</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The ISO 8601 timestamp when the Session was created.</p>
+<h3 id='core-api-sessions-create-a-new-session'>Create a new Session</h3>
+<blockquote>
+<p>POST https://api.paket.tv/v1/sessions</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location --request POST 'https://api.paket.tv/v1/sessions' \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Basic &lt;credentials&gt;'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "session_id": "faa37296-dc32-4cce-b8c0-47ac4bc032c1",
+  "client_type": "platform",
+  "client_id": "fab3d02606122a08",
+  "created_at": "2024-02-16T04:41:06.596Z"
+}
+</code></pre></div>
+<p><strong>Parameters</strong></p>
+
+<p>No parameters.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a Session object.</p>
+<h2 id='core-api-participants'>Participants</h2>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>POST https://api.paket.tv/v1/participants
+</code></pre></div>
+<p>A Participant represents a Publisher (or app&#39;s) end user either at the account or profile level. Whether the Participant is associated to the account or profile is, ultimately, up to the Publisher to determine. For optimal flexibility, however, a Participant ID should be created and stored by a Publisher at the profile level.</p>
+
+<p>Ideally, a Participant should be indefinitely associated with an end-user&#39;s account or profile. So long as the Participant ID persists, all items associated with the Participant will remain active.</p>
+
+<p>Generally, a Publisher interacts with a Platform by explicitly sharing the Participant ID with a Platform and it being matched to an active Session.</p>
+<h3 id='core-api-participants-the-participant-object'>The Participant Object</h3>
+<blockquote>
+<p>The Participant Object</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "participant_id": "6e5060c3-7df4-488e-9e9a-67cd5077b352",
+  "client_type": "publisher",
+  "client_id": "fe4a9ed381e8e376",
+  "created_at": "2024-02-16T04:41:06.596Z"
+}
+</code></pre></div>
+<p><strong>Attributes</strong></p>
+
+<p><strong><code>participant_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The newly generated Participant ID.</p>
+
+<p><strong><code>client_type</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The requesting Client type.</p>
+
+<p><strong><code>client_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The requesting Client ID.</p>
+
+<p><strong><code>created_at</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The ISO 8601 timestamp when the Session was created.</p>
+<h3 id='core-api-participants-create-a-new-participant'>Create a new Participant</h3>
+<blockquote>
+<p>POST https://api.paket.tv/v1/participants</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location --request POST 'https://api.paket.tv/v1/participants' \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Basic &lt;credentials&gt;'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "participant_id": "6e5060c3-7df4-488e-9e9a-67cd5077b352",
+  "client_type": "publisher",
+  "client_id": "fe4a9ed381e8e376",
+  "created_at": "2024-02-16T04:41:06.596Z"
+}
+</code></pre></div>
+<p><strong>Parameters</strong></p>
+
+<p>No parameters.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a Participant object.</p>
+<h1 id='upnext-api'>UpNext API</h1><h2 id='upnext-api-overview'>Overview</h2>
+<p>The Paket UpNext API is a powerful connected TV (CTV) engagement tool through which Platforms and Publishers can offer users a consistent, highly personalized feed of their recently watched items, new content availability, watchlist items, and more. </p>
+
+<p>While similar features currently exist across many best-in-class tv and OEM platforms, the resulting data is, invariably, inconsistent - and the means by which the data is retrieved are often varied, making it challenging for app developers to build and maintain such feature across an array of platforms. </p>
+
+<p>The goal with the Paket UpNext API is to offer CTV Platforms and Publishers a platform-agnostic experience that is as consistent and reliable - across devices - as is currently available exclusively on identity-based, ecosystem-wide platforms such as Google TV and Apple TV.</p>
+
+<p><strong>For Platforms</strong>, the UpNext API offers a timely snapshot of what a user is watching on any Paket-integrated service across any platorm or device. In addition to providing an aggregated view of a user&#39;s most relevant content, the data provided can be used to drive personalized recommendations, ads, and merchandising opportunities from within the Platform&#39;s native environment.</p>
+
+<p><strong>For Publishers</strong>, the UpNext API ensures its highly relevant content is featured consistently across Paket-integrated tv platforms and within the context of a user&#39;s cross-device viewing - something that has proven to be a top driver of engagement on connected tvs. Further, a Publisher needs to integrate only once to have its users&#39; continue watching data syndicated to any Paket-integrated platform. Adding new Platforms is simply a matter of configuration from within the <a href="https://developer.paket.tv">Paket Developer Portal</a>.</p>
+<h3 id='upnext-api-overview-the-list-object'>The List Object</h3>
+<p>At the core of the UpNext API is the Session List object, which is an aggregated, chronological feed up UpNext items added by all Participants attached to a Session. </p>
+
+<p>For example, if Apps A, B, and C have shared their respective Participant IDs with a Platform - and such Participant IDs have been added to a Session - a request to <a href="#upnext-api-sessions-get-an-aggregated-list">this API endpoint</a> will return an aggregated, chronological list of items across all Apps attached to the Session. </p>
+
+<p>An individual Participant&#39;s feed (i.e., a specific App) can also be requested simply by calling the Session API along with the <a href="#upnext-api-sessions-get-a-specific-list">requested Participant ID</a> included in the path parameters.</p>
+
+<!-- ========================= -->
+
+<!-- UPNEXT SESSION ATTRIBUTES -->
+
+<!-- ========================= -->
+
+<blockquote>
+<p>The List Object</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "total": 271,
+  "next_key": 4,
+  "items": [
+    {...},
+    {...},
+    {...},
+    {...},
+    }
+  ]
+}
+</code></pre></div>
+<p><strong>Attributes</strong></p>
+
+<p><strong><code>total</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+The total number of list items returned from request.</p>
+
+<p><strong><code>next_key</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+The index of the next available item. Returned only if the <code>total</code> results exceeds the requested number of results.</p>
+
+<p><strong><code>items</code></strong> <span style='margin: 0 5px;font-size:.9em'>array</span><br>
+An array of <a href="#upnext-api-overview-the-list-item-object">list items</a>.</p>
+<h3 id='upnext-api-overview-the-list-item-object'>The List Item Object</h3>
+<blockquote>
+<p>The List Item Object</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "content_id": "1iwousk12i008d9",
+  "app_id": "df79418d4e6d5325",
+  "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+  "updated_at": "2023-12-20T19:02:28.285Z",
+  "action": "up_next_continue",
+  "media_type": "tv_episode",
+  "title": "The Colt",
+  "description": "Jeff ignores Lassie when Gramps brings home a new colt.",
+  "season": 1,
+  "episode": 3,
+  "poster_art_uri": "https://media.paket.tv/1iwousk12i008d9/thumb.png",
+  "poster_art_aspect_ratio": "aspect_ratio_16_9",
+  "preview_video_uri": "https://media.paket.tv/1iwousk12i008d9/preview.m3u8",
+  "last_interaction": 1702766417,
+  "position": 654,
+  "duration": 1308,
+  "hidden": false,
+  "platform_data": {
+    "platform_app_id": "internalAppId12345"
+  }
+}
+</code></pre></div>
+<p><strong>Attributes</strong></p>
+
+<p><strong><code>content_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The unique identifier of the respective item. Typically, this is an internal identifier provided by the Publisher.</p>
+
+<p><strong><code>app_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The Publisher&#39;s Client ID to which the item is associated.</p>
+
+<p><strong><code>participant_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The Participant ID to which the item is associated.</p>
+
+<p><strong><code>updated_at</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The ISO 8601 timestamp when the item was created or last updated.</p>
+
+<p><strong><code>action</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The item action, which can be one of the following enum values:</p>
+
+<ul>
+<li><code>up_next_continue</code></li>
+<li><code>up_next_next</code></li>
+<li><code>up_next_new</code></li>
+<li><code>up_next_watchlist</code></li>
+</ul>
+
+<p><strong><code>media_type</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The item&#39;s media type, which can be one of the following enum values:</p>
+
+<ul>
+<li><code>movie</code></li>
+<li><code>tv_episode</code></li>
+</ul>
+
+<p><strong><code>title</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The title of the movie or TV show item.</p>
+
+<p><strong><code>description</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The item description.</p>
+
+<p><strong><code>season</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+The tv series season number. Returned only if item <code>media_type</code> is <code>tv_episode</code>.</p>
+
+<p><strong><code>episode</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+The tv series episode number. Returned only if item <code>media_type</code> is <code>tv_episode</code>.</p>
+
+<p><strong><code>poster_art_uri</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+Uri of item&#39;s thumbnail image.</p>
+
+<p><strong><code>poster_art_aspect_ratio</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+Aspect ratio of media provided at <code>poster_art_uri</code>, which can be one of the following enum values:</p>
+
+<ul>
+<li><code>aspect_ratio_16_9</code></li>
+<li><code>aspect_ratio_4_3</code></li>
+<li><code>aspect_ratio_1_1</code></li>
+<li><code>aspect_ratio_2_3</code></li>
+</ul>
+
+<p><strong><code>preview_video_uri</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+Uri of item&#39;s preview video, if provided.</p>
+
+<p><strong><code>last_interaction</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+<code>UTC</code> timestamp of Participant&#39;s last interaction with media item. </p>
+
+<p><strong><code>position</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Last recorded position of media playback in seconds (returned if <code>action</code> is <code>up_next_continue</code>).</p>
+
+<p><strong><code>duration</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Item&#39;s total running time in seconds.</p>
+
+<p><strong><code>hidden</code></strong> <span style='margin: 0 5px;font-size:.9em'>boolean</span><br>
+Indicates whether item is hidden or visible.</p>
+
+<p><strong><code>platform_data</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
+Custom object containing <a href="#platform-data">custom attributes</a> provided by the requesting Platform.</p>
+
+<aside class="notice">
+The <span style="font-family:monospace;font-size:.9em;font-weight:bolder">platform_data</span> object is returned only via the Sessions endpoint.
+</aside>
+<h3 id='upnext-api-overview-the-session-participants-object'>The Session Participants Object</h3>
+<p>Returned when requesting a list of all Parcticipants associated with an active Session.</p>
+
+<blockquote>
+<p>The Session Participants Object</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+  "app_id": "df79418d4e6d5325",
+  "created_at": "2023-12-23T23:38:50.303Z"
+}
+</code></pre></div>
+<p><strong>Attributes</strong></p>
+
+<p><strong><code>participant_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The corresponding Participant ID.</p>
+
+<p><strong><code>app_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The Publisher&#39;s Client ID to which the Participant belongs.</p>
+
+<p><strong><code>created_at</code></strong> <span style='margin: 0 5px;font-size:.9em'>array</span><br>
+The ISO 8601 timestamp when the Participant was added to the Session.</p>
+<h3 id='upnext-api-overview-platform-work-flow'>Platform Work Flow</h3>
+<p>Before beginning, Platform partners should familiarize themselves with the <a href="#sessions">Sessions</a> object. Additionally, Platforms should leverage the <code>platform_data</code> configuration as described in the <a href="#platform-data">Platform Data</a> section of the documentation.</p>
+
+<p>The diagram below is an overview of how Platform Clients interact with the Paket UpNext API. </p>
+
+<aside class="notice">Please note that the Platform must provide a means for a Publisher's app to communicate the Paket Participant ID to the Platform Client. Typically, this is achieved via the Platform SDK.</aside>
+
+<p><img src="images/paket_upnext_workflow_platforms-3f7681e6.jpg" alt="Platform Work Flow Diagram" /></p>
+<h3 id='upnext-api-overview-publisher-work-flow'>Publisher Work Flow</h3>
+<p>Before beginning, Publisher partners should familiarize themselves with the <a href="#participants">Participants</a> object.</p>
+
+<p>The diagram below is an overview of how Publisher Clients interact with the Paket UpNext API. </p>
+
+<aside class="notice">Please note that the Publisher must be able to communicate the Paket Participant ID to the Platform Client. Typically, this is achieved via the Platform SDK.</aside>
+
+<p><img src="images/paket_upnext_workflow_publishers-1d5aa24c.jpg" alt="Publisher Work Flow Diagram" /></p>
+<h2 id='upnext-api-sessions'>Sessions</h2>
+<p>Sessions are the primary means by which Platforms interact with the Paket UpNext API. </p>
+
+<p>It is through this API that Platforms can: </p>
+
+<ul>
+<li>Add or remove Participants to a Session</li>
+<li>Fetch an aggregated UpNext list </li>
+<li>Fetch a specific Participant&#39;s UpNext list</li>
+<li>Fetch a list of a Session&#39;s Participants</li>
+<li>Hide items from a list</li>
+<li>Remove an existing Session</li>
+</ul>
+<h3 id='upnext-api-sessions-add-a-participant'>Add a Participant</h3>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>PUT https://api.paket.tv/v1/upnext/sessions/:session_id
+</code></pre></div>
+<p>Adds or updates a Participant to an active Session.</p>
+
+<blockquote>
+<p>PUT https://api.paket.tv/v1/upnext/sessions/:session_id</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location --request PUT 'https://api.paket.tv/v1/upnext/sessions/:session_id' \
+  --header 'Content-Type: application/json' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic &lt;credentials&gt;' \
+  --data '{
+    "app_id": "fe4a9ed381e8e376",
+    "participant_id": "6e5060c3-7df4-488e-9e9a-67cd5077b352"
+  }'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "message": "Success"
+}
+</code></pre></div>
+<p><strong>Parameters</strong></p>
+
+<p><strong><code>app_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The Publisher&#39;s Client ID to which the Participant being added belongs.</p>
+
+<p><strong><code>participant_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The Participant ID to be added to the Session.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a <code>200</code> Success response.</p>
+<h3 id='upnext-api-sessions-remove-a-participant'>Remove a Participant</h3>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>DELETE https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id
+</code></pre></div>
+<p>Removes a Participant from an active Session.</p>
+
+<blockquote>
+<p>DELETE https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location --request DELETE 'https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic &lt;credentials&gt;'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{}
+</code></pre></div>
+<p><strong>Parameters</strong></p>
+
+<p>No parameters.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a <code>204</code> No Content response.</p>
+<h3 id='upnext-api-sessions-get-an-aggregated-list'>Get an Aggregated List</h3>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>GET https://api.paket.tv/v1/upnext/sessions/:session_id
+</code></pre></div>
+<p>Retrieves aggregated Session list from all registered Participants.</p>
+
+<blockquote>
+<p>GET https://api.paket.tv/v1/upnext/sessions/:session_id</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic &lt;credentials&gt;'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "total": 271,
+  "next_key": 4,
+  "items": [
+    {
+      "content_id": "1iwousk12i008d9",
+      "app_id": "df79418d4e6d5325",
+      "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+      "updated_at": "2023-12-20T19:02:28.285Z",
+      "action": "up_next_continue",
+      "media_type": "tv_episode",
+      "title": "The Colt",
+      "description": "Jeff ignores Lassie when Gramps brings home a new colt.",
+      "season": 1,
+      "episode": 3,
+      "poster_art_uri": "https://media.paket.tv/1iwousk12i008d9/thumb.png",
+      "poster_art_aspect_ratio": "aspect_ratio_16_9",
+      "preview_video_uri": "https://media.paket.tv/1iwousk12i008d9/preview.m3u8",
+      "last_interaction": 1702766417,
+      "position": 654,
+      "duration": 1308,
+      "hidden": false,
+      "platform_data": {
+        "platform_app_id": "internalAppId12345"
+      }
+    },
+    {...},
+    {...},
+    {...}
+  ]
+}
+</code></pre></div>
+<p><strong>Parameters</strong></p>
+
+<p><strong><code>limit</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Optional. Limits items returned (default is <code>50</code>).</p>
+
+<p><strong><code>next_key</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Optional. Key returned in previous call if <a href="#pagination">additional items</a> are available.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a <a href="#upnext-api-overview-the-list-object">List Object</a> containing an array of <a href="#upnext-api-overview-the-list-item-object">List Item Objects</a>.</p>
+<h3 id='upnext-api-sessions-get-a-specific-list'>Get a Specific List</h3>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>GET https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id
+</code></pre></div>
+<p>Retrieves the Session list of a specified Participant.</p>
+
+<blockquote>
+<p>GET https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic &lt;credentials&gt;'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "total": 271,
+  "next_key": 4,
+  "items": [
+    {
+      "content_id": "1iwousk12i008d9",
+      "app_id": "df79418d4e6d5325",
+      "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+      "updated_at": "2023-12-20T19:02:28.285Z",
+      "action": "up_next_continue",
+      "media_type": "tv_episode",
+      "title": "The Colt",
+      "description": "Jeff ignores Lassie when Gramps brings home a new colt.",
+      "season": 1,
+      "episode": 3,
+      "poster_art_uri": "https://media.paket.tv/1iwousk12i008d9/thumb.png",
+      "poster_art_aspect_ratio": "aspect_ratio_16_9",
+      "preview_video_uri": "https://media.paket.tv/1iwousk12i008d9/preview.m3u8",
+      "last_interaction": 1702766417,
+      "position": 654,
+      "duration": 1308,
+      "hidden": false,
+      "platform_data": {
+        "platform_app_id": "internalAppId12345"
+      }
+    },
+    {...},
+    {...},
+    {...}
+  ]
+}
+</code></pre></div>
+<p><strong>Parameters</strong></p>
+
+<p><strong><code>limit</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Optional. Limits items returned (default is <code>50</code>).</p>
+
+<p><strong><code>next_key</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Optional. Key returned in previous call if <a href="#pagination">additional items</a> are available.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a <a href="#upnext-api-overview-the-list-object">List Object</a> containing an array of <a href="#upnext-api-overview-the-list-item-object">List Item Objects</a>.</p>
+<h3 id='upnext-api-sessions-get-session-participants'>Get Session Participants</h3>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>GET https://api.paket.tv/v1/upnext/sessions/:session_id/participants
+</code></pre></div>
+<p>Retrieves a list of all Participant&#39;s associated with a Session.</p>
+
+<blockquote>
+<p>GET https://api.paket.tv/v1/upnext/sessions/:session_id/participants</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id/participants' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic &lt;credentials&gt;'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "total": 12,
+  "next_key": 4,
+  "items": [
+    {
+      {
+        "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+        "app_id": "df79418d4e6d5325",
+        "created_at": "2023-12-23T23:38:50.303Z"
+      }
+    },
+    {...},
+    {...},
+    {...}
+  ]
+}
+</code></pre></div>
+<p><strong>Parameters</strong></p>
+
+<p><strong><code>limit</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Optional. Limits items returned (default is <code>50</code>).</p>
+
+<p><strong><code>next_key</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Optional. Key returned in previous call if <a href="#pagination">additional items</a> are available.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a <a href="#upnext-api-overview-the-list-object">List Object</a> containing an array of <a href="#upnext-api-overview-the-session-participants-object">Session Participants Objects</a>.</p>
+<h3 id='upnext-api-sessions-hide-an-item-in-a-list'>Hide an Item in a List</h3>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>PUT https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id
+</code></pre></div>
+<blockquote>
+<p>PUT https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location --request PUT 'https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id' \
+  --header 'Content-Type: application/json' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic &lt;credentials&gt;' \
+  --data '{
+    "content_id": "1iwousk12i008d9",
+    "action": "hide"
+  }'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "message": "Success"
+}
+</code></pre></div>
+<p>If hiding list items is supported within a Platform&#39;s user interface, this action allows the Platform to set the <code>hidden</code> parameter of a list item to <code>true</code>. Once the action is completed, an <code>item_hidden</code> notification is delivered to the Publisher&#39;s webhook endpoint.</p>
+
+<p>While it is up to the Publisher to decide whether or not to remove the item from the Participant&#39;s list, the item will remain hidden within the <a href="#upnext-api-overview-the-list-item-object">List Item Object</a> unless the <code>hidden</code> attribute is set to <code>false</code> by a Publisher action.</p>
+
+<p><strong>Parameters</strong></p>
+
+<p><strong><code>content_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The content ID of the item to be hidden.</p>
+
+<p><strong><code>action</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The hide action, which (presently) can be one of a single enum value: </p>
+
+<ul>
+<li><code>hide</code></li>
+</ul>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a <code>200</code> Success response.</p>
+<h3 id='upnext-api-sessions-remove-a-session'>Remove a Session</h3>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>DELETE https://api.paket.tv/v1/upnext/sessions/:session_id
+</code></pre></div>
+<blockquote>
+<p>DELETE https://api.paket.tv/v1/upnext/sessions/:session_id</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location --request DELETE 'https://api.paket.tv/v1/upnext/sessions/:session_id' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic &lt;credentials&gt;'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{}
+</code></pre></div>
+<p>Deletes a Session and all Participant associations.</p>
+
+<p><strong>Parameters</strong></p>
+
+<p>No parameters.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a <code>204</code> No Content response.</p>
+<h2 id='upnext-api-participants'>Participants</h2>
+<p>Participants are the primary means by which Publishers interact with the Paket UpNext API. </p>
+
+<p>It is through this API that Publishers can: </p>
+
+<ul>
+<li>Add or remove items from a Participant&#39;s list</li>
+<li>Fetch a specific Participant&#39;s UpNext list</li>
+<li>Remove a Participant&#39;s Sessions</li>
+</ul>
+<h3 id='upnext-api-participants-publisher-guidelines'>Publisher Guidelines</h3>
+<p>It is likely that most Publishers who will be integrating with the Paket UpNext API will have an existing back-end service dedicated to making continue watching, new episodes, and related requests. In such cases - and to ensure as consistent a user experience as possible - it is recommended that such partners post data to the UpNext API in a way that is consistent with its existing guidelines and best practices.</p>
+
+<p>For those Publishers who will be integrating exclusively with the Paket API, please refer to the following guidelines as to when items should be added to a Participant&#39;s UpNext List.</p>
+
+<p><strong>When to add an item to the UpNext List</strong></p>
+
+<p>Please determine whether or not to add an <code>up_next_continue</code> item if:</p>
+
+<ul>
+<li>The user exits an app client during playback</li>
+<li>The user pauses or stops playback of a media item for more than five (5) minutes</li>
+</ul>
+
+<p><strong>Including unfinished movies and TV shows</strong></p>
+
+<p>Please add an <code>up_next_continue</code> item if:</p>
+
+<ul>
+<li>A movie or TV show is started and the user has watched more than two (2) minutes; or</li>
+<li>A movie or TV show is is started and the user has watched more that 3% of its total duration (whichever is earlier)</li>
+</ul>
+
+<p><strong>Including new and next episode from a tv series</strong></p>
+
+<ul>
+<li>Please add an <code>up_next_next</code> item if a user finishes an episode in a series and the next episode is available on your service</li>
+<li>Please add an <code>up_next_new</code> item if a user is caught up on all available episodes of a tv series and a new season or episode becomes availables</li>
+<li>Please add an <code>up_next_watchlist</code> item if an item in a user&#39;s watchlist was previously unavailable but has since been made available to watch on the service </li>
+</ul>
+
+<p><strong>Remove finished items from the UpNext List</strong></p>
+
+<ul>
+<li>A media item is considered &#39;finished&#39; when the end credits begin</li>
+<li>If the end credits cannot be determined, a media item is considered &#39;finished&#39; when 3% or less the total duration of the media is remaining to be watched</li>
+</ul>
+<h3 id='upnext-api-participants-add-item-to-list'>Add Item to List</h3>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>PUT https://api.paket.tv/v1/upnext/participants/:participant_id
+</code></pre></div>
+<blockquote>
+<p>PUT https://api.paket.tv/v1/upnext/participants/:participant_id</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location --request PUT 'https://api.paket.tv/v1/upnext/participants/:participant_id' \
+  --header 'Content-Type: application/json' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic &lt;credentials&gt;' \
+  --data '{
+    "action": "up_next_continue",
+    "media_type": "tv_episode",
+    "content_id": "1iwousk12i008d9",
+    "title": "The Colt",
+    "poster_art_uri": "https://media.paket.tv/1iwousk12i008d9/thumb.png",
+    "poster_art_aspect_ratio": "aspect_ratio_16_9",
+    "description": "Jeff ignores Lassie when Gramps brings home a new colt.",
+    "season": 1,
+    "episode": 3,
+    "preview_video_uri": "https://media.paket.tv/1iwousk12i008d9/preview.m3u8",
+    "last_interaction": 1702766417,
+    "position": 654,
+    "duration": 1308
+    "hidden": false
+  }'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "message": "Success"
+}
+</code></pre></div>
+<p>Adds or updates an Item to the Participant list. Please refer to the UpNext <a href="#upnext-api-participants-guidelines">Guidelines</a> to learn more about how to determine when to add an Item to the Participant&#39;s list.</p>
+
+<p><strong>Parameters</strong></p>
+
+<p>* required parameter.</p>
+
+<p><strong><code>content_id</code></strong>* <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The content ID of the item being added. Typically, this is an internal identifier provided by the Publisher.</p>
+
+<p><strong><code>media_type</code></strong>* <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The item&#39;s media type, which can be one of the following enum values:</p>
+
+<ul>
+<li><code>movie</code></li>
+<li><code>tv_episode</code></li>
+</ul>
+
+<p><strong><code>action</code></strong>* <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The item action, which can be one of the following enum values:</p>
+
+<ul>
+<li><code>up_next_continue</code></li>
+<li><code>up_next_next</code></li>
+<li><code>up_next_new</code></li>
+<li><code>up_next_watchlist</code></li>
+</ul>
+
+<p><strong><code>title</code></strong>* <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The title of the movie or TV show item.</p>
+
+<p><strong><code>description</code></strong>* <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The item description.</p>
+
+<p><strong><code>poster_art_uri</code></strong>* <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+Uri of item&#39;s thumbnail image.</p>
+
+<p><strong><code>poster_art_aspect_ratio</code></strong>* <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+Aspect ratio of media provided at <code>poster_art_uri</code>, which can be one of the following enum values:</p>
+
+<ul>
+<li><code>aspect_ratio_16_9</code></li>
+<li><code>aspect_ratio_4_3</code></li>
+<li><code>aspect_ratio_1_1</code></li>
+<li><code>aspect_ratio_2_3</code></li>
+</ul>
+
+<p><strong><code>season</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+The tv series season number. Required only if item <code>media_type</code> is <code>tv_episode</code>.</p>
+
+<p><strong><code>episode</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+The tv series episode number. Required only if item <code>media_type</code> is <code>tv_episode</code>.</p>
+
+<p><strong><code>preview_video_uri</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+Uri of item&#39;s preview video, if provided.</p>
+
+<p><strong><code>last_interaction</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+<code>UTC</code> timestamp of Participant&#39;s last interaction with media item. </p>
+
+<p><strong><code>position</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Last recorded position of media playback in seconds (required if <code>action</code> is <code>up_next_continue</code>).</p>
+
+<p><strong><code>duration</code></strong>* <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Item&#39;s total running time in seconds.</p>
+
+<p><strong><code>hidden</code></strong> <span style='margin: 0 5px;font-size:.9em'>boolean</span><br>
+Indicates whether item is hidden or visible.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a <code>200</code> Success response.</p>
+<h3 id='upnext-api-participants-remove-item-from-list'>Remove Item from List</h3>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>DELETE https://api.paket.tv/v1/upnext/participants/:participant_id/:content_id
+</code></pre></div>
+<blockquote>
+<p>DELETE https://api.paket.tv/v1/upnext/participants/:participant_id/:content_id</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location --request DELETE 'https://api.paket.tv/v1/upnext/participants/:participant_id/:content_id' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic &lt;credentials&gt;'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{}
+</code></pre></div>
+<p>Removes an Item from the Participant list.</p>
+
+<p><strong>Parameters</strong></p>
+
+<p>No parameters.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a <code>204</code> No Content response.</p>
+<h3 id='upnext-api-participants-get-a-participant-list'>Get a Participant List</h3>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>GET https://api.paket.tv/v1/upnext/participants/:participant_id
+</code></pre></div>
+<p>Retrieves the list of a specified Participant.</p>
+
+<blockquote>
+<p>GET https://api.paket.tv/v1/upnext/participants/:participant_id</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location 'https://api.paket.tv/v1/upnext/participants/:participant_id' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic &lt;credentials&gt;'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "total": 271,
+  "next_key": 4,
+  "items": [
+    {
+      "content_id": "1iwousk12i008d9",
+      "app_id": "df79418d4e6d5325",
+      "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+      "updated_at": "2023-12-20T19:02:28.285Z",
+      "action": "up_next_continue",
+      "media_type": "tv_episode",
+      "title": "The Colt",
+      "description": "Jeff ignores Lassie when Gramps brings home a new colt.",
+      "season": 1,
+      "episode": 3,
+      "poster_art_uri": "https://media.paket.tv/1iwousk12i008d9/thumb.png",
+      "poster_art_aspect_ratio": "aspect_ratio_16_9",
+      "preview_video_uri": "https://media.paket.tv/1iwousk12i008d9/preview.m3u8",
+      "last_interaction": 1702766417,
+      "position": 654,
+      "duration": 1308,
+      "hidden": false
+    },
+    {...},
+    {...},
+    {...}
+  ]
+}
+</code></pre></div>
+<p><strong>Parameters</strong></p>
+
+<p><strong><code>limit</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Optional. Limits items returned (default is <code>50</code>).</p>
+
+<p><strong><code>next_key</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+Optional. Key returned in previous call if <a href="#pagination">additional items</a> are available.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a <a href="#upnext-api-overview-the-list-object">List Object</a> containing an array of <a href="#upnext-api-overview-the-list-item-object">List Item Objects</a>.</p>
+
+<aside class="notice">
+The <span style="font-family:monospace;font-size:.9em;font-weight:bolder">platform_data</span> object is returned only via the Sessions endpoint and will not be included in the response to this request.
+</aside>
+<h3 id='upnext-api-participants-remove-participant-39-s-sessions'>Remove Participant&#39;s Sessions</h3>
+<blockquote>
+<p>Endpoint</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>DELETE https://api-dev.paket.tv/v1/upnext/participants/:participant_id/sessions
+</code></pre></div>
+<p>Removes all sessions associated with a Participant.</p>
+
+<blockquote>
+<p>DELETE https://api-dev.paket.tv/v1/upnext/participants/:participant_id/sessions</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl --location --request DELETE 'https://api.paket.tv/v1/upnext/participants/:participant_id/sessions' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic &lt;credentials&gt;'
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{}
+</code></pre></div>
+<p><strong>Parameters</strong></p>
+
+<p>No parameters.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>Returns a <code>204</code> No Content response.</p>
+<h1 id='bundle-api'>Bundle API</h1>
+<p>Documentation for the Bundle API is coming soon. </p>
+<h1 id='webhooks'>Webhooks</h1>
+<p>Webhooks play a key role in communicating critical information (in the form of events) among Platform and Publisher Clients and the Paket service. While not technically a part of the Paket API, this section explains how to set up and secure your webhooks endpoints; and serves as a reference as to which notifications are sent and on which triggering events.</p>
+<h2 id='webhooks-configure-your-endpoints'>Configure your endpoints</h2>
+<p>Webhooks are configured discretely under each Client object in the <a href="https://developer.paket.tv">Paket Developer Portal</a>. You may configure multiple endpoints, however, please note that at present all events will be sent to all active endpoints.</p>
+
+<p>Webhook endpoints must be secured using TLS/SSL certificates over HTTPS and are signed using a signing secret, provided on creation of each endpoint. While it is possible to receive events without <a href="#webhooks-configure-your-endpoints-verify-webhook-signature">verifying the webhook signature</a>, it is highly recommended that each event is verified before taking any programmatic action.</p>
+
+<p><img src="images/webhooks-77387e24.png" alt="Webhooks Configuration" /></p>
+<h3 id='webhooks-configure-your-endpoints-verify-webhook-signature'>Verify webhook signature</h3>
+<p>The <code>Paket-Signature</code> header included in each signed event contains a timestamp and one or more signatures that you must verify. The timestamp is prefixed by <code>t=</code>, and each signature is prefixed by a scheme. Schemes start with <code>v</code>, followed by an integer. Currently, the only valid live signature scheme is <code>v1</code>. To aid with testing, Paket sends an additional signature with a fake <code>v0</code> scheme.</p>
+
+<blockquote>
+<p>Example <code>Paket-Signature</code> header</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>Paket-Signature:
+t=1709156882568,
+v1=f03a63e17d5720d7d01974d115059c8ec05b0f425828a2d0d341020f431bbafa,
+v0=3e3be55cd51ef0476ddf7fe83e72f10cf7358e54dd8eab17560dfb879b9d485a
+</code></pre></div>
+<p>Paket generates signatures using a hash-based message authentication code (HMAC) with SHA-256. To prevent downgrade attacks, ignore all schemes that aren’t <code>v1</code>.</p>
+
+<p>You can have multiple signatures with the same scheme-secret pair when you roll an endpoint’s secret, and keep the previous secret active for up to 24 hours. During this time, your endpoint has multiple active secrets and Paket generates one signature for each secret.</p>
+
+<p>To create a manual solution for verifying signatures, you must complete the following steps:</p>
+
+<p><strong>Step 1: Extract the timestamp and signatures from the header</strong></p>
+
+<p>Split the header using the <code>,</code> character as the separator to get a list of elements. Then split each element using the <code>=</code> character as the separator to get a prefix and value pair.</p>
+
+<p>The value for the prefix <code>t</code> corresponds to the timestamp, and <code>v1</code> corresponds to the signature (or signatures). You can discard all other elements.</p>
+
+<p><strong>Step 2: Prepare the <code>signed_payload</code> string</strong></p>
+
+<blockquote>
+<p>Example  <code>signed_payload</code></p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>1709156882568.{"idempotency_key":"62a0152b-6ac4-49f7-b605-5e18cbf70ed8","data":{"participant_id":"6b0af623-2923-4997-92a6-73f94bbe321e","client_id":"286d2a536a5d6b6b","app_id":"417f3625d067cbe3","created_at":"2024-03-05T17:56:26.265Z","session_id":"4c682b9e-65b4-4e43-a5e9-96f58a967240"},"type":"participant.session.created","api_version":"2023-12-10","created":1709661388431,"object":"event","id":"req_ad8a67d675a71a89"}
+</code></pre></div>
+<p>The <code>signed_payload</code> string is created by concatenating:</p>
+
+<ul>
+<li>The timestamp (as a string)</li>
+<li>The character <code>.</code></li>
+<li>The actual JSON payload (that is, the request body)</li>
+</ul>
+
+<p><strong>Step 3: Determine the expected signature</strong></p>
+
+<blockquote>
+<p>Example Hashed result</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>f03a63e17d5720d7d01974d115059c8ec05b0f425828a2d0d341020f431bbafa
+</code></pre></div>
+<p>Compute an HMAC with the SHA256 hash function. Use the endpoint’s signing secret as the key, and use the signed_payload string as the message.</p>
+
+<p><strong>Step 4: Compare the signatures</strong></p>
+
+<p>Compare the signature (or signatures) in the header to the expected signature. For an equality match, compute the difference between the current timestamp and the received timestamp, then decide if the difference is within your tolerance.</p>
+
+<p>To protect against timing attacks, use a constant-time-string comparison to compare the expected signature to each of the received signatures.</p>
+
+<!-- ### Monitoring endpoints
+
+Add section when dashboard monitoring goes live. -->
+<h3 id='webhooks-configure-your-endpoints-paket-ip-addresses'>Paket IP addresses</h3>
+<p>To further protect your endpoints, it is recommended that you implement IP whitelisting of the Paket servers from which you will receive webhook events.</p>
+
+<p>Paket IP Addresses:</p>
+
+<ul>
+<li><code>35.83.22.57</code></li>
+</ul>
+<h2 id='webhooks-events'>Events</h2>
+<p>Events are our way of letting you know when something interesting happens in your account. When an interesting event occurs, we create a new <code>Event</code> object. For example, when a Participant is added to a Session, we create a <code>participant.session.participant_added</code> event, and when a bundle subscription is canceled, we create an <code>participant.subscription.canceled</code> event.</p>
+<h3 id='webhooks-events-the-event-object'>The Event object</h3>
+<blockquote>
+<p>Example webhook event</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+  "id": "evt_a75f6d23be8c17b1",
+  "object": "event",
+  "type": "participant.session.participant_added",
+  "created": 1709679883853,
+  "api_version": "2023-12-10",
+  "request": {
+    "id": "req_2442fd8627bedb77",
+    "idempotency_key": null
+  },
+  "data": {
+    "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+    "client_id": "286d2a536a5d6b6b",
+    "app_id": "417f3625d067cbe3",
+    "created_at": "2024-03-05T23:04:43.684Z",
+    "session_id": "4c682b9e-65b4-4e43-a5e9-96f58a967240"
+  }
+}
+</code></pre></div>
+<p><strong>Attributes</strong></p>
+
+<p><strong><code>id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The unique identifier of the webhook event.</p>
+
+<p><strong><code>object</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+Description of the object type (e.g., <code>event</code>).</p>
+
+<p><strong><code>type</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+Description of the event (e.g., <code>participant.session.participant_added</code> or <code>participant.subscription.canceled</code>)</p>
+
+<p><strong><code>created</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
+<code>UTC</code> timestamp when the event was created. </p>
+
+<p><strong><code>api_version</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The Paket API version through which the triggering API request was made.</p>
+
+<p><strong><code>request</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
+An object containing details of the event&#39;s triggering API request.</p>
+
+<p><strong><code>request.id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The unique identifier of the event&#39;s triggering API request.</p>
+
+<p><strong><code>request.idempotency_key</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The <code>idempotency_key</code>, if any, of the original request. Otherwise <code>null</code>.</p>
+
+<p><strong><code>data</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
+An object containing the data associated with the event.</p>
+<h3 id='webhooks-events-types-of-events'>Types of events</h3>
+<p>This is a list of all the types of events we currently send. We may add more at any time, so in developing and maintaining your code, you should not assume that only these types exist.</p>
+
+<p>You’ll notice that these events follow a pattern: <code>resource.event</code>. Our goal is to design a consistent system that makes things easier to anticipate and code against.</p>
+
+<p><strong>Event</strong></p>
+
+<p><strong><code>participant.session.deleted</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#core-api-sessions-the-session-participant-object">session participant</a></span><br>
+Occurs when a Session is removed. Sent to the related Publishers only.</p>
+
+<p><strong><code>participant.session.participant_added</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#core-api-sessions-the-session-participant-object">session participant</a></span><br>
+Occurs when a Participant is added to a Session. Sent to the related Publishers only.</p>
+
+<p><strong><code>participant.session.participant_removed</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#core-api-sessions-the-session-participant-object">session participant</a></span><br>
+Occurs when a Participant is removed from a Session. Sent to the related Publishers only.</p>
+
+<p><strong><code>participant.list.item_hidden</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#upnext-api-overview-the-list-item-object">list item</a></span><br>
+Occurs when a Participant user removes or hides an item from their List via the Platform. Sent to the related Publisher only.</p>
+
+      </div>
+      <div class="dark-box">
+      </div>
+    </div>
+  </body>
+</html>

@@ -4,7 +4,7 @@ Webhooks play a key role in communicating critical information (in the form of e
 
 ## Configure your endpoints
 
-Webhooks are configured discretely under each Client object in the Paket Developer Portal. You may configure multiple endpoints, however, please note that at present all events will be sent to all active endpoints.
+Webhooks are configured discretely under each Client object in the [Paket Developer Portal](https://developer.paket.tv). You may configure multiple endpoints, however, please note that at present all events will be sent to all active endpoints.
 
 Webhook endpoints must be secured using TLS/SSL certificates over HTTPS and are signed using a signing secret, provided on creation of each endpoint. While it is possible to receive events without [verifying the webhook signature](#webhooks-configure-your-endpoints-verify-webhook-signature), it is highly recommended that each event is verified before taking any programmatic action.
 
@@ -151,5 +151,5 @@ Occurs when a Participant is added to a Session. Sent to the related Publishers 
 **`participant.session.participant_removed`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [session participant](#core-api-sessions-the-session-participant-object)</span>  
 Occurs when a Participant is removed from a Session. Sent to the related Publishers only.
 
-**`participant.list.item_hidden'`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [list item](#upnext-api-overview-the-list-item-object)</span>  
+**`participant.list.item_hidden`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [list item](#upnext-api-overview-the-list-item-object)</span>  
 Occurs when a Participant user removes or hides an item from their List via the Platform. Sent to the related Publisher only.

@@ -10,7 +10,7 @@ The goal with the Paket UpNext API is to offer CTV Platforms and Publishers a pl
 
 **For Platforms**, the UpNext API offers a timely snapshot of what a user is watching on any Paket-integrated service across any platorm or device. In addition to providing an aggregated view of a user's most relevant content, the data provided can be used to drive personalized recommendations, ads, and merchandising opportunities from within the Platform's native environment.
 
-**For Publishers**, the UpNext API ensures its highly relevant content is featured consistently across Paket-integrated tv platforms and within the context of a user's cross-device viewing - something that has proven to be a top driver of engagement on connected tvs. Further, a Publisher needs to integrate only once to have its users' continue watching data syndicated to any Paket-integrated platform. Adding new Platforms is simply a matter of configuration from within the Paket Developer Portal.
+**For Publishers**, the UpNext API ensures its highly relevant content is featured consistently across Paket-integrated tv platforms and within the context of a user's cross-device viewing - something that has proven to be a top driver of engagement on connected tvs. Further, a Publisher needs to integrate only once to have its users' continue watching data syndicated to any Paket-integrated platform. Adding new Platforms is simply a matter of configuration from within the [Paket Developer Portal](https://developer.paket.tv).
 
 ### The List Object
 

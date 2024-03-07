@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: "Paket Docs :: API Documentation"
 
 # language_tabs: # must be one of https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers
 #   - shell
@@ -8,12 +8,12 @@ title: API Reference
 #   - ruby
 
 nav_items:
-  - <a href='https://www.paket.tv/api'>API Reference</a>
+  - <a href='https://developer.paket.tv/api'>API Reference</a>
   - <a href='https://developer.paket.tv'>Dashboard →</a>
 
 toc_footers:
   - <div style="padding-bottom:20px">© 2024 Paket Media, Inc.</div>
-  # - <div class='footer-hidden'><a href='https://www.paket.tv/api'>Paket API Reference</a></div>
+  # - <div class='footer-hidden'><a href='https://developer.paket.tv/api'>Paket API Reference</a></div>
   - <div class='footer-hidden'><a href='https://developer.paket.tv'>Paket Dashboard</a></div>
 
 
@@ -29,6 +29,7 @@ includes:
   - versioning
   - core_api
   - upnext_api
+  - bundle_api
   - webhooks
 
 search: true
@@ -37,10 +38,28 @@ code_clipboard: true
 
 meta:
   - name: title
-    content: Paket API Documentation
+    content: "Paket Docs :: API Documentation"
   - name: description
-    content: Documentation for the Paket API
+    content: Documentation site for the Paket Watch APIs
   - name: keywords
-    content: Paket,API,Documentation
+    content: Paket,API,Documentation,Streaming,Watch
+  - name: robots
+    content: index, follow
+  - name: language
+    content: English
+  - name: revisit-after
+    content: 30 days
+  - name: author
+    content: Paket Media, Inc.
+  - property: og:title
+    content: "Paket Docs :: API Documentation"
+  - property: og:description
+    content: Documentation site for the Paket Watch APIs
+  - property: og:url
+    content: https://docs.paket.tv
+  - property: og:type
+    content: website
+  - name: twitter:card
+    content: summary_large_image
 ---
 

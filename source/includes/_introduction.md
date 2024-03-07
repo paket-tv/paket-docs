@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to Paket! This documentation explains key concepts and describes how Platforms and Publishers engage with the Paket API.
+Welcome to Paket! This documentation explains key concepts and describes how Platforms and Publishers engage with the Paket Watch APIs.
 
 **So, what is it?**
 
@@ -20,6 +20,6 @@ There are two primary types of API consumers:
 Platform partners are typically TV OEMs, platforms, operating systems, and marketplaces.
 
 **Publishers**  
-Publisher partners are typically publishers of streaming media apps.
+Publisher partners are typically publishers of streaming media or other subscription-based apps.
 
 How a partner engages with the API depends largely on whether they are a Platform or a Publisher. This designation is assigned in the [Paket Developer Portal](https://developer.paket.tv) at the time of the Company's account setup.
