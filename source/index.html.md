@@ -8,12 +8,12 @@ title: "Paket Docs :: API Documentation"
 #   - ruby
 
 nav_items:
-  - <a href='https://developer.paket.tv/api'>API Reference</a>
+  - <a href='https://documenter.getpostman.com/view/33020276/2sA2xh2Cbj'>API Reference</a>
   - <a href='https://developer.paket.tv'>Dashboard →</a>
 
 toc_footers:
   - <div style="padding-bottom:20px">© 2024 Paket Media, Inc.</div>
-  # - <div class='footer-hidden'><a href='https://developer.paket.tv/api'>Paket API Reference</a></div>
+  - <div class='footer-hidden'><a href='https://documenter.getpostman.com/view/33020276/2sA2xh2Cbj'>Paket API Reference</a></div>
   - <div class='footer-hidden'><a href='https://developer.paket.tv'>Paket Dashboard</a></div>
 
 
