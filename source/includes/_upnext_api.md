@@ -347,7 +347,7 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id' \
 **Parameters**
 
 **`limit`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Optional. Limits items returned (default is `50`).
+Optional. Limits items returned (default is `50`, maximum is `200`).
 
 **`next_key`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Optional. Key returned in previous call if [additional items](#pagination) are available.
@@ -415,7 +415,7 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id/:participan
 **Parameters**
 
 **`limit`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Optional. Limits items returned (default is `50`).
+Optional. Limits items returned (default is `50`, maximum is `200`).
 
 **`next_key`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Optional. Key returned in previous call if [additional items](#pagination) are available.
@@ -467,7 +467,7 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id/participant
 **Parameters**
 
 **`limit`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Optional. Limits items returned (default is `50`).
+Optional. Limits items returned (default and maximum is `50`).
 
 **`next_key`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Optional. Key returned in previous call if [additional items](#pagination) are available.
@@ -789,7 +789,7 @@ curl --location 'https://api.paket.tv/v1/upnext/participants/:participant_id' \
 **Parameters**
 
 **`limit`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Optional. Limits items returned (default is `50`).
+Optional. Limits items returned (default is `50`, maximum is `200`).
 
 **`next_key`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Optional. Key returned in previous call if [additional items](#pagination) are available.

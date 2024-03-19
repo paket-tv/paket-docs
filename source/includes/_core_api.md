@@ -18,14 +18,18 @@ Retrieves the API status by making an authenticated `GET` request to the API's r
 
 ```
 {
-    "message": "The API is healthy!"
+    "message": "The API is healthy!",
+    "client_id: "fab3d02606122a08"
 }
 ```
 
 **Attributes**
 
 **`message`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The API Status.
+The API Status message.
+
+**`client_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The unique identifier of the requesting Client.
 
 ### Retrieve API Status
 

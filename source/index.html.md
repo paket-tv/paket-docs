@@ -21,6 +21,7 @@ includes:
   - introduction
   - clients
   - authentication
+  - testing
   - security
   - errors
   - idempotency

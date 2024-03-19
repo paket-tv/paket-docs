@@ -385,6 +385,9 @@
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
+            <a href="#testing" class="toc-h1 toc-link" data-title="Testing">Testing</a>
+          </li>
+          <li>
             <a href="#security" class="toc-h1 toc-link" data-title="Security">Security</a>
           </li>
           <li>
@@ -626,6 +629,12 @@ let api = kittn.authorize('meowmeowmeow');
 <aside class="notice">
 Rolled Secret Keys will remain valid for the duration specified before they are permanently expired.
 </aside>
+<h1 id='testing'>Testing</h1>
+<p>API requests may be tested in a live environment simply by using the API Test Key provided in the <a href="https://developer.paket.tv">Paket Developer Portal</a>. Test keys begin with the prefix <code>test_sk</code> and inherit the same behaviors as live API Secret Keys, save that they call test responses. </p>
+
+<p>Test API requests are validated identically to live requests and although the response schema are identical to live requests, the responses themselves are dynamically generated. </p>
+
+<p>The <code>Paket-Response-Type: Test</code> header indicates whether or not the response is via the API Test Key.</p>
 <h1 id='security'>Security</h1>
 <p>Securing API requests is critical to ensure data integrity. The Paket API employs the following methods to ensure that requests made to its API are authenticated and secure:</p>
 
@@ -754,13 +763,17 @@ Rolled Secret Keys will remain valid for the duration specified before they are 
 <p>The Status Object</p>
 </blockquote>
 <div class="highlight"><pre class="highlight plaintext"><code>{
-    "message": "The API is healthy!"
+    "message": "The API is healthy!",
+    "client_id: "fab3d02606122a08"
 }
 </code></pre></div>
 <p><strong>Attributes</strong></p>
 
 <p><strong><code>message</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-The API Status.</p>
+The API Status message.</p>
+
+<p><strong><code>client_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The unique identifier of the requesting Client.</p>
 <h3 id='core-api-api-status-retrieve-api-status'>Retrieve API Status</h3>
 <blockquote>
 <p>GET https://api.paket.tv/v1</p>
@@ -1256,7 +1269,7 @@ The Participant ID to be added to the Session.</p>
 <p><strong>Parameters</strong></p>
 
 <p><strong><code>limit</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
-Optional. Limits items returned (default is <code>50</code>).</p>
+Optional. Limits items returned (default is <code>50</code>, maximum is <code>200</code>).</p>
 
 <p><strong><code>next_key</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
 Optional. Key returned in previous call if <a href="#pagination">additional items</a> are available.</p>
@@ -1317,7 +1330,7 @@ Optional. Key returned in previous call if <a href="#pagination">additional item
 <p><strong>Parameters</strong></p>
 
 <p><strong><code>limit</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
-Optional. Limits items returned (default is <code>50</code>).</p>
+Optional. Limits items returned (default is <code>50</code>, maximum is <code>200</code>).</p>
 
 <p><strong><code>next_key</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
 Optional. Key returned in previous call if <a href="#pagination">additional items</a> are available.</p>
@@ -1363,7 +1376,7 @@ Optional. Key returned in previous call if <a href="#pagination">additional item
 <p><strong>Parameters</strong></p>
 
 <p><strong><code>limit</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
-Optional. Limits items returned (default is <code>50</code>).</p>
+Optional. Limits items returned (default and maximum is <code>50</code>).</p>
 
 <p><strong><code>next_key</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
 Optional. Key returned in previous call if <a href="#pagination">additional items</a> are available.</p>
@@ -1673,7 +1686,7 @@ Indicates whether item is hidden or visible.</p>
 <p><strong>Parameters</strong></p>
 
 <p><strong><code>limit</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
-Optional. Limits items returned (default is <code>50</code>).</p>
+Optional. Limits items returned (default is <code>50</code>, maximum is <code>200</code>).</p>
 
 <p><strong><code>next_key</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
 Optional. Key returned in previous call if <a href="#pagination">additional items</a> are available.</p>
