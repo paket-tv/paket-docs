@@ -532,6 +532,9 @@
                           <li>
                             <a href="#webhooks-configure-your-endpoints-paket-ip-addresses" class="toc-h3 toc-link" data-title="Paket IP addresses">Paket IP addresses</a>
                           </li>
+                          <li>
+                            <a href="#webhooks-configure-your-endpoints-retry-behavior" class="toc-h3 toc-link" data-title="Retry behavior">Retry behavior</a>
+                          </li>
                       </ul>
                   </li>
                   <li>
@@ -688,11 +691,11 @@ Rolled Secret Keys will remain valid for the duration specified before they are 
 
 <p>A requesting Client generates an idempotency key, which is a unique key that the server uses to recognize subsequent retries of the same request. How you create unique keys is up to you, but we suggest using V4 UUIDs, or another random string with enough entropy to avoid collisions. Idempotency keys are up to 255 characters long.</p>
 
-<p>We remove keys from the system automatically after they’re at least 24 hours old and will generate a new request if a key is reused after the original is pruned. The idempotency layer compares incoming parameters to those of the original request and errors if they’re the same to prevent accidental misuse.</p>
+<p>We remove keys from the system automatically after they’re at least 72 hours old and will generate a new request if a key is reused after the original is pruned. The idempotency layer compares incoming parameters to those of the original request and errors if they’re the same to prevent accidental misuse.</p>
 
 <p>We save results only after the execution of an endpoint begins. If incoming parameters fail validation, or the request conflicts with another request that’s executing concurrently, we don’t save the idempotent result because no API endpoint initiates the execution. You can retry these requests.</p>
 
-<p>All POST requests accept idempotency keys. Don’t send idempotency keys in GET and DELETE requests because it has no effect. These requests are idempotent by definition.</p>
+<p>All <code>POST</code> and <code>PUT</code> requests accept idempotency keys. Don’t send idempotency keys in <code>GET</code> and <code>DELETE</code> requests because it has no effect. These requests are idempotent by definition.</p>
 <h1 id='platform-data'>Platform Data</h1>
 <p>Some Platforms will require custom attributes and schemas that are not available in an API product&#39;s default attribute set.</p>
 
@@ -1843,6 +1846,8 @@ Add section when dashboard monitoring goes live. -->
 <ul>
 <li><code>35.83.22.57</code></li>
 </ul>
+<h3 id='webhooks-configure-your-endpoints-retry-behavior'>Retry behavior</h3>
+<p>Paket attempts to deliver a given event to your webhook endpoint up to fifteen (15) times over the course of 3 days with an exponential back off. In the Webhooks logs section of the Paket Publisher Portal, you can view when the next retry will occur as well as the event and event data itself.</p>
 <h2 id='webhooks-events'>Events</h2>
 <p>Events are our way of letting you know when something interesting happens in your account. When an interesting event occurs, we create a new <code>Event</code> object. For example, when a Participant is added to a Session, we create a <code>participant.session.participant_added</code> event, and when a bundle subscription is canceled, we create an <code>participant.subscription.canceled</code> event.</p>
 <h3 id='webhooks-events-the-event-object'>The Event object</h3>
