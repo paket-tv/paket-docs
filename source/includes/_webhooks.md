@@ -77,6 +77,10 @@ Paket IP Addresses:
 
 - `35.83.22.57`
 
+### Retry behavior
+
+Paket attempts to deliver a given event to your webhook endpoint up to fifteen (15) times over the course of 3 days with an exponential back off. In the Webhooks logs section of the Paket Publisher Portal, you can view when the next retry will occur as well as the event and event data itself.
+
 ## Events
 
 Events are our way of letting you know when something interesting happens in your account. When an interesting event occurs, we create a new `Event` object. For example, when a Participant is added to a Session, we create a `participant.session.participant_added` event, and when a bundle subscription is canceled, we create an `participant.subscription.canceled` event.

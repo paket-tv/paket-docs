@@ -1019,7 +1019,16 @@ An array of <a href="#upnext-api-overview-the-list-item-object">list items</a>.<
   "hidden": false,
   "platform_data": {
     "platform_app_id": "internalAppId12345"
-  }
+  },
+  "app_media": {
+      "icon_1x": "https://media.paket.tv/media/df79418d4e6d5325/icon@1x.png",
+      "icon_2x": "https://media.paket.tv/media/df79418d4e6d5325/icon@2x.png",
+      "icon_3x": "https://media.paket.tv/media/df79418d4e6d5325/icon@3x.png",
+      "tile_1x": "https://media.paket.tv/media/df79418d4e6d5325/tile@1x.png",
+      "tile_2x": "https://media.paket.tv/media/df79418d4e6d5325/tile@2x.png",
+      "logo_dark_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_dark@1x.png",
+      "logo_light_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_light@1x.png"
+    }
 }
 </code></pre></div>
 <p><strong>Attributes</strong></p>
@@ -1095,10 +1104,27 @@ Item&#39;s total running time in seconds.</p>
 Indicates whether item is hidden or visible.</p>
 
 <p><strong><code>platform_data</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
-Custom object containing <a href="#platform-data">custom attributes</a> provided by the requesting Platform.</p>
+Custom object containing <a href="#platform-data">custom attributes</a> provided by the requesting Platform in the form of key-value pairs.</p>
+
+<p><strong><code>app_media</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
+Object containing URIs to app media provided by the integrated Publisher.</p>
+
+<p>Media URIs are constructed using the following shchema: <code>&lt;base_url&gt;/media/&lt;app_id&gt;/&lt;file_name&gt;.png</code>. Media will return provided the respective file has been uploaded by the Publisher. Note: this can be reviewed and verified by the Platform via the UpNext API avails configuration in the <a href="https://developer.paket.tv">Paket Developer Portal</a>.</p>
+
+<p>Below is a list of available keys and its respective <code>file_name</code>:</p>
+
+<ul>
+<li><code>icon_1x</code> corresponds to <code>icon@1x.png</code> (240x240, PNG)</li>
+<li><code>icon_2x</code> corresponds to <code>icon@2x.png</code> (480x480, PNG)</li>
+<li><code>icon_3x</code> corresponds to <code>icon@3x.png</code> (960x960, PNG)</li>
+<li><code>tile_1x</code> corresponds to <code>tile@1x.png</code> (400x240, PNG)</li>
+<li><code>tile_2x</code> corresponds to <code>tile@2x.png</code> (800x480, PNG)</li>
+<li><code>logo_dark_1x</code> corresponds to <code>logo_dark@1x.png</code> (400x240, PNG, Transparency)</li>
+<li><code>logo_light_1x</code> corresponds to <code>logo_light@1x.png</code> (400x240, PNG, Transpareny)</li>
+</ul>
 
 <aside class="notice">
-The <span style="font-family:monospace;font-size:.9em;font-weight:bolder">platform_data</span> object is returned only via the Sessions endpoint.
+The <span style="font-family:monospace;font-size:.9em;font-weight:bolder">platform_data</span> and <span style="font-family:monospace;font-size:.9em;font-weight:bolder">app_media</span> objects are returned only via the Sessions endpoint.
 </aside>
 <h3 id='upnext-api-overview-the-session-participants-object'>The Session Participants Object</h3>
 <p>Returned when requesting a list of all Parcticipants associated with an active Session.</p>
@@ -1258,6 +1284,15 @@ The Participant ID to be added to the Session.</p>
       "hidden": false,
       "platform_data": {
         "platform_app_id": "internalAppId12345"
+      },
+      "app_media": {
+        "icon_1x": "https://media.paket.tv/media/df79418d4e6d5325/icon@1x.png",
+        "icon_2x": "https://media.paket.tv/media/df79418d4e6d5325/icon@2x.png",
+        "icon_3x": "https://media.paket.tv/media/df79418d4e6d5325/icon@3x.png",
+        "tile_1x": "https://media.paket.tv/media/df79418d4e6d5325/tile@1x.png",
+        "tile_2x": "https://media.paket.tv/media/df79418d4e6d5325/tile@2x.png",
+        "logo_dark_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_dark@1x.png",
+        "logo_light_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_light@1x.png"
       }
     },
     {...},
@@ -1319,6 +1354,15 @@ Optional. Key returned in previous call if <a href="#pagination">additional item
       "hidden": false,
       "platform_data": {
         "platform_app_id": "internalAppId12345"
+      },
+      "app_media": {
+        "icon_1x": "https://media.paket.tv/media/df79418d4e6d5325/icon@1x.png",
+        "icon_2x": "https://media.paket.tv/media/df79418d4e6d5325/icon@2x.png",
+        "icon_3x": "https://media.paket.tv/media/df79418d4e6d5325/icon@3x.png",
+        "tile_1x": "https://media.paket.tv/media/df79418d4e6d5325/tile@1x.png",
+        "tile_2x": "https://media.paket.tv/media/df79418d4e6d5325/tile@2x.png",
+        "logo_dark_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_dark@1x.png",
+        "logo_light_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_light@1x.png"
       }
     },
     {...},

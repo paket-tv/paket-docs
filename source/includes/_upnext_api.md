@@ -75,7 +75,16 @@ An array of [list items](#upnext-api-overview-the-list-item-object).
   "hidden": false,
   "platform_data": {
     "platform_app_id": "internalAppId12345"
-  }
+  },
+  "app_media": {
+      "icon_1x": "https://media.paket.tv/media/df79418d4e6d5325/icon@1x.png",
+      "icon_2x": "https://media.paket.tv/media/df79418d4e6d5325/icon@2x.png",
+      "icon_3x": "https://media.paket.tv/media/df79418d4e6d5325/icon@3x.png",
+      "tile_1x": "https://media.paket.tv/media/df79418d4e6d5325/tile@1x.png",
+      "tile_2x": "https://media.paket.tv/media/df79418d4e6d5325/tile@2x.png",
+      "logo_dark_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_dark@1x.png",
+      "logo_light_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_light@1x.png"
+    }
 }
 ```
 
@@ -146,10 +155,25 @@ Item's total running time in seconds.
 Indicates whether item is hidden or visible.
 
 **`platform_data`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Custom object containing [custom attributes](#platform-data) provided by the requesting Platform.
+Custom object containing [custom attributes](#platform-data) provided by the requesting Platform in the form of key-value pairs.
+
+**`app_media`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Object containing URIs to app media provided by the integrated Publisher.
+
+Media URIs are constructed using the following shchema: `<base_url>/media/<app_id>/<file_name>.png`. Media will return provided the respective file has been uploaded by the Publisher. Note: this can be reviewed and verified by the Platform via the UpNext API avails configuration in the [Paket Developer Portal](https://developer.paket.tv).
+
+Below is a list of available keys and its respective `file_name`:
+
+- `icon_1x` corresponds to `icon@1x.png` (240x240, PNG)
+- `icon_2x` corresponds to `icon@2x.png` (480x480, PNG)
+- `icon_3x` corresponds to `icon@3x.png` (960x960, PNG)
+- `tile_1x` corresponds to `tile@1x.png` (400x240, PNG)
+- `tile_2x` corresponds to `tile@2x.png` (800x480, PNG)
+- `logo_dark_1x` corresponds to `logo_dark@1x.png` (400x240, PNG, Transparency)
+- `logo_light_1x` corresponds to `logo_light@1x.png` (400x240, PNG, Transpareny)
 
 <aside class="notice">
-The <span style="font-family:monospace;font-size:.9em;font-weight:bolder">platform_data</span> object is returned only via the Sessions endpoint.
+The <span style="font-family:monospace;font-size:.9em;font-weight:bolder">platform_data</span> and <span style="font-family:monospace;font-size:.9em;font-weight:bolder">app_media</span> objects are returned only via the Sessions endpoint.
 </aside>
 
 ### The Session Participants Object
@@ -335,6 +359,15 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id' \
       "hidden": false,
       "platform_data": {
         "platform_app_id": "internalAppId12345"
+      },
+      "app_media": {
+        "icon_1x": "https://media.paket.tv/media/df79418d4e6d5325/icon@1x.png",
+        "icon_2x": "https://media.paket.tv/media/df79418d4e6d5325/icon@2x.png",
+        "icon_3x": "https://media.paket.tv/media/df79418d4e6d5325/icon@3x.png",
+        "tile_1x": "https://media.paket.tv/media/df79418d4e6d5325/tile@1x.png",
+        "tile_2x": "https://media.paket.tv/media/df79418d4e6d5325/tile@2x.png",
+        "logo_dark_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_dark@1x.png",
+        "logo_light_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_light@1x.png"
       }
     },
     {...},
@@ -403,6 +436,15 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id/:participan
       "hidden": false,
       "platform_data": {
         "platform_app_id": "internalAppId12345"
+      },
+      "app_media": {
+        "icon_1x": "https://media.paket.tv/media/df79418d4e6d5325/icon@1x.png",
+        "icon_2x": "https://media.paket.tv/media/df79418d4e6d5325/icon@2x.png",
+        "icon_3x": "https://media.paket.tv/media/df79418d4e6d5325/icon@3x.png",
+        "tile_1x": "https://media.paket.tv/media/df79418d4e6d5325/tile@1x.png",
+        "tile_2x": "https://media.paket.tv/media/df79418d4e6d5325/tile@2x.png",
+        "logo_dark_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_dark@1x.png",
+        "logo_light_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_light@1x.png"
       }
     },
     {...},
