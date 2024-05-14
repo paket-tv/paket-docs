@@ -8,7 +8,7 @@ title: "Paket Docs :: API Documentation"
 #   - ruby
 
 nav_items:
-  - <a href='https://documenter.getpostman.com/view/33020276/2sA2xh2Cbj'>API Reference</a>
+  - <a href='https://documenter.getpostman.com/view/33020276/2sA3JQ4zp3'>API Reference</a>
   - <a href='https://developer.paket.tv'>Dashboard →</a>
 
 toc_footers:
