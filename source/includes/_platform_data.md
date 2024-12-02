@@ -4,7 +4,7 @@ Some Platforms will require custom attributes and schemas that are not available
 
 To address this requirement, Platforms are able to configure custom app-level schemas and attributes to be provided by Publisher partners; as well as to define the regional availability of a Platform Client by region or specific countries.
 
-For example, a Platform Client may require a custom app identifier, `custom_app_id`, is returned in UpNext API responses. In order to ensure such custom app identifier is provided by a Publisher Client, the Platform will configure this custom attribute from within the Client in the [Paket Developer Portal](https://developer.paket.tv).
+For example, a Platform Client may require a custom app identifier, `custom_app_id`, is returned in API responses. In order to ensure such custom app identifier is provided by a Publisher Client, the Platform will configure this custom attribute from within the Client in the [Paket Developer Portal](https://developer.paket.tv).
 
 > Example `platform_data` attribute:
 

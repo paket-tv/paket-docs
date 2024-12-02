@@ -71,10 +71,12 @@ Add section when dashboard monitoring goes live. -->
 
 ### Paket IP addresses
 
-To further protect your endpoints, it is recommended that you implement IP whitelisting of the Paket servers from which you will receive webhook events.
+To further protect your endpoints, it is recommended that you implement IP whitelisting of the Paket servers from which you may receive webhook events.
 
 Paket IP Addresses:
 
+- `54.185.102.16`
+- `52.40.235.54`
 - `35.83.22.57`
 
 ### Retry behavior
