@@ -385,6 +385,39 @@
           </li>
           <li>
             <a href="#security" class="toc-h1 toc-link" data-title="Security">Security</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#security-securing-api-requests" class="toc-h2 toc-link" data-title="Securing API Requests">Securing API Requests</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#security-securing-api-requests-how-it-works" class="toc-h3 toc-link" data-title="How It Works">How It Works</a>
+                          </li>
+                          <li>
+                            <a href="#security-securing-api-requests-headers-to-include" class="toc-h3 toc-link" data-title="Headers To Include">Headers To Include</a>
+                          </li>
+                          <li>
+                            <a href="#security-securing-api-requests-signature-format" class="toc-h3 toc-link" data-title="Signature Format">Signature Format</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                    <a href="#security-securing-webhooks" class="toc-h2 toc-link" data-title="Securing Webhooks">Securing Webhooks</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#security-securing-webhooks-configure-your-endpoints" class="toc-h3 toc-link" data-title="Configure your endpoints">Configure your endpoints</a>
+                          </li>
+                          <li>
+                            <a href="#security-securing-webhooks-verify-webhook-signature" class="toc-h3 toc-link" data-title="Verify webhook signature">Verify webhook signature</a>
+                          </li>
+                          <li>
+                            <a href="#security-securing-webhooks-paket-ip-addresses" class="toc-h3 toc-link" data-title="Paket IP addresses">Paket IP addresses</a>
+                          </li>
+                          <li>
+                            <a href="#security-securing-webhooks-retry-behavior" class="toc-h3 toc-link" data-title="Retry behavior">Retry behavior</a>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
@@ -520,20 +553,6 @@
             <a href="#webhooks" class="toc-h1 toc-link" data-title="Webhooks">Webhooks</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#webhooks-configure-your-endpoints" class="toc-h2 toc-link" data-title="Configure your endpoints">Configure your endpoints</a>
-                      <ul class="toc-list-h3">
-                          <li>
-                            <a href="#webhooks-configure-your-endpoints-verify-webhook-signature" class="toc-h3 toc-link" data-title="Verify webhook signature">Verify webhook signature</a>
-                          </li>
-                          <li>
-                            <a href="#webhooks-configure-your-endpoints-paket-ip-addresses" class="toc-h3 toc-link" data-title="Paket IP addresses">Paket IP addresses</a>
-                          </li>
-                          <li>
-                            <a href="#webhooks-configure-your-endpoints-retry-behavior" class="toc-h3 toc-link" data-title="Retry behavior">Retry behavior</a>
-                          </li>
-                      </ul>
-                  </li>
-                  <li>
                     <a href="#webhooks-events" class="toc-h2 toc-link" data-title="Events">Events</a>
                       <ul class="toc-list-h3">
                           <li>
@@ -643,6 +662,136 @@ Rolled Secret Keys will remain valid for the duration specified before they are 
 <li><strong>IP Whitelisting</strong>: Restrict access to API requests to your server IP addresses designated at the Client level.</li>
 <li><strong>Encryption-at-rest</strong>: All data stored is encrypted-at-rest.</li>
 </ul>
+<h2 id='security-securing-api-requests'>Securing API Requests</h2>
+<p>In addition to Basic Authentication and IP whitelisting, Paket supports optional <strong>HMAC-SHA256 payload signing</strong> to ensure the integrity and authenticity of the request body. This feature is recommended for clients who want to protect against tampering or replay attacks at the payload level.</p>
+<h3 id='security-securing-api-requests-how-it-works'>How It Works</h3>
+<p>Each API client uses its existing secret key (provided with the client credentials) to compute an HMAC signature of the request payload. Paket will verify the signature if present, but does not require it unless enforced at the client level.</p>
+
+<p>When a signed request is received, Paket will:</p>
+
+<ul>
+<li>Verify the signature matches the body and timestamp using the shared secret key.</li>
+<li>Ensure the request timestamp is within a 5-minute tolerance window.</li>
+<li>Log the signature status for audit and observability purposes.</li>
+</ul>
+
+<p>If the headers are not present, the request is still accepted (unless signing is explicitly required for that client).</p>
+<h3 id='security-securing-api-requests-headers-to-include'>Headers To Include</h3>
+<p>To sign your request, add the following headers:</p>
+
+<p><strong><code>X-Paket-Timestamp</code></strong><br />
+Unix timestamp in milliseconds</p>
+
+<p><strong><code>X-Paket-Signature</code></strong><br />
+<code>sha256=</code> followed by HMAC of payload</p>
+<h3 id='security-securing-api-requests-signature-format'>Signature Format</h3>
+<blockquote>
+<p>Example HMAC-SHA256 payload signing (Node.js)</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>const crypto = require('crypto')
+
+function signPaketRequest(secretKey, body, timestamp) {
+  const payload = `${timestamp}.${body}`
+  const signature = crypto
+    .createHmac('sha256', secretKey)
+    .update(payload)
+    .digest('hex')
+
+  return `sha256=${signature}`
+}
+
+const secretKey = 'your_client_secret_key'
+const body = JSON.stringify({ plan_id: 'xyz', session_id: 'abc' })
+const timestamp = Date.now().toString()
+
+const headers = {
+  'Authorization': 'Basic base64(username:secret)',
+  'Content-Type': 'application/json',
+  'X-Paket-Timestamp': timestamp,
+  'X-Paket-Signature': signPaketRequest(secretKey, body, timestamp),
+}
+</code></pre></div>
+<p>The signature is computed as:</p>
+
+<p><code>HMAC_SHA256(secret_key, timestamp + &#39;.&#39; + request_body)</code></p>
+
+<p>The result should be hex-encoded and prefixed with <code>sha256=</code>.</p>
+<h2 id='security-securing-webhooks'>Securing Webhooks</h2>
+<p>Webhooks play a key role in communicating critical information (in the form of events) among Platform and Publisher Clients and the Paket service. While not technically a part of the Paket API, this section explains how to set up and secure your webhooks endpoints; and serves as a reference as to which notifications are sent and on which triggering events.</p>
+<h3 id='security-securing-webhooks-configure-your-endpoints'>Configure your endpoints</h3>
+<p>Webhooks are configured discretely under each Client object in the <a href="https://developer.paket.tv">Paket Developer Portal</a>. You may configure multiple endpoints, however, please note that at present all events will be sent to all active endpoints.</p>
+
+<p>Webhook endpoints must be secured using TLS/SSL certificates over HTTPS and are signed using a signing secret, provided on creation of each endpoint. While it is possible to receive events without <a href="#webhooks-configure-your-endpoints-verify-webhook-signature">verifying the webhook signature</a>, it is highly recommended that each event is verified before taking any programmatic action.</p>
+
+<p><img src="images/webhooks-77387e24.png" alt="Webhooks Configuration" /></p>
+<h3 id='security-securing-webhooks-verify-webhook-signature'>Verify webhook signature</h3>
+<p>The <code>Paket-Signature</code> header included in each signed event contains a timestamp and one or more signatures that you must verify. The timestamp is prefixed by <code>t=</code>, and each signature is prefixed by a scheme. Schemes start with <code>v</code>, followed by an integer. Currently, the only valid live signature scheme is <code>v1</code>. To aid with testing, Paket sends an additional signature with a fake <code>v0</code> scheme.</p>
+
+<blockquote>
+<p>Example <code>Paket-Signature</code> header</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>Paket-Signature:
+t=1709156882568,
+v1=f03a63e17d5720d7d01974d115059c8ec05b0f425828a2d0d341020f431bbafa,
+v0=3e3be55cd51ef0476ddf7fe83e72f10cf7358e54dd8eab17560dfb879b9d485a
+</code></pre></div>
+<p>Paket generates signatures using a hash-based message authentication code (HMAC) with SHA-256. To prevent downgrade attacks, ignore all schemes that aren’t <code>v1</code>.</p>
+
+<p>You can have multiple signatures with the same scheme-secret pair when you roll an endpoint’s secret, and keep the previous secret active for up to 24 hours. During this time, your endpoint has multiple active secrets and Paket generates one signature for each secret.</p>
+
+<p>To create a manual solution for verifying signatures, you must complete the following steps:</p>
+
+<p><strong>Step 1: Extract the timestamp and signatures from the header</strong></p>
+
+<p>Split the header using the <code>,</code> character as the separator to get a list of elements. Then split each element using the <code>=</code> character as the separator to get a prefix and value pair.</p>
+
+<p>The value for the prefix <code>t</code> corresponds to the timestamp, and <code>v1</code> corresponds to the signature (or signatures). You can discard all other elements.</p>
+
+<p><strong>Step 2: Prepare the <code>signed_payload</code> string</strong></p>
+
+<blockquote>
+<p>Example  <code>signed_payload</code></p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>1709156882568.{"idempotency_key":"62a0152b-6ac4-49f7-b605-5e18cbf70ed8","data":{"context_id":"6b0af623-2923-4997-92a6-73f94bbe321e","client_id":"286d2a536a5d6b6b","app_id":"417f3625d067cbe3","created_at":"2024-03-05T17:56:26.265Z","session_id":"4c682b9e-65b4-4e43-a5e9-96f58a967240"},"type":"context.session.created","api_version":"2023-12-10","created":1709661388431,"object":"event","id":"req_ad8a67d675a71a89"}
+</code></pre></div>
+<p>The <code>signed_payload</code> string is created by concatenating:</p>
+
+<ul>
+<li>The timestamp (as a string)</li>
+<li>The character <code>.</code></li>
+<li>The actual JSON payload (that is, the request body)</li>
+</ul>
+
+<p><strong>Step 3: Determine the expected signature</strong></p>
+
+<blockquote>
+<p>Example Hashed result</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>f03a63e17d5720d7d01974d115059c8ec05b0f425828a2d0d341020f431bbafa
+</code></pre></div>
+<p>Compute an HMAC with the SHA256 hash function. Use the endpoint’s signing secret as the key, and use the signed_payload string as the message.</p>
+
+<p><strong>Step 4: Compare the signatures</strong></p>
+
+<p>Compare the signature (or signatures) in the header to the expected signature. For an equality match, compute the difference between the current timestamp and the received timestamp, then decide if the difference is within your tolerance.</p>
+
+<p>To protect against timing attacks, use a constant-time-string comparison to compare the expected signature to each of the received signatures.</p>
+
+<!-- ### Monitoring endpoints
+
+Add section when dashboard monitoring goes live. -->
+<h3 id='security-securing-webhooks-paket-ip-addresses'>Paket IP addresses</h3>
+<p>To further protect your endpoints, it is recommended that you implement IP whitelisting of the Paket servers from which you may receive webhook events.</p>
+
+<p>Paket IP Addresses:</p>
+
+<ul>
+<li><code>54.185.102.16</code></li>
+<li><code>52.40.235.54</code></li>
+<li><code>35.83.22.57</code></li>
+</ul>
+<h3 id='security-securing-webhooks-retry-behavior'>Retry behavior</h3>
+<p>Paket attempts to deliver a given event to your webhook endpoint up to fifteen (15) times over the course of 3 days with an exponential back off. In the Webhooks logs section of the Paket Publisher Portal, you can view when the next retry will occur as well as the event and event data itself.</p>
 <h1 id='errors'>Errors</h1>
 <p>Paket uses conventional HTTP response codes to indicate the success or failure of an API request. In general: Codes in the <code>2xx</code> range indicate success. Codes in the <code>4xx</code> range indicate an error that failed given the information provided (e.g., a required parameter was omitted, etc.). Codes in the <code>5xx</code> range indicate an error with Paket&#39;s servers.</p>
 
@@ -1125,7 +1274,7 @@ The ISO 8601 timestamp when the Session was created.</p>
 
 <aside class="notice">Please note that the Platform must provide a means for a Publisher's app to communicate the Paket Context ID to the Platform Client. Typically, this is achieved via the Platform SDK.</aside>
 
-<p><img src="images/paket_upnext_workflow_platforms-3f7681e6.jpg" alt="Platform Work Flow Diagram" /></p>
+<p><img src="images/paket_upnext_workflow_platforms-aa499695.jpg" alt="Platform Work Flow Diagram" /></p>
 <h3 id='upnext-api-overview-publisher-work-flow'>Publisher Work Flow</h3>
 <p>Before beginning, Publisher partners should familiarize themselves with the <a href="#contexts">Contexts</a> object.</p>
 
@@ -1133,7 +1282,7 @@ The ISO 8601 timestamp when the Session was created.</p>
 
 <aside class="notice">Please note that the Publisher must be able to communicate the Paket Context ID to the Platform Client. Typically, this is achieved via the Platform SDK.</aside>
 
-<p><img src="images/paket_upnext_workflow_publishers-1d5aa24c.jpg" alt="Publisher Work Flow Diagram" /></p>
+<p><img src="images/paket_upnext_workflow_publishers-293c497b.jpg" alt="Publisher Work Flow Diagram" /></p>
 <h2 id='upnext-api-sessions'>Sessions</h2>
 <p>Sessions are the primary means by which Platforms interact with the Paket UpNext API. </p>
 
@@ -1831,83 +1980,7 @@ The Context ID to which the Sessions are associated.</p>
 <p>Returns a <code>204</code> No Content response.</p>
 <h1 id='bundle-api'>Bundle API</h1>
 <p>Documentation for the Bundle API is coming soon. </p>
-<h1 id='webhooks'>Webhooks</h1>
-<p>Webhooks play a key role in communicating critical information (in the form of events) among Platform and Publisher Clients and the Paket service. While not technically a part of the Paket API, this section explains how to set up and secure your webhooks endpoints; and serves as a reference as to which notifications are sent and on which triggering events.</p>
-<h2 id='webhooks-configure-your-endpoints'>Configure your endpoints</h2>
-<p>Webhooks are configured discretely under each Client object in the <a href="https://developer.paket.tv">Paket Developer Portal</a>. You may configure multiple endpoints, however, please note that at present all events will be sent to all active endpoints.</p>
-
-<p>Webhook endpoints must be secured using TLS/SSL certificates over HTTPS and are signed using a signing secret, provided on creation of each endpoint. While it is possible to receive events without <a href="#webhooks-configure-your-endpoints-verify-webhook-signature">verifying the webhook signature</a>, it is highly recommended that each event is verified before taking any programmatic action.</p>
-
-<p><img src="images/webhooks-77387e24.png" alt="Webhooks Configuration" /></p>
-<h3 id='webhooks-configure-your-endpoints-verify-webhook-signature'>Verify webhook signature</h3>
-<p>The <code>Paket-Signature</code> header included in each signed event contains a timestamp and one or more signatures that you must verify. The timestamp is prefixed by <code>t=</code>, and each signature is prefixed by a scheme. Schemes start with <code>v</code>, followed by an integer. Currently, the only valid live signature scheme is <code>v1</code>. To aid with testing, Paket sends an additional signature with a fake <code>v0</code> scheme.</p>
-
-<blockquote>
-<p>Example <code>Paket-Signature</code> header</p>
-</blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>Paket-Signature:
-t=1709156882568,
-v1=f03a63e17d5720d7d01974d115059c8ec05b0f425828a2d0d341020f431bbafa,
-v0=3e3be55cd51ef0476ddf7fe83e72f10cf7358e54dd8eab17560dfb879b9d485a
-</code></pre></div>
-<p>Paket generates signatures using a hash-based message authentication code (HMAC) with SHA-256. To prevent downgrade attacks, ignore all schemes that aren’t <code>v1</code>.</p>
-
-<p>You can have multiple signatures with the same scheme-secret pair when you roll an endpoint’s secret, and keep the previous secret active for up to 24 hours. During this time, your endpoint has multiple active secrets and Paket generates one signature for each secret.</p>
-
-<p>To create a manual solution for verifying signatures, you must complete the following steps:</p>
-
-<p><strong>Step 1: Extract the timestamp and signatures from the header</strong></p>
-
-<p>Split the header using the <code>,</code> character as the separator to get a list of elements. Then split each element using the <code>=</code> character as the separator to get a prefix and value pair.</p>
-
-<p>The value for the prefix <code>t</code> corresponds to the timestamp, and <code>v1</code> corresponds to the signature (or signatures). You can discard all other elements.</p>
-
-<p><strong>Step 2: Prepare the <code>signed_payload</code> string</strong></p>
-
-<blockquote>
-<p>Example  <code>signed_payload</code></p>
-</blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>1709156882568.{"idempotency_key":"62a0152b-6ac4-49f7-b605-5e18cbf70ed8","data":{"context_id":"6b0af623-2923-4997-92a6-73f94bbe321e","client_id":"286d2a536a5d6b6b","app_id":"417f3625d067cbe3","created_at":"2024-03-05T17:56:26.265Z","session_id":"4c682b9e-65b4-4e43-a5e9-96f58a967240"},"type":"context.session.created","api_version":"2023-12-10","created":1709661388431,"object":"event","id":"req_ad8a67d675a71a89"}
-</code></pre></div>
-<p>The <code>signed_payload</code> string is created by concatenating:</p>
-
-<ul>
-<li>The timestamp (as a string)</li>
-<li>The character <code>.</code></li>
-<li>The actual JSON payload (that is, the request body)</li>
-</ul>
-
-<p><strong>Step 3: Determine the expected signature</strong></p>
-
-<blockquote>
-<p>Example Hashed result</p>
-</blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>f03a63e17d5720d7d01974d115059c8ec05b0f425828a2d0d341020f431bbafa
-</code></pre></div>
-<p>Compute an HMAC with the SHA256 hash function. Use the endpoint’s signing secret as the key, and use the signed_payload string as the message.</p>
-
-<p><strong>Step 4: Compare the signatures</strong></p>
-
-<p>Compare the signature (or signatures) in the header to the expected signature. For an equality match, compute the difference between the current timestamp and the received timestamp, then decide if the difference is within your tolerance.</p>
-
-<p>To protect against timing attacks, use a constant-time-string comparison to compare the expected signature to each of the received signatures.</p>
-
-<!-- ### Monitoring endpoints
-
-Add section when dashboard monitoring goes live. -->
-<h3 id='webhooks-configure-your-endpoints-paket-ip-addresses'>Paket IP addresses</h3>
-<p>To further protect your endpoints, it is recommended that you implement IP whitelisting of the Paket servers from which you may receive webhook events.</p>
-
-<p>Paket IP Addresses:</p>
-
-<ul>
-<li><code>54.185.102.16</code></li>
-<li><code>52.40.235.54</code></li>
-<li><code>35.83.22.57</code></li>
-</ul>
-<h3 id='webhooks-configure-your-endpoints-retry-behavior'>Retry behavior</h3>
-<p>Paket attempts to deliver a given event to your webhook endpoint up to fifteen (15) times over the course of 3 days with an exponential back off. In the Webhooks logs section of the Paket Publisher Portal, you can view when the next retry will occur as well as the event and event data itself.</p>
-<h2 id='webhooks-events'>Events</h2>
+<h1 id='webhooks'>Webhooks</h1><h2 id='webhooks-events'>Events</h2>
 <p>Events are our way of letting you know when something interesting happens in your account. When an interesting event occurs, we create a new <code>Event</code> object. For example, when a Context is added to a Session, we create a <code>context.session.context_added</code> event, and when a bundle subscription is canceled, we create an <code>context.subscription.canceled</code> event.</p>
 <h3 id='webhooks-events-the-event-object'>The Event object</h3>
 <blockquote>
