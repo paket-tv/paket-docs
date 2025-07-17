@@ -30,7 +30,7 @@ includes:
   - versioning
   - core_api
   - tvaas_api
-  # - upnext_api
+  - upnext_api
   - bundle_api
   - webhooks
 

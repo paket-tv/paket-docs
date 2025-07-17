@@ -19,7 +19,8 @@ Retrieves the API status by making an authenticated `GET` request to the API's r
 ```
 {
     "message": "The API is healthy!",
-    "client_id: "fab3d02606122a08"
+    "client_id: "fab3d02606122a08",
+    "app_id: "AP467777522151985152"
 }
 ```
 
@@ -30,6 +31,12 @@ The API Status message.
 
 **`client_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The unique identifier of the requesting Client.
+
+**`app_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The unique identifier of the requesting Client's App (returned if requesting tenant is an App).
+
+**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The unique identifier of the requesting Client's App (returned if requesting tenant is a Platform).
 
 ### Retrieve API Status
 
@@ -43,15 +50,15 @@ curl --location 'https://api.paket.tv/v1' \
 
 > Response
 
-```
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 {
-    "message": "The API is healthy!"
+    "message": "The API is healthy!",
+    "client_id: "fab3d02606122a08",
+    "app_id: "AP467777522151985152"
 }
 ```
-
-**Parameters**
-
-No parameters.
 
 **Returns**
 
@@ -75,9 +82,9 @@ Ideally, a Session should be indefinitely associated with an end-user's account 
 
 ```
 {
-  "session_id": "faa37296-dc32-4cce-b8c0-47ac4bc032c1",
-  "client_type": "platform",
-  "client_id": "fab3d02606122a08",
+  "session_id": "759077888463135026",
+  "client_id": "907785425416524528",
+  "platform_id": "PL442217472463772054",
   "created_at": "2024-02-16T04:41:06.596Z"
 }
 ```
@@ -87,47 +94,11 @@ Ideally, a Session should be indefinitely associated with an end-user's account 
 **`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 A unique Session identifier.
 
-**`client_type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The requesting Client type.
-
 **`client_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The requesting Client ID.
 
-**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The ISO 8601 timestamp when the Session was created.
-
-### The Session Participant Object
-
-The Session Participant Object is created when a Participant is added to a Session and contains useful information related to a Participant's relationship to a Session.
-
-> The Session Participant Object
-
-```
-{
-  "app_id": "417f3625d067cbe3",
-  "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
-  "session_id": "faa37296-dc32-4cce-b8c0-47ac4bc032c1",
-  "client_id": "fab3d02606122a08",
-  "created_at": "2024-02-16T04:41:06.596Z"
-}
-```
-
-**Attributes**
-
-**`app_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The Publisher's Client ID to which the `participant_id` belongs.
-
-**`participant_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-A unique Participant identifier.
-
-**`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-A unique Session identifier.
-
-**`client_type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The requesting Client type.
-
-**`client_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The requesting Client ID.
+**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The Platform to which the requesting Client belongs.
 
 **`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The ISO 8601 timestamp when the Session was created.
@@ -144,81 +115,82 @@ curl --location --request POST 'https://api.paket.tv/v1/sessions' \
 
 > Response
 
-```
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 {
-  "session_id": "faa37296-dc32-4cce-b8c0-47ac4bc032c1",
-  "client_type": "platform",
-  "client_id": "fab3d02606122a08",
+  "session_id": "759077888463135026",
+  "client_id": "907785425416524528",
+  "platform_id": "PL442217472463772054",
   "created_at": "2024-02-16T04:41:06.596Z"
 }
 ```
 
-**Parameters**
-
-No parameters.
-
 **Returns**
 
-Returns a Session object.
+Returns a status object.
 
-## Participants
+
+## Contexts
 
 > Endpoint
 
 ```
-POST https://api.paket.tv/v1/participants
+POST https://api.paket.tv/v1/contexts
 ```
 
-A Participant represents a Publisher (or app's) end user either at the account or profile level. Whether the Participant is associated to the account or profile is, ultimately, up to the Publisher to determine. For optimal flexibility, however, a Participant ID should be created and stored by a Publisher at the profile level.
+A Context is a unique identifier representing a Publisher or app's end user either at the account or profile level. Also referred to as a "Participant," whether it is associated to the account or profile is, ultimately, up to the Publisher to determine. For optimal flexibility, however, a Context should be created and stored by a Publisher at the profile level.
 
-Ideally, a Participant should be indefinitely associated with an end-user's account or profile. So long as the Participant ID persists, all items associated with the Participant will remain active.
+Ideally, a Context should be indefinitely associated with an end-user's account or profile. So long as the Context ID persists, all items associated with the Context will remain active.
 
-Generally, a Publisher interacts with a Platform by explicitly sharing the Participant ID with a Platform and it being matched to an active Session.
+Generally, a Publisher interacts with a Platform by explicitly sharing the Context ID with a Platform and it being matched to an active Session.
 
-### The Participant Object
+### The Context Object
 
-> The Participant Object
+> The Context Object
 
 ```
 {
-  "participant_id": "6e5060c3-7df4-488e-9e9a-67cd5077b352",
-  "client_type": "publisher",
-  "client_id": "fe4a9ed381e8e376",
+  "context_id": "CX467798389036421120",
+  "client_id": "f02d9e4750febfa4",
+  "app_id": "AP463772054442217472",
   "created_at": "2024-02-16T04:41:06.596Z"
 }
 ```
 
 **Attributes**
 
-**`participant_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The newly generated Participant ID.
-
-**`client_type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The requesting Client type.
+**`context_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The newly generated Context ID.
 
 **`client_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The requesting Client ID.
 
+**`app_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The App to which the requesting Client belongs.
+
 **`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The ISO 8601 timestamp when the Session was created.
 
-### Create a new Participant
+### Create a new Context
 
-> POST https://api.paket.tv/v1/participants
+> POST https://api.paket.tv/v1/contexts
 
 ```curl
-curl --location --request POST 'https://api.paket.tv/v1/participants' \
+curl --location --request POST 'https://api.paket.tv/v1/contexts' \
     --header 'Accept: application/json' \
     --header 'Authorization: Basic <credentials>'
 ``` 
 
 > Response
 
-```
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 {
-  "participant_id": "6e5060c3-7df4-488e-9e9a-67cd5077b352",
-  "client_type": "publisher",
-  "client_id": "fe4a9ed381e8e376",
+  "context_id": "CX467798389036421120",
+  "client_id": "f02d9e4750febfa4",
+  "app_id": "AP463772054442217472",
   "created_at": "2024-02-16T04:41:06.596Z"
 }
 ```
@@ -229,4 +201,4 @@ No parameters.
 
 **Returns**
 
-Returns a Participant object.
+Returns a Context object.

@@ -14,11 +14,11 @@ The goal with the Paket UpNext API is to offer CTV Platforms and Publishers a pl
 
 ### The List Object
 
-At the core of the UpNext API is the Session List object, which is an aggregated, chronological feed up UpNext items added by all Participants attached to a Session. 
+At the core of the UpNext API is the Session List object, which is an aggregated, chronological feed up UpNext items added by all Contexts attached to a Session. 
 
-For example, if Apps A, B, and C have shared their respective Participant IDs with a Platform - and such Participant IDs have been added to a Session - a request to [this API endpoint](#upnext-api-sessions-get-an-aggregated-list) will return an aggregated, chronological list of items across all Apps attached to the Session. 
+For example, if Apps A, B, and C have shared their respective Context IDs with a Platform - and such Context IDs have been added to a Session - a request to [this API endpoint](#upnext-api-sessions-get-an-aggregated-list) will return an aggregated, chronological list of items across all Apps attached to the Session. 
 
-An individual Participant's feed (i.e., a specific App) can also be requested simply by calling the Session API along with the [requested Participant ID](#upnext-api-sessions-get-a-specific-list) included in the path parameters.
+An individual Context's feed (i.e., a specific App) can also be requested simply by calling the Session API along with the [requested Context ID](#upnext-api-sessions-get-a-specific-list) included in the path parameters.
 
 <!-- ========================= -->
 <!-- UPNEXT SESSION ATTRIBUTES -->
@@ -57,8 +57,8 @@ An array of [list items](#upnext-api-overview-the-list-item-object).
 ```
 {
   "content_id": "1iwousk12i008d9",
-  "app_id": "df79418d4e6d5325",
-  "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+  "app_id": "AP463772054442217472",
+  "context_id": "CX467798389036421120",
   "updated_at": "2023-12-20T19:02:28.285Z",
   "action": "up_next_continue",
   "media_type": "tv_episode",
@@ -69,7 +69,6 @@ An array of [list items](#upnext-api-overview-the-list-item-object).
   "poster_art_uri": "https://media.paket.tv/1iwousk12i008d9/thumb.png",
   "poster_art_aspect_ratio": "aspect_ratio_16_9",
   "preview_video_uri": "https://media.paket.tv/1iwousk12i008d9/preview.m3u8",
-  "last_interaction": 1702766417,
   "position": 654,
   "duration": 1308,
   "hidden": false,
@@ -94,10 +93,10 @@ An array of [list items](#upnext-api-overview-the-list-item-object).
 The unique identifier of the respective item. Typically, this is an internal identifier provided by the Publisher.
 
 **`app_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The Publisher's Client ID to which the item is associated.
+The App ID to which the item is associated.
 
-**`participant_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The Participant ID to which the item is associated.
+**`context_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The Context ID to which the item is associated.
 
 **`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The ISO 8601 timestamp when the item was created or last updated.
@@ -142,9 +141,6 @@ Aspect ratio of media provided at `poster_art_uri`, which can be one of the foll
 **`preview_video_uri`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 Uri of item's preview video, if provided.
 
-**`last_interaction`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-`UTC` timestamp of Participant's last interaction with media item. 
-
 **`position`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Last recorded position of media playback in seconds (returned if `action` is `up_next_continue`).
 
@@ -176,29 +172,33 @@ Below is a list of available keys and its respective `file_name`:
 The <span style="font-family:monospace;font-size:.9em;font-weight:bolder">platform_data</span> and <span style="font-family:monospace;font-size:.9em;font-weight:bolder">app_media</span> objects are returned only via the Sessions endpoint.
 </aside>
 
-### The Session Participants Object
 
-Returned when requesting a list of all Parcticipants associated with an active Session.
+### The Session Context Object
 
-> The Session Participants Object
+The Session Context Object is created when a Participant's `context_id` is added to a Session or when requesting a list of all Parcticipants associated with an active Session. It contains useful information related to a Participant's relationship to a Session.
+
 
 ```
 {
-  "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
-  "app_id": "df79418d4e6d5325",
-  "created_at": "2023-12-23T23:38:50.303Z"
+  "session_id: "SN759077888463135026"
+  "context_id": "CX463135026759077888",
+  "app_id": "AP463772054442217472",
+  "created_at": "2024-02-16T04:41:06.596Z"
 }
 ```
 **Attributes**
 
-**`participant_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The corresponding Participant ID.
-
 **`app_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The Publisher's Client ID to which the Participant belongs.
+The Publisher's App ID to which the `context_id` belongs.
 
-**`created_at`** <span style='margin: 0 5px;font-size:.9em'>array</span>  
-The ISO 8601 timestamp when the Participant was added to the Session.
+**`context_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The app user's (or "Participant") unique Context identifier.
+
+**`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform user's unique Session identifier.
+
+**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The ISO 8601 timestamp when the Session was created.
 
 
 ### Platform Work Flow
@@ -207,17 +207,17 @@ Before beginning, Platform partners should familiarize themselves with the [Sess
 
 The diagram below is an overview of how Platform Clients interact with the Paket UpNext API. 
 
-<aside class="notice">Please note that the Platform must provide a means for a Publisher's app to communicate the Paket Participant ID to the Platform Client. Typically, this is achieved via the Platform SDK.</aside>
+<aside class="notice">Please note that the Platform must provide a means for a Publisher's app to communicate the Paket Context ID to the Platform Client. Typically, this is achieved via the Platform SDK.</aside>
 
 ![Platform Work Flow Diagram](paket_upnext_workflow_platforms.jpg)
 
 ### Publisher Work Flow
 
-Before beginning, Publisher partners should familiarize themselves with the [Participants](#participants) object.
+Before beginning, Publisher partners should familiarize themselves with the [Contexts](#contexts) object.
 
 The diagram below is an overview of how Publisher Clients interact with the Paket UpNext API. 
 
-<aside class="notice">Please note that the Publisher must be able to communicate the Paket Participant ID to the Platform Client. Typically, this is achieved via the Platform SDK.</aside>
+<aside class="notice">Please note that the Publisher must be able to communicate the Paket Context ID to the Platform Client. Typically, this is achieved via the Platform SDK.</aside>
 
 ![Publisher Work Flow Diagram](paket_upnext_workflow_publishers.jpg)
 
@@ -228,86 +228,106 @@ Sessions are the primary means by which Platforms interact with the Paket UpNext
 
 It is through this API that Platforms can: 
 
-- Add or remove Participants to a Session
+- Add or remove Contexts to a Session
 - Fetch an aggregated UpNext list 
-- Fetch a specific Participant's UpNext list
-- Fetch a list of a Session's Participants
+- Fetch a specific Context's UpNext list
+- Fetch a list of a Session's Contexts
 - Hide items from a list
 - Remove an existing Session
 
-### Add a Participant
+### Add a Context
 
 > Endpoint
 
 ```
-PUT https://api.paket.tv/v1/upnext/sessions/:session_id
+PUT https://api.paket.tv/v1/sessions/upnext/:session_id
 ```
 
-Adds or updates a Participant to an active Session.
+Adds or updates a Context to an active Session.
 
 
-> PUT https://api.paket.tv/v1/upnext/sessions/:session_id
+> PUT https://api.paket.tv/v1/sessions/upnext/:session_id
 
 ```curl
-curl --location --request PUT 'https://api.paket.tv/v1/upnext/sessions/:session_id' \
+curl --location --request PUT 'https://api.paket.tv/v1/sessions/upnext/:session_id' \
   --header 'Content-Type: application/json' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>' \
   --data '{
     "app_id": "fe4a9ed381e8e376",
-    "participant_id": "6e5060c3-7df4-488e-9e9a-67cd5077b352"
+    "context_id": "6e5060c3-7df4-488e-9e9a-67cd5077b352"
   }'
 ``` 
 
 > Response
 
-```
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 {
-  "message": "Success"
+  "session_id: "SN759077888463135026"
+  "context_id": "CX463135026759077888",
+  "app_id": "AP463772054442217472",
+  "created_at": "2024-02-16T04:41:06.596Z"
 }
+
 ```
 
-**Parameters**
+**Path Parameters**
 
-**`app_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The Publisher's Client ID to which the Participant being added belongs.
+\* required
 
-**`participant_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The Participant ID to be added to the Session.
+**`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform user's unique Session identifier.
+
+**Request Body**
+
+**`app_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The Publisher's App ID to which the Context being added belongs.
+
+**`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The Context ID to be added to the Session.
 
 **Returns**
 
-Returns a `200` Success response.
+Returns a [Session Context Object](#upnext-api-overview-the-session-context-object).
 
 
-### Remove a Participant
+### Remove a Context
 
 > Endpoint
 
 ```
-DELETE https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id
+DELETE https://api.paket.tv/v1/sessions/upnext/:session_id/:context_id
 ```
 
-Removes a Participant from an active Session.
+Removes a Context from an active Session.
 
 
-> DELETE https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id
+> DELETE https://api.paket.tv/v1/sessions/upnext/:session_id/:context_id
 
 ```curl
-curl --location --request DELETE 'https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id' \
+curl --location --request DELETE 'https://api.paket.tv/v1/sessions/upnext/:session_id/:context_id' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
 
 > Response
 
-```
-{}
+```http
+HTTP/1.1 204 OK
+Content-Type: application/json
 ```
 
-**Parameters**
+**Path Parameters**
 
-No parameters.
+\* required
+
+**`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform user's unique Session identifier.
+
+**`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The app user's (or "Participant") unique Context identifier.
 
 **Returns**
 
@@ -318,23 +338,25 @@ Returns a `204` No Content response.
 > Endpoint
 
 ```
-GET https://api.paket.tv/v1/upnext/sessions/:session_id
+GET https://api.paket.tv/v1/sessions/upnext/:session_id
 ```
 
-Retrieves aggregated Session list from all registered Participants.
+Retrieves aggregated Session list from all registered Contexts.
 
 
-> GET https://api.paket.tv/v1/upnext/sessions/:session_id
+> GET https://api.paket.tv/v1/sessions/upnext/:session_id
 
 ```curl
-curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id' \
+curl --location 'https://api.paket.tv/v1/sessions/upnext/:session_id' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
 
 > Response
 
-```
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 {
   "total": 271,
   "next_key": 4,
@@ -342,7 +364,7 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id' \
     {
       "content_id": "1iwousk12i008d9",
       "app_id": "df79418d4e6d5325",
-      "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+      "context_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
       "updated_at": "2023-12-20T19:02:28.285Z",
       "action": "up_next_continue",
       "media_type": "tv_episode",
@@ -353,7 +375,6 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id' \
       "poster_art_uri": "https://media.paket.tv/1iwousk12i008d9/thumb.png",
       "poster_art_aspect_ratio": "aspect_ratio_16_9",
       "preview_video_uri": "https://media.paket.tv/1iwousk12i008d9/preview.m3u8",
-      "last_interaction": 1702766417,
       "position": 654,
       "duration": 1308,
       "hidden": false,
@@ -377,7 +398,14 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id' \
 }
 ```
 
-**Parameters**
+**Path Parameters**
+
+\* required
+
+**`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform user's unique Session identifier.
+
+**Query Parameters**
 
 **`limit`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Optional. Limits items returned (default is `50`, maximum is `200`).
@@ -395,23 +423,25 @@ Returns a [List Object](#upnext-api-overview-the-list-object) containing an arra
 > Endpoint
 
 ```
-GET https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id
+GET https://api.paket.tv/v1/sessions/upnext/:session_id/:context_id
 ```
 
-Retrieves the Session list of a specified Participant.
+Retrieves the Session list of a specified Context.
 
 
-> GET https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id
+> GET https://api.paket.tv/v1/sessions/upnext/:session_id/:context_id
 
 ```curl
-curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id' \
+curl --location 'https://api.paket.tv/v1/sessions/upnext/:session_id/:context_id' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
 
 > Response
 
-```
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 {
   "total": 271,
   "next_key": 4,
@@ -419,7 +449,7 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id/:participan
     {
       "content_id": "1iwousk12i008d9",
       "app_id": "df79418d4e6d5325",
-      "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+      "context_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
       "updated_at": "2023-12-20T19:02:28.285Z",
       "action": "up_next_continue",
       "media_type": "tv_episode",
@@ -430,7 +460,6 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id/:participan
       "poster_art_uri": "https://media.paket.tv/1iwousk12i008d9/thumb.png",
       "poster_art_aspect_ratio": "aspect_ratio_16_9",
       "preview_video_uri": "https://media.paket.tv/1iwousk12i008d9/preview.m3u8",
-      "last_interaction": 1702766417,
       "position": 654,
       "duration": 1308,
       "hidden": false,
@@ -454,7 +483,17 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id/:participan
 }
 ```
 
-**Parameters**
+**Path Parameters**
+
+\* required
+
+**`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform user's unique Session identifier.
+
+**`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The app user's (or "Participant") unique Context identifier.
+
+**Query Parameters**
 
 **`limit`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Optional. Limits items returned (default is `50`, maximum is `200`).
@@ -466,35 +505,38 @@ Optional. Key returned in previous call if [additional items](#pagination) are a
 
 Returns a [List Object](#upnext-api-overview-the-list-object) containing an array of [List Item Objects](#upnext-api-overview-the-list-item-object).
 
-### Get Session Participants
+### Get Session Contexts
 
 > Endpoint
 
 ```
-GET https://api.paket.tv/v1/upnext/sessions/:session_id/participants
+GET https://api.paket.tv/v1/sessions/upnext/:session_id/contexts
 ```
 
-Retrieves a list of all Participant's associated with a Session.
+Retrieves a list of all Context's associated with a Session.
 
 
-> GET https://api.paket.tv/v1/upnext/sessions/:session_id/participants
+> GET https://api.paket.tv/v1/sessions/upnext/:session_id/contexts
 
 ```curl
-curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id/participants' \
+curl --location 'https://api.paket.tv/v1/sessions/upnext/:session_id/contexts' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
 
 > Response
 
-```
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 {
   "total": 12,
   "next_key": 4,
   "items": [
     {
       {
-        "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+        "session_id: "SN759077888463135026",
+        "context_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
         "app_id": "df79418d4e6d5325",
         "created_at": "2023-12-23T23:38:50.303Z"
       }
@@ -506,7 +548,15 @@ curl --location 'https://api.paket.tv/v1/upnext/sessions/:session_id/participant
 }
 ```
 
-**Parameters**
+**Path Parameters**
+
+\* required
+
+**`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform user's unique Session identifier.
+
+
+**Query Parameters**
 
 **`limit`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Optional. Limits items returned (default and maximum is `50`).
@@ -516,20 +566,20 @@ Optional. Key returned in previous call if [additional items](#pagination) are a
 
 **Returns**
 
-Returns a [List Object](#upnext-api-overview-the-list-object) containing an array of [Session Participants Objects](#upnext-api-overview-the-session-participants-object).
+Returns a [List Object](#upnext-api-overview-the-list-object) containing an array of [Session Contexts Objects](#upnext-api-overview-the-session-contexts-object).
 
 ### Hide an Item in a List
 
 > Endpoint
 
 ```
-PUT https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id
+PUT https://api.paket.tv/v1/sessions/upnext/:session_id/:context_id
 ```
 
-> PUT https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id
+> PUT https://api.paket.tv/v1/sessions/upnext/:session_id/:context_id
 
 ```curl
-curl --location --request PUT 'https://api.paket.tv/v1/upnext/sessions/:session_id/:participant_id' \
+curl --location --request PUT 'https://api.paket.tv/v1/sessions/upnext/:session_id/:context_id' \
   --header 'Content-Type: application/json' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>' \
@@ -541,7 +591,9 @@ curl --location --request PUT 'https://api.paket.tv/v1/upnext/sessions/:session_
 
 > Response
 
-```
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 {
   "message": "Success"
 }
@@ -549,17 +601,28 @@ curl --location --request PUT 'https://api.paket.tv/v1/upnext/sessions/:session_
 
 If hiding list items is supported within a Platform's user interface, this action allows the Platform to set the `hidden` parameter of a list item to `true`. Once the action is completed, an `item_hidden` notification is delivered to the Publisher's webhook endpoint.
 
-While it is up to the Publisher to decide whether or not to remove the item from the Participant's list, the item will remain hidden within the [List Item Object](#upnext-api-overview-the-list-item-object) unless the `hidden` attribute is set to `false` by a Publisher action.
+While it is up to the Publisher to decide whether or not to remove the item from the Context's list, the item will remain hidden within the [List Item Object](#upnext-api-overview-the-list-item-object) unless the `hidden` attribute is set to `false` by a Publisher action.
 
-**Parameters**
+**Path Parameters**
 
-**`content_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+\* required
+
+**`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform user's unique Session identifier.
+
+**`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The app user's (or "Participant") unique Context identifier.
+
+**Request Body**
+
+**`content_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The content ID of the item to be hidden.
 
-**`action`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The hide action, which (presently) can be one of a single enum value: 
+**`action`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The hide action, which can be one of the following enum values: 
 
 - `hide`
+- `unhide`
 
 **Returns**
 
@@ -570,48 +633,52 @@ Returns a `200` Success response.
 > Endpoint
 
 ```
-DELETE https://api.paket.tv/v1/upnext/sessions/:session_id
+DELETE https://api.paket.tv/v1/sessions/upnext/:session_id
 ```
 
-> DELETE https://api.paket.tv/v1/upnext/sessions/:session_id
+> DELETE https://api.paket.tv/v1/sessions/upnext/:session_id
 
 ```curl
-curl --location --request DELETE 'https://api.paket.tv/v1/upnext/sessions/:session_id' \
+curl --location --request DELETE 'https://api.paket.tv/v1/sessions/upnext/:session_id' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
 
 > Response
 
+```http
+HTTP/1.1 204 OK
+Content-Type: application/json
 ```
-{}
-```
 
-Deletes a Session and all Participant associations.
+Deletes a Session and all Context associations.
 
-**Parameters**
+**Path Parameters**
 
-No parameters.
+\* required
+
+**`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform user's unique Session identifier.
 
 **Returns**
 
 Returns a `204` No Content response.
 
-## Participants
+## Contexts
 
-Participants are the primary means by which Publishers interact with the Paket UpNext API. 
+Contexts are the primary means by which Publishers interact with the Paket UpNext API. 
 
 It is through this API that Publishers can: 
 
-- Add or remove items from a Participant's list
-- Fetch a specific Participant's UpNext list
-- Remove a Participant's Sessions
+- Add or remove items from a Context's list
+- Fetch a specific Context's UpNext list
+- Remove a Context's Sessions
 
 ### Publisher Guidelines
 
 It is likely that most Publishers who will be integrating with the Paket UpNext API will have an existing back-end service dedicated to making continue watching, new episodes, and related requests. In such cases - and to ensure as consistent a user experience as possible - it is recommended that such partners post data to the UpNext API in a way that is consistent with its existing guidelines and best practices.
 
-For those Publishers who will be integrating exclusively with the Paket API, please refer to the following guidelines as to when items should be added to a Participant's UpNext List.
+For those Publishers who will be integrating exclusively with the Paket API, please refer to the following guidelines as to when items should be added to a Context's UpNext List.
 
 **When to add an item to the UpNext List**
 
@@ -643,13 +710,13 @@ Please add an `up_next_continue` item if:
 > Endpoint
 
 ```
-PUT https://api.paket.tv/v1/upnext/participants/:participant_id
+PUT https://api.paket.tv/v1/contexts/upnext/:context_id
 ```
 
-> PUT https://api.paket.tv/v1/upnext/participants/:participant_id
+> PUT https://api.paket.tv/v1/contexts/upnext/:context_id
 
 ```curl
-curl --location --request PUT 'https://api.paket.tv/v1/upnext/participants/:participant_id' \
+curl --location --request PUT 'https://api.paket.tv/v1/contexts/upnext/:context_id' \
   --header 'Content-Type: application/json' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>' \
@@ -664,7 +731,6 @@ curl --location --request PUT 'https://api.paket.tv/v1/upnext/participants/:part
     "season": 1,
     "episode": 3,
     "preview_video_uri": "https://media.paket.tv/1iwousk12i008d9/preview.m3u8",
-    "last_interaction": 1702766417,
     "position": 654,
     "duration": 1308
     "hidden": false
@@ -673,17 +739,26 @@ curl --location --request PUT 'https://api.paket.tv/v1/upnext/participants/:part
 
 > Response
 
-```
+```http
+HTTP/1.1 204 OK
+Content-Type: application/json
 {
   "message": "Success"
 }
 ```
 
-Adds or updates an Item to the Participant list. Please refer to the UpNext [Guidelines](#upnext-api-participants-guidelines) to learn more about how to determine when to add an Item to the Participant's list.
+Adds or updates an Item to the Context list. Please refer to the UpNext [Guidelines](#upnext-api-contexts-guidelines) to learn more about how to determine when to add an Item to the Context's list.
 
-**Parameters**
+**Path Parameters**
 
-\* required parameter.
+\* required
+
+**`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The Context ID to which the List belongs.
+
+**Request Body**
+
+\* required
 
 **`content_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The content ID of the item being added. Typically, this is an internal identifier provided by the Publisher.
@@ -728,9 +803,6 @@ The tv series episode number. Required only if item `media_type` is `tv_episode`
 **`preview_video_uri`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 Uri of item's preview video, if provided.
 
-**`last_interaction`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-`UTC` timestamp of Participant's last interaction with media item. 
-
 **`position`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Last recorded position of media playback in seconds (required if `action` is `up_next_continue`).
 
@@ -749,55 +821,64 @@ Returns a `200` Success response.
 > Endpoint
 
 ```
-DELETE https://api.paket.tv/v1/upnext/participants/:participant_id/:content_id
+DELETE https://api.paket.tv/v1/contexts/upnext/:context_id/:content_id
 ```
 
-> DELETE https://api.paket.tv/v1/upnext/participants/:participant_id/:content_id
+> DELETE https://api.paket.tv/v1/contexts/upnext/:context_id/:content_id
 
 ```curl
-curl --location --request DELETE 'https://api.paket.tv/v1/upnext/participants/:participant_id/:content_id' \
+curl --location --request DELETE 'https://api.paket.tv/v1/contexts/upnext/:context_id/:content_id' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
 
 > Response
 
+```http
+HTTP/1.1 204 OK
+Content-Type: application/json
 ```
-{}
-```
 
-Removes an Item from the Participant list.
+Removes an Item from the Context's list.
 
-**Parameters**
+**Path Parameters**
 
-No parameters.
+\* required
+
+**`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The Context ID to which the List belongs.
+
+**`content_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The Content ID of the item being added. Typically, this is an internal identifier provided by the Publisher.
 
 **Returns**
 
 Returns a `204` No Content response.
 
-### Get a Participant List
+### Get a Context's List
 
 > Endpoint
 
 ```
-GET https://api.paket.tv/v1/upnext/participants/:participant_id
+GET https://api.paket.tv/v1/contexts/upnext/:context_id
 ```
 
-Retrieves the list of a specified Participant.
+Retrieves the list of a specified Context.
 
 
-> GET https://api.paket.tv/v1/upnext/participants/:participant_id
+> GET https://api.paket.tv/v1/contexts/upnext/:context_id
 
 ```curl
-curl --location 'https://api.paket.tv/v1/upnext/participants/:participant_id' \
+curl --location 'https://api.paket.tv/v1/contexts/upnext/:context_id' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
 
 > Response
 
-```
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 {
   "total": 271,
   "next_key": 4,
@@ -805,7 +886,7 @@ curl --location 'https://api.paket.tv/v1/upnext/participants/:participant_id' \
     {
       "content_id": "1iwousk12i008d9",
       "app_id": "df79418d4e6d5325",
-      "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+      "context_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
       "updated_at": "2023-12-20T19:02:28.285Z",
       "action": "up_next_continue",
       "media_type": "tv_episode",
@@ -816,7 +897,6 @@ curl --location 'https://api.paket.tv/v1/upnext/participants/:participant_id' \
       "poster_art_uri": "https://media.paket.tv/1iwousk12i008d9/thumb.png",
       "poster_art_aspect_ratio": "aspect_ratio_16_9",
       "preview_video_uri": "https://media.paket.tv/1iwousk12i008d9/preview.m3u8",
-      "last_interaction": 1702766417,
       "position": 654,
       "duration": 1308,
       "hidden": false
@@ -828,7 +908,15 @@ curl --location 'https://api.paket.tv/v1/upnext/participants/:participant_id' \
 }
 ```
 
-**Parameters**
+
+**Path Parameters**
+
+\* required
+
+**`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The Context ID to which the List belongs.
+
+**Query Parameters**
 
 **`limit`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Optional. Limits items returned (default is `50`, maximum is `200`).
@@ -844,34 +932,38 @@ Returns a [List Object](#upnext-api-overview-the-list-object) containing an arra
 The <span style="font-family:monospace;font-size:.9em;font-weight:bolder">platform_data</span> object is returned only via the Sessions endpoint and will not be included in the response to this request.
 </aside>
 
-### Remove Participant's Sessions
+### Remove Context's Sessions
 
 > Endpoint
 
 ```
-DELETE https://api-dev.paket.tv/v1/upnext/participants/:participant_id/sessions
+DELETE https://api-dev.paket.tv/v1/contexts/upnext/:context_id/sessions
 ```
 
-Removes all sessions associated with a Participant.
+Removes all sessions associated with a Context.
 
 
-> DELETE https://api-dev.paket.tv/v1/upnext/participants/:participant_id/sessions
+> DELETE https://api-dev.paket.tv/v1/contexts/upnext/:context_id/sessions
 
 ```curl
-curl --location --request DELETE 'https://api.paket.tv/v1/upnext/participants/:participant_id/sessions' \
+curl --location --request DELETE 'https://api.paket.tv/v1/contexts/upnext/:context_id/sessions' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
 
 > Response
 
-```
-{}
+```http
+HTTP/1.1 204 OK
+Content-Type: application/json
 ```
 
-**Parameters**
+**Path Parameters**
 
-No parameters.
+\* required
+
+**`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The Context ID to which the Sessions are associated.
 
 **Returns**
 

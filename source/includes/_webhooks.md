@@ -40,7 +40,7 @@ The value for the prefix `t` corresponds to the timestamp, and `v1` corresponds 
 > Example  `signed_payload`
 
 ```
-1709156882568.{"idempotency_key":"62a0152b-6ac4-49f7-b605-5e18cbf70ed8","data":{"participant_id":"6b0af623-2923-4997-92a6-73f94bbe321e","client_id":"286d2a536a5d6b6b","app_id":"417f3625d067cbe3","created_at":"2024-03-05T17:56:26.265Z","session_id":"4c682b9e-65b4-4e43-a5e9-96f58a967240"},"type":"participant.session.created","api_version":"2023-12-10","created":1709661388431,"object":"event","id":"req_ad8a67d675a71a89"}
+1709156882568.{"idempotency_key":"62a0152b-6ac4-49f7-b605-5e18cbf70ed8","data":{"context_id":"6b0af623-2923-4997-92a6-73f94bbe321e","client_id":"286d2a536a5d6b6b","app_id":"417f3625d067cbe3","created_at":"2024-03-05T17:56:26.265Z","session_id":"4c682b9e-65b4-4e43-a5e9-96f58a967240"},"type":"context.session.created","api_version":"2023-12-10","created":1709661388431,"object":"event","id":"req_ad8a67d675a71a89"}
 ```
 
 The `signed_payload` string is created by concatenating:
@@ -85,7 +85,7 @@ Paket attempts to deliver a given event to your webhook endpoint up to fifteen (
 
 ## Events
 
-Events are our way of letting you know when something interesting happens in your account. When an interesting event occurs, we create a new `Event` object. For example, when a Participant is added to a Session, we create a `participant.session.participant_added` event, and when a bundle subscription is canceled, we create an `participant.subscription.canceled` event.
+Events are our way of letting you know when something interesting happens in your account. When an interesting event occurs, we create a new `Event` object. For example, when a Context is added to a Session, we create a `context.session.context_added` event, and when a bundle subscription is canceled, we create an `context.subscription.canceled` event.
 
 ### The Event object
 
@@ -95,7 +95,7 @@ Events are our way of letting you know when something interesting happens in you
 {
   "id": "evt_a75f6d23be8c17b1",
   "object": "event",
-  "type": "participant.session.participant_added",
+  "type": "context.session.context_added",
   "created": 1709679883853,
   "api_version": "2023-12-10",
   "request": {
@@ -103,7 +103,7 @@ Events are our way of letting you know when something interesting happens in you
     "idempotency_key": null
   },
   "data": {
-    "participant_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+    "context_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
     "client_id": "286d2a536a5d6b6b",
     "app_id": "417f3625d067cbe3",
     "created_at": "2024-03-05T23:04:43.684Z",
@@ -120,7 +120,7 @@ The unique identifier of the webhook event.
 Description of the object type (e.g., `event`).
 
 **`type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Description of the event (e.g., `participant.session.participant_added` or `participant.subscription.canceled`)
+Description of the event (e.g., `context.session.context_added` or `context.subscription.canceled`)
 
 **`created`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 `UTC` timestamp when the event was created. 
@@ -148,14 +148,14 @@ You’ll notice that these events follow a pattern: `resource.event`. Our goal i
 
 **Event**
 
-**`participant.session.deleted`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [session participant](#core-api-sessions-the-session-participant-object)</span>  
+**`context.session.deleted`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [session context](#core-api-sessions-the-session-context-object)</span>  
 Occurs when a Session is removed. Sent to the related Publishers only.
 
-**`participant.session.participant_added`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [session participant](#core-api-sessions-the-session-participant-object)</span>  
-Occurs when a Participant is added to a Session. Sent to the related Publishers only.
+**`context.session.context_added`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [session context](#core-api-sessions-the-session-context-object)</span>  
+Occurs when a Context is added to a Session. Sent to the related Publishers only.
 
-**`participant.session.participant_removed`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [session participant](#core-api-sessions-the-session-participant-object)</span>  
-Occurs when a Participant is removed from a Session. Sent to the related Publishers only.
+**`context.session.context_removed`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [session context](#core-api-sessions-the-session-context-object)</span>  
+Occurs when a Context is removed from a Session. Sent to the related Publishers only.
 
-**`participant.list.item_hidden`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [list item](#upnext-api-overview-the-list-item-object)</span>  
-Occurs when a Participant user removes or hides an item from their List via the Platform. Sent to the related Publisher only.
+**`context.list.item_hidden`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [list item](#upnext-api-overview-the-list-item-object)</span>  
+Occurs when a Context user removes or hides an item from their List via the Platform. Sent to the related Publisher only.
