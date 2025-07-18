@@ -8,7 +8,7 @@ Securing API requests is critical to ensure data integrity. The Paket API employ
 - **IP Whitelisting**: Restrict access to API requests to your server IP addresses designated at the Client level.
 - **Encryption-at-rest**: All data stored is encrypted-at-rest.
 
-## Securing API Requests
+## Signing API Requests
 
 In addition to Basic Authentication and IP whitelisting, Paket supports optional **HMAC-SHA256 payload signing** to ensure the integrity and authenticity of the request body. This feature is recommended for clients who want to protect against tampering or replay attacks at the payload level.
 

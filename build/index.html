@@ -387,16 +387,16 @@
             <a href="#security" class="toc-h1 toc-link" data-title="Security">Security</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#security-securing-api-requests" class="toc-h2 toc-link" data-title="Securing API Requests">Securing API Requests</a>
+                    <a href="#security-signing-api-requests" class="toc-h2 toc-link" data-title="Signing API Requests">Signing API Requests</a>
                       <ul class="toc-list-h3">
                           <li>
-                            <a href="#security-securing-api-requests-how-it-works" class="toc-h3 toc-link" data-title="How It Works">How It Works</a>
+                            <a href="#security-signing-api-requests-how-it-works" class="toc-h3 toc-link" data-title="How It Works">How It Works</a>
                           </li>
                           <li>
-                            <a href="#security-securing-api-requests-headers-to-include" class="toc-h3 toc-link" data-title="Headers To Include">Headers To Include</a>
+                            <a href="#security-signing-api-requests-headers-to-include" class="toc-h3 toc-link" data-title="Headers To Include">Headers To Include</a>
                           </li>
                           <li>
-                            <a href="#security-securing-api-requests-signature-format" class="toc-h3 toc-link" data-title="Signature Format">Signature Format</a>
+                            <a href="#security-signing-api-requests-signature-format" class="toc-h3 toc-link" data-title="Signature Format">Signature Format</a>
                           </li>
                       </ul>
                   </li>
@@ -662,9 +662,9 @@ Rolled Secret Keys will remain valid for the duration specified before they are 
 <li><strong>IP Whitelisting</strong>: Restrict access to API requests to your server IP addresses designated at the Client level.</li>
 <li><strong>Encryption-at-rest</strong>: All data stored is encrypted-at-rest.</li>
 </ul>
-<h2 id='security-securing-api-requests'>Securing API Requests</h2>
+<h2 id='security-signing-api-requests'>Signing API Requests</h2>
 <p>In addition to Basic Authentication and IP whitelisting, Paket supports optional <strong>HMAC-SHA256 payload signing</strong> to ensure the integrity and authenticity of the request body. This feature is recommended for clients who want to protect against tampering or replay attacks at the payload level.</p>
-<h3 id='security-securing-api-requests-how-it-works'>How It Works</h3>
+<h3 id='security-signing-api-requests-how-it-works'>How It Works</h3>
 <p>Each API client uses its existing secret key (provided with the client credentials) to compute an HMAC signature of the request payload. Paket will verify the signature if present, but does not require it unless enforced at the client level.</p>
 
 <p>When a signed request is received, Paket will:</p>
@@ -676,7 +676,7 @@ Rolled Secret Keys will remain valid for the duration specified before they are 
 </ul>
 
 <p>If the headers are not present, the request is still accepted (unless signing is explicitly required for that client).</p>
-<h3 id='security-securing-api-requests-headers-to-include'>Headers To Include</h3>
+<h3 id='security-signing-api-requests-headers-to-include'>Headers To Include</h3>
 <p>To sign your request, add the following headers:</p>
 
 <p><strong><code>X-Paket-Timestamp</code></strong><br />
@@ -684,7 +684,7 @@ Unix timestamp in milliseconds</p>
 
 <p><strong><code>X-Paket-Signature</code></strong><br />
 <code>sha256=</code> followed by HMAC of payload</p>
-<h3 id='security-securing-api-requests-signature-format'>Signature Format</h3>
+<h3 id='security-signing-api-requests-signature-format'>Signature Format</h3>
 <blockquote>
 <p>Example HMAC-SHA256 payload signing (Node.js)</p>
 </blockquote>
