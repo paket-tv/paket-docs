@@ -398,6 +398,9 @@
                           <li>
                             <a href="#security-signing-api-requests-signature-format" class="toc-h3 toc-link" data-title="Signature Format">Signature Format</a>
                           </li>
+                          <li>
+                            <a href="#security-signing-api-requests-delete-requests-without-a-body" class="toc-h3 toc-link" data-title="DELETE Requests Without a Body">DELETE Requests Without a Body</a>
+                          </li>
                       </ul>
                   </li>
                   <li>
@@ -715,8 +718,18 @@ const headers = {
 
 <p><code>HMAC_SHA256(secret_key, timestamp + &#39;.&#39; + request_body)</code></p>
 
+<ul>
+<li><code>secret_key</code>: your client’s API secret</li>
+<li><code>timestamp</code>: the current UNIX timestamp in milliseconds</li>
+<li><code>request_body</code>: the raw body string (or &#39;&#39; if there is no body)</li>
+</ul>
+
 <p>The result should be hex-encoded and prefixed with <code>sha256=</code>.</p>
-<h2 id='security-securing-webhooks'>Securing Webhooks</h2>
+<h3 id='security-signing-api-requests-delete-requests-without-a-body'>DELETE Requests Without a Body</h3>
+<p>When sending a <code>DELETE</code> request (or any request without a body), sign an empty string as the body:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>const body = ''  // DELETE usually has no body
+const payload = `${timestamp}.${body}`
+</code></pre></div><h2 id='security-securing-webhooks'>Securing Webhooks</h2>
 <p>Webhooks play a key role in communicating critical information (in the form of events) among Platform and Publisher Clients and the Paket service. While not technically a part of the Paket API, this section explains how to set up and secure your webhooks endpoints; and serves as a reference as to which notifications are sent and on which triggering events.</p>
 <h3 id='security-securing-webhooks-configure-your-endpoints'>Configure your endpoints</h3>
 <p>Webhooks are configured discretely under each Client object in the <a href="https://developer.paket.tv">Paket Developer Portal</a>. You may configure multiple endpoints, however, please note that at present all events will be sent to all active endpoints.</p>

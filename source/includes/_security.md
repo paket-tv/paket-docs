@@ -67,7 +67,20 @@ The signature is computed as:
 
 `HMAC_SHA256(secret_key, timestamp + '.' + request_body)`
 
+- `secret_key`: your client’s API secret
+- `timestamp`: the current UNIX timestamp in milliseconds
+- `request_body`: the raw body string (or '' if there is no body)
+
 The result should be hex-encoded and prefixed with `sha256=`.
+
+### DELETE Requests Without a Body
+
+When sending a `DELETE` request (or any request without a body), sign an empty string as the body:
+
+```
+const body = ''  // DELETE usually has no body
+const payload = `${timestamp}.${body}`
+```
 
 ## Securing Webhooks
 
