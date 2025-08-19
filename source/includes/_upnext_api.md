@@ -201,7 +201,7 @@ The platform user's unique Session identifier.
 The ISO 8601 timestamp when the Session was created.
 
 
-### Platform Work Flow
+### Platform UpNext Flow
 
 Before beginning, Platform partners should familiarize themselves with the [Sessions](#sessions) object. Additionally, Platforms should leverage the `platform_data` configuration as described in the [Platform Data](#platform-data) section of the documentation.
 
@@ -209,9 +209,9 @@ The diagram below is an overview of how Platform Clients interact with the Paket
 
 <aside class="notice">Please note that the Platform must provide a means for a Publisher's app to communicate the Paket Context ID to the Platform Client. Typically, this is achieved via the Platform SDK.</aside>
 
-![Platform Work Flow Diagram](paket_upnext_workflow_platforms.jpg)
+![Platform Sequence Diagram](paket_upnext_seq_dia_platforms.jpg)
 
-### Publisher Work Flow
+### Publisher UpNext Flow
 
 Before beginning, Publisher partners should familiarize themselves with the [Contexts](#contexts) object.
 
@@ -219,7 +219,7 @@ The diagram below is an overview of how Publisher Clients interact with the Pake
 
 <aside class="notice">Please note that the Publisher must be able to communicate the Paket Context ID to the Platform Client. Typically, this is achieved via the Platform SDK.</aside>
 
-![Publisher Work Flow Diagram](paket_upnext_workflow_publishers.jpg)
+![Publisher Sequence Diagram](paket_upnext_seq_dia_publishers.jpg)
 
 
 ## Sessions
@@ -273,9 +273,15 @@ Content-Type: application/json
 
 ```
 
-**Path Parameters**
-
 \* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+
+**Path Parameters**
 
 **`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The platform user's unique Session identifier.
@@ -318,10 +324,14 @@ curl --location --request DELETE 'https://api.paket.tv/v1/sessions/upnext/:sessi
 HTTP/1.1 204 OK
 Content-Type: application/json
 ```
+\* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
 
 **Path Parameters**
-
-\* required
 
 **`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The platform user's unique Session identifier.
@@ -398,9 +408,14 @@ Content-Type: application/json
 }
 ```
 
-**Path Parameters**
-
 \* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**Path Parameters**
 
 **`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The platform user's unique Session identifier.
@@ -483,9 +498,14 @@ Content-Type: application/json
 }
 ```
 
-**Path Parameters**
-
 \* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**Path Parameters**
 
 **`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The platform user's unique Session identifier.
@@ -547,10 +567,14 @@ Content-Type: application/json
   ]
 }
 ```
+\* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
 
 **Path Parameters**
-
-\* required
 
 **`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The platform user's unique Session identifier.
@@ -603,9 +627,14 @@ If hiding list items is supported within a Platform's user interface, this actio
 
 While it is up to the Publisher to decide whether or not to remove the item from the Context's list, the item will remain hidden within the [List Item Object](#upnext-api-overview-the-list-item-object) unless the `hidden` attribute is set to `false` by a Publisher action.
 
-**Path Parameters**
-
 \* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**Path Parameters**
 
 **`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The platform user's unique Session identifier.
@@ -653,9 +682,14 @@ Content-Type: application/json
 
 Deletes a Session and all Context associations.
 
-**Path Parameters**
-
 \* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**Path Parameters**
 
 **`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The platform user's unique Session identifier.
@@ -749,16 +783,19 @@ Content-Type: application/json
 
 Adds or updates an Item to the Context list. Please refer to the UpNext [Guidelines](#upnext-api-contexts-guidelines) to learn more about how to determine when to add an Item to the Context's list.
 
-**Path Parameters**
-
 \* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**Path Parameters**
 
 **`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The Context ID to which the List belongs.
 
 **Request Body**
-
-\* required
 
 **`content_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The content ID of the item being added. Typically, this is an internal identifier provided by the Publisher.
@@ -841,9 +878,14 @@ Content-Type: application/json
 
 Removes an Item from the Context's list.
 
-**Path Parameters**
-
 \* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**Path Parameters**
 
 **`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The Context ID to which the List belongs.
@@ -907,11 +949,14 @@ Content-Type: application/json
   ]
 }
 ```
+\* required
 
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
 
 **Path Parameters**
-
-\* required
 
 **`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The Context ID to which the List belongs.
@@ -957,10 +1002,14 @@ curl --location --request DELETE 'https://api.paket.tv/v1/contexts/upnext/:conte
 HTTP/1.1 204 OK
 Content-Type: application/json
 ```
+\* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
 
 **Path Parameters**
-
-\* required
 
 **`context_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The Context ID to which the Sessions are associated.

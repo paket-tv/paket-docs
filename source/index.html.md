@@ -31,7 +31,7 @@ includes:
   - core_api
   - tvaas_api
   - upnext_api
-  - bundle_api
+  - license_api
   - webhooks
 
 search: true
