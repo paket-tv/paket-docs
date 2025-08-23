@@ -4,7 +4,13 @@ Welcome to Paket! This documentation explains key concepts and describes how Pla
 
 **So, what is it?**
 
-Paket is a universal engagement platform for Connected TVs and subscription marketplaces. We facilitate, through our suite of APIs, device and platform-agnostic features that help drive engagement through personalization, enhanced discovery, and advanced analytics.
+Paket is a universal engagement platform that gives connected TV platforms, operators, and telcos access to:
+
+- **Scalable subscription and bundling orchestration** – streamline third-party subscription management across services using platform's native payments and identity services.
+- **AI-powered streaming television** – deliver personalized programming and recommendations that adapt to each user.
+- **Cross-device continue watching & Up Next management** – unify playback progress and next-up recommendations across multiple apps and devices.
+
+Our suite of APIs is device- and platform-agnostic, designed to increase engagement through personalization, improve discovery, and provide actionable analytics.
 
 The Paket API is organized around [REST](https://en.wikipedia.org/wiki/REST). Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
 

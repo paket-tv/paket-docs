@@ -8,7 +8,7 @@ Events are our way of letting you know when something interesting happens in you
 
 > Example webhook event
 
-```
+```json
 {
   "id": "evt_a75f6d23be8c17b1",
   "object": "event",

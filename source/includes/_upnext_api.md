@@ -26,7 +26,7 @@ An individual Context's feed (i.e., a specific App) can also be requested simply
 
 > The List Object
 
-```
+```json
 {
   "total": 271,
   "next_key": 4,
@@ -34,8 +34,7 @@ An individual Context's feed (i.e., a specific App) can also be requested simply
     {...},
     {...},
     {...},
-    {...},
-    }
+    {...}
   ]
 }
 ```
@@ -54,7 +53,7 @@ An array of [list items](#upnext-api-overview-the-list-item-object).
 
 > The List Item Object
 
-```
+```json
 {
   "content_id": "1iwousk12i008d9",
   "app_id": "AP463772054442217472",
@@ -76,14 +75,14 @@ An array of [list items](#upnext-api-overview-the-list-item-object).
     "platform_app_id": "internalAppId12345"
   },
   "app_media": {
-      "icon_1x": "https://media.paket.tv/media/df79418d4e6d5325/icon@1x.png",
-      "icon_2x": "https://media.paket.tv/media/df79418d4e6d5325/icon@2x.png",
-      "icon_3x": "https://media.paket.tv/media/df79418d4e6d5325/icon@3x.png",
-      "tile_1x": "https://media.paket.tv/media/df79418d4e6d5325/tile@1x.png",
-      "tile_2x": "https://media.paket.tv/media/df79418d4e6d5325/tile@2x.png",
-      "logo_dark_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_dark@1x.png",
-      "logo_light_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_light@1x.png"
-    }
+    "icon_1x": "https://media.paket.tv/media/df79418d4e6d5325/icon@1x.png",
+    "icon_2x": "https://media.paket.tv/media/df79418d4e6d5325/icon@2x.png",
+    "icon_3x": "https://media.paket.tv/media/df79418d4e6d5325/icon@3x.png",
+    "tile_1x": "https://media.paket.tv/media/df79418d4e6d5325/tile@1x.png",
+    "tile_2x": "https://media.paket.tv/media/df79418d4e6d5325/tile@2x.png",
+    "logo_dark_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_dark@1x.png",
+    "logo_light_1x": "https://media.paket.tv/media/df79418d4e6d5325/logo_light@1x.png"
+  }
 }
 ```
 
@@ -178,9 +177,9 @@ The <span style="font-family:monospace;font-size:.9em;font-weight:bolder">platfo
 The Session Context Object is created when a Participant's `context_id` is added to a Session or when requesting a list of all Parcticipants associated with an active Session. It contains useful information related to a Participant's relationship to a Session.
 
 
-```
+```json
 {
-  "session_id: "SN759077888463135026"
+  "session_id": "SN759077888463135026",
   "context_id": "CX463135026759077888",
   "app_id": "AP463772054442217472",
   "created_at": "2024-02-16T04:41:06.596Z"
@@ -264,13 +263,15 @@ curl --location --request PUT 'https://api.paket.tv/v1/sessions/upnext/:session_
 ```http
 HTTP/1.1 200 OK
 Content-Type: application/json
+```
+
+```json
 {
-  "session_id: "SN759077888463135026"
+  "session_id": "SN759077888463135026",
   "context_id": "CX463135026759077888",
   "app_id": "AP463772054442217472",
   "created_at": "2024-02-16T04:41:06.596Z"
 }
-
 ```
 
 \* required
@@ -367,6 +368,9 @@ curl --location 'https://api.paket.tv/v1/sessions/upnext/:session_id' \
 ```http
 HTTP/1.1 200 OK
 Content-Type: application/json
+```
+
+```json
 {
   "total": 271,
   "next_key": 4,
@@ -457,6 +461,9 @@ curl --location 'https://api.paket.tv/v1/sessions/upnext/:session_id/:context_id
 ```http
 HTTP/1.1 200 OK
 Content-Type: application/json
+```
+
+```json
 {
   "total": 271,
   "next_key": 4,
@@ -549,17 +556,18 @@ curl --location 'https://api.paket.tv/v1/sessions/upnext/:session_id/contexts' \
 ```http
 HTTP/1.1 200 OK
 Content-Type: application/json
+```
+
+```json
 {
   "total": 12,
   "next_key": 4,
   "items": [
     {
-      {
-        "session_id: "SN759077888463135026",
-        "context_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
-        "app_id": "df79418d4e6d5325",
-        "created_at": "2023-12-23T23:38:50.303Z"
-      }
+      "session_id": "SN759077888463135026",
+      "context_id": "6b0af623-2923-4997-92a6-73f94bbe321e",
+      "app_id": "df79418d4e6d5325",
+      "created_at": "2023-12-23T23:38:50.303Z"
     },
     {...},
     {...},
@@ -618,6 +626,9 @@ curl --location --request PUT 'https://api.paket.tv/v1/sessions/upnext/:session_
 ```http
 HTTP/1.1 200 OK
 Content-Type: application/json
+```
+
+```json
 {
   "message": "Success"
 }
@@ -766,7 +777,7 @@ curl --location --request PUT 'https://api.paket.tv/v1/contexts/upnext/:context_
     "episode": 3,
     "preview_video_uri": "https://media.paket.tv/1iwousk12i008d9/preview.m3u8",
     "position": 654,
-    "duration": 1308
+    "duration": 1308,
     "hidden": false
   }'
 ``` 
@@ -776,6 +787,9 @@ curl --location --request PUT 'https://api.paket.tv/v1/contexts/upnext/:context_
 ```http
 HTTP/1.1 204 OK
 Content-Type: application/json
+```
+
+```json
 {
   "message": "Success"
 }
@@ -921,6 +935,9 @@ curl --location 'https://api.paket.tv/v1/contexts/upnext/:context_id' \
 ```http
 HTTP/1.1 200 OK
 Content-Type: application/json
+```
+
+```json
 {
   "total": 271,
   "next_key": 4,

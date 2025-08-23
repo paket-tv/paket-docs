@@ -428,7 +428,6 @@ The Invoice object represents a billing statement for a subscription period, tra
   "payment_method_id": null,
   "payment_intent_id": null,
   "payment_date": null,
-  "paid_at": null,
   "retry_count": 0,
   "max_retries": 3,
   "next_retry_date": null,
@@ -529,9 +528,6 @@ Payment processor intent identifier.
 **`payment_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 ISO 8601 timestamp when payment was processed (null if unpaid).
 
-**`paid_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when invoice was marked as paid (null if unpaid).
-
 **`retry_count`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Number of payment retry attempts made.
 
@@ -604,11 +600,303 @@ ISO 8601 timestamp when the invoice was created.
 **`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 ISO 8601 timestamp when the invoice was last updated.
 
-### Create Subscription Flow
+### The Payment Object
+
+The Payment object represents an immutable payment attempt record for an invoice, providing a complete audit trail of all payment processing activities. Please note that Paket does not natively process payments, rather it is a store of a payment attempts made via a Platform's PSP. As such, it is encumbant on the Platform processing a payment to post payment responsese to this API to ensure an immutable audit trail of payment attemps exists for each Invoice
+
+> The Payment Object
+
+```
+{
+  "payment_id": "PAY479027832345678912",
+  "invoice_id": "INV479027832278880256",
+  "subscription_id": "SUB479027832035610624",
+  "platform_id": "PL468440696748511232",
+  "amount": 1848,
+  "currency": "USD",
+  "status": "succeeded",
+  "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+  "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
+  "error_code": null,
+  "error_message": null,
+  "processor_response": {
+    "last_four": "4242",
+    "brand": "visa",
+    "exp_month": 12,
+    "exp_year": 2028
+  },
+  "metadata": {
+    "source": "mobile_app",
+    "user_agent": "Mozilla/5.0...",
+    "retry_attempt": 0
+  },
+  "created_ip": "192.168.1.100",
+  "created_at": "2025-08-14T21:15:00.000Z",
+  "activation_urls": [
+    {
+      "app_id": "AP468442205989113856",
+      "app_name": "Disney+",
+      "product_id": "PR469716925099413504",
+      "product_name": "Disney+ Basic",
+      "activation_url": "https://disneyplus.com/activate?token=abc123...",
+      "expires_at": "2025-08-14T21:45:00.000Z"
+    }
+  ]
+}
+```
+
+**Refund Example:**
+
+```
+{
+  "payment_id": "PAY479027832345678914",
+  "invoice_id": "INV479027832278880256",
+  "subscription_id": "SUB479027832035610624",
+  "platform_id": "PL468440696748511232",
+  "amount": -1848,
+  "currency": "USD",
+  "status": "refunded",
+  "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+  "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
+  "refund_reason": "customer_request",
+  "original_payment_id": "PAY479027832345678912",
+  "error_code": null,
+  "error_message": null,
+  "processor_response": {
+    "refund_id": "re_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+    "last_four": "4242",
+    "brand": "visa"
+  },
+  "metadata": {
+    "refund_requested_by": "customer_service",
+    "original_charge_date": "2025-08-14T21:15:00.000Z"
+  },
+  "created_ip": "192.168.1.100",
+  "created_at": "2025-08-15T14:30:00.000Z"
+}
+```
+
+**Attributes**
+
+**`payment_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The unique identifier for the payment record (prefixed with PAY).
+
+**`invoice_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The invoice this payment attempt was made for.
+
+**`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The subscription associated with this payment.
+
+**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform identifier that initiated this payment.
+
+**`amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+Payment amount in cents. Positive values represent payments, negative values represent refunds.
+
+**`currency`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Three-letter ISO currency code.
+
+**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Payment processing status:
+
+- `succeeded` - Payment completed successfully
+- `failed` - Payment failed to process
+- `processing` - Payment is being processed
+- `canceled` - Payment was canceled
+- `requires_action` - Payment requires additional user action
+- `refunded` - Full refund processed successfully
+- `partially_refunded` - Partial refund processed successfully
+- `refund_failed` - Refund attempt failed
+- `refund_pending` - Refund is being processed
+
+**`payment_method_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Payment processor's payment method identifier.
+
+**`payment_intent_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Payment processor's intent identifier.
+
+**`refund_reason`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Reason for refund (only present for refund records).
+
+**`original_payment_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Reference to the original payment being refunded (only present for refund records).
+
+**`error_code`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Error code if payment failed (null for successful payments).
+
+**`error_message`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Human-readable error message if payment failed (null for successful payments).
+
+**`processor_response`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Payment processor's response data (card details, processor-specific metadata).
+
+**`metadata`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Additional metadata associated with the payment attempt.
+
+**`created_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+IP address from which the payment was initiated.
+
+**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the payment record was created.
+
+**`activation_urls`** <span style='margin: 0 5px;font-size:.9em'>array</span>  
+Optional. Returned for successful payments on first invoices. Contains activation URLs for bundled services requiring activation.
+
+### The Activation Session Object
+
+The Activation Session object represents a collection of activation codes generated for a paid subscription, tracking the activation status of each bundled product.
+
+> The Activation Session Object
+
+```json
+{
+  "activation_session_id": "AS479027832456789123",
+  "subscription_id": "SUB479027832035610624",
+  "invoice_id": "INV479027832278880256",
+  "session_id": "session_456",
+  "platform_id": "PL468440696748511232",
+  "platform_name": "Example Platform",
+  "status": "pending",
+  "items_total": 2,
+  "items_activated": 0,
+  "created_at": "2025-08-14T21:15:00.000Z",
+  "updated_at": "2025-08-14T21:15:00.000Z",
+  "expires_at": "2025-08-17T21:15:00.000Z",
+  "activation_items": [
+    {
+      "app_id": "AP468442205989113856",
+      "app_name": "Disney+",
+      "product_id": "PR469716925099413504",
+      "product_name": "Disney+ Basic",
+      "status": "pending",
+      "activation_code_hash": "a1b2c3d4e5f6...",
+      "activation_url": "https://disneyplus.com/activate?activation_code=AC_A3F2B7C9_D4E1F8A2",
+      "jti": "at_479027832567890234",
+      "created_at": "2025-08-14T21:15:00.000Z",
+      "expires_at": "2025-08-14T22:00:00.000Z"
+    }
+  ]
+}
+```
+
+**Attributes**
+
+**`activation_session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The unique identifier for the activation session (prefixed with AS).
+
+**`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The subscription that triggered this activation session.
+
+**`invoice_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The invoice that was paid to trigger activation.
+
+**`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The user session associated with the subscription.
+
+**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform identifier that created the subscription.
+
+**`platform_name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Display name of the platform.
+
+**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Overall activation session status:
+- `pending` - Awaiting activation for one or more items
+- `partial` - Some items activated but not all
+- `completed` - All items successfully activated
+- `failed` - Activation failed for one or more items
+- `expired` - Session expired before completion
+
+**`items_total`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+Total number of products requiring activation.
+
+**`items_activated`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+Number of products successfully activated.
+
+**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the activation session was created.
+
+**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the activation session was last updated.
+
+**`expires_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the activation session expires.
+
+**`activation_items`** <span style='margin: 0 5px;font-size:.9em'>array</span>  
+Array of activation items for each product in the subscription. Each item contains:
+- `app_id` - The app/publisher identifier
+- `app_name` - Display name of the app
+- `product_id` - The product being activated
+- `product_name` - Display name of the product
+- `status` - Item activation status (pending, activated, failed, expired)
+- `activation_code_hash` - SHA-256 hash of the activation code (for validation)
+- `activation_url` - Complete URL for user activation
+- `jti` - Unique JWT identifier for the activation token
+- `created_at` - When this activation item was created
+- `expires_at` - When this activation code expires (typically 7 days)
+
+### Subscription Activation Flow
 
 Paket's subscription orchestration service works independently of the Platform's payment and identity services and the app Publishers' respective identity services. This affords both Platform and Publisher direct ownership of the respective user's accounts and enhanced privacy for the end user.
 
 ![Create Sub Sequence Diagram](paket_create_sub_seq_diagram.jpg)
+
+#### Create New Subscription
+
+1. **Platform Creates Subscription**: Platform calls `POST /v1/catalog/subscriptions` with user's session ID and selected plan
+2. **Invoice Generation**: Paket automatically generates the first invoice for the billing period
+3. **Platform Processes Payment**: Platform collects payment through their payment service provider (PSP)
+4. **Payment Recording**: Platform posts payment result to `POST /v1/catalog/subscriptions/{subscription_id}/invoices/{invoice_id}/payments`
+5. **Subscription Activation**: On successful payment, Paket returns activation URLs and triggers the app activation flow
+6. **Publisher Notification**: Publishers receive webhooks about new subscriptions requiring activation
+
+#### Product Activation
+
+1. **User Arrives**: User visits activation URL with their unique activation code
+3. **Code Validation**: Publisher validates the activation code via `POST /v1/catalog/activation/exchange`
+4. **Account Setup**: Publisher completes user sign-up or sign-in process
+5. **Activation Confirmation**: Publisher calls `PUT /v1/catalog/activation/{session_id}/items/{item_id}` to confirm activation
+6. **Service Provisioning**: Publisher provisions the service for the activated user
+
+
+> Request to Exchange Activation Code
+
+```shell
+curl --location --request POST 'https://api.paket.tv/v1/catalog/activation/exchange' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Basic <credentials>' \
+  --data '{
+    "activation_code": "AC_A3F2B7C9_D4E1F8A2"
+  }'
+```
+
+> Response with Product Details
+
+```json
+{
+  "activation_session_id": "AS479027832456789123",
+  "app_id": "AP468442205989113856",
+  "product_id": "PR469716925099413504",
+  "subscription_id": "SUB479027832035610624",
+  "platform_id": "PL468440696748511232",
+  "product": {
+    "product_id": "PR469716925099413504",
+    "product_name": "Disney+ Basic",
+    "internal_id": "disney_basic_tier1"
+  }
+}
+```
+
+#### Important Notes
+
+- **Time-Limited**: Activation codes expire after 7 days
+- **Single Use**: Each code can only be exchanged once
+- **No Secrets Required**: Simply exchange the code as received from the user
+- **Automatic Validation**: Paket handles all security validation internally
+
+<aside class="notice">
+After successfully exchanging the activation code and completing user account setup, publishers must confirm the activation by calling PUT /v1/catalog/activation/{session_id}/items/{item_id} to update the activation status.
+</aside>
 
 
 ## Plans
@@ -1318,7 +1606,7 @@ curl --location --request PUT 'https://b3vevnva7a.execute-api.us-west-2.amazonaw
   }'
 ``` 
 
-> Response
+> Response (Standard)
 
 ```http
 HTTP/1.1 200 OK
@@ -1337,9 +1625,52 @@ Content-Type: application/json
   "currency": "USD",
   "payment_method_id": "pm_123",
   "payment_intent_id": "pi_456",
-  "paid_at": "2025-08-14T21:15:00.000Z",
+  "payment_date": "2025-08-14T21:15:00.000Z",
   "retry_count": 0,
   "updated_at": "2025-08-14T21:15:00.000Z"
+}
+```
+
+> Response (First Invoice with Activation URLs)
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+{
+  "invoice_id": "INV479027832278880256",
+  "invoice_number": "INV-2025-78880256",
+  "subscription_id": "SUB479027832035610624",
+  "status": "paid",
+  "payment_status": "paid",
+  "billing_cycle": 1,
+  "subtotal": 1699,
+  "tax_amount": 149,
+  "total_amount": 1848,
+  "amount_paid": 1848,
+  "amount_due": 0,
+  "currency": "USD",
+  "payment_method_id": "pm_123",
+  "payment_intent_id": "pi_456",
+  "payment_date": "2025-08-14T21:15:00.000Z",
+  "updated_at": "2025-08-14T21:15:00.000Z",
+  "activation_urls": [
+    {
+      "app_id": "AP468442205989113856",
+      "app_name": "Disney+",
+      "product_id": "PR469716925099413504",
+      "product_name": "Disney+ Basic",
+      "activation_url": "https://disneyplus.com/activate?activation_code=AC_A3F2_B7C9",
+      "expires_at": "2025-08-14T22:00:00.000Z"
+    },
+    {
+      "app_id": "AP468442310876295168",
+      "app_name": "Hulu",
+      "product_id": "PR469716985421504512",
+      "product_name": "Hulu Basic",
+      "activation_url": "https://hulu.com/activate?code=AC_D4E1_F8A2",
+      "expires_at": "2025-08-14T22:00:00.000Z"
+    }
+  ]
 }
 ```
 
@@ -1367,6 +1698,7 @@ At least one field is required.
 
 **`payment_status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 Optional. Update payment status. Valid values:
+
 - `open`
 - `paid`
 - `failed`
@@ -1381,10 +1713,27 @@ Optional. Payment processor intent ID.
 
 **Returns**
 
-Returns the updated Invoice object.
+Returns the updated Invoice object. When updating a first invoice (billing_cycle <= 1) to `payment_status: "paid"`, the response may also include an `activation_urls` array containing activation URLs for each bundled service that requires activation.
+
+**Response Fields**
+
+All standard Invoice fields plus:
+
+**`activation_urls`** <span style='margin: 0 5px;font-size:.9em'>array</span>  
+Optional. Returned when payment_status is set to "paid" for first invoices. Contains activation URLs for bundled services. Each object includes:
+- `app_id` - The app/publisher ID
+- `app_name` - Display name of the app
+- `product_id` - The product being activated
+- `product_name` - Display name of the product
+- `activation_url` - URL to redirect user for activation
+- `expires_at` - When the activation URL expires
 
 <aside class="notice">
-When payment_status is set to "paid", the invoice status automatically updates to "paid" and the subscription becomes active if it was pending payment.
+When payment_status is set to "paid":
+- The invoice status automatically updates to "paid"
+- The subscription becomes active if it was pending payment
+- For first invoices (billing_cycle <= 1), activation sessions are created and activation URLs are returned
+- Webhooks are sent to publishers notifying them of pending activations
 </aside>
 
 ### Get Invoice
@@ -1532,3 +1881,532 @@ Optional. Number of results to return (1-100, default: 25).
 **Returns**
 
 Returns an array of summarized Invoice objects, sorted by most recent first.
+
+## Payments
+
+Payments provide immutable audit trails of all payment attempts for invoices. Unlike invoices which can be updated, payment records are never modified once created, ensuring complete payment history and compliance.
+
+### Create Payment
+
+> Endpoint
+
+```
+POST https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
+```
+
+Creates an immutable payment record for an invoice. Supports both payments (positive amounts) and refunds (negative amounts).
+
+> POST https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
+
+```curl
+curl --location --request POST 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256/payments' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Basic <credentials>' \
+  --header 'Idempotency-Key: unique-payment-123' \
+  --data '{
+    "amount": 1848,
+    "currency": "USD",
+    "status": "succeeded",
+    "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+    "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
+    "processor_response": {
+      "last_four": "4242",
+      "brand": "visa",
+      "exp_month": 12,
+      "exp_year": 2028
+    },
+    "metadata": {
+      "source": "web_app",
+      "retry_attempt": 0
+    }
+  }'
+``` 
+
+> Response (Successful Payment)
+
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json
+{
+  "payment_id": "PAY479027832345678912",
+  "invoice_id": "INV479027832278880256",
+  "subscription_id": "SUB479027832035610624",
+  "platform_id": "PL468440696748511232",
+  "amount": 1848,
+  "currency": "USD",
+  "status": "succeeded",
+  "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+  "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
+  "error_code": null,
+  "error_message": null,
+  "processor_response": {
+    "last_four": "4242",
+    "brand": "visa",
+    "exp_month": 12,
+    "exp_year": 2028
+  },
+  "metadata": {
+    "source": "web_app",
+    "retry_attempt": 0
+  },
+  "created_ip": "192.168.1.100",
+  "created_at": "2025-08-14T21:15:00.000Z",
+  "activation_urls": [
+    {
+      "app_id": "AP468442205989113856",
+      "app_name": "Disney+",
+      "product_id": "PR469716925099413504",
+      "product_name": "Disney+ Basic",
+      "activation_url": "https://disneyplus.com/activate?token=abc123...",
+      "expires_at": "2025-08-14T21:45:00.000Z"
+    }
+  ]
+}
+```
+
+> Response (Failed Payment)
+
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json
+{
+  "payment_id": "PAY479027832345678913",
+  "invoice_id": "INV479027832278880256",
+  "subscription_id": "SUB479027832035610624",
+  "platform_id": "PL468440696748511232",
+  "amount": 1848,
+  "currency": "USD",
+  "status": "failed",
+  "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+  "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
+  "error_code": "insufficient_funds",
+  "error_message": "Your card has insufficient funds.",
+  "processor_response": {
+    "last_four": "4242",
+    "brand": "visa",
+    "decline_code": "insufficient_funds"
+  },
+  "metadata": {
+    "source": "web_app",
+    "retry_attempt": 1
+  },
+  "created_ip": "192.168.1.100",
+  "created_at": "2025-08-14T21:16:30.000Z"
+}
+```
+
+\* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**`Idempotency-Key`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Optional but recommended. Unique key to prevent duplicate payment records.
+
+**Path Parameters**
+
+**`subscription_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The subscription ID.
+
+**`invoice_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The invoice ID to create payment for.
+
+**Request Body**
+
+**`amount`*** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+Payment amount in cents. Use positive values for payments, negative values for refunds.
+
+**`status`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Payment processing status. Valid values:
+
+- `succeeded` - Payment completed successfully
+- `failed` - Payment failed to process
+- `processing` - Payment is being processed
+- `canceled` - Payment was canceled
+- `requires_action` - Payment requires additional user action
+- `refunded` - Full refund processed successfully
+- `partially_refunded` - Partial refund processed successfully
+- `refund_failed` - Refund attempt failed
+- `refund_pending` - Refund is being processed
+
+**`currency`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Optional. Three-letter ISO currency code (defaults to USD).
+
+**`payment_method_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Optional. Payment processor's payment method identifier.
+
+**`payment_intent_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Optional. Payment processor's intent identifier.
+
+**`refund_reason`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Optional. Reason for refund (only applicable for refund records).
+
+**`original_payment_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Optional. Reference to the original payment being refunded (only applicable for refund records).
+
+**`error_code`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Optional. Error code for failed payments.
+
+**`error_message`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Optional. Human-readable error message for failed payments.
+
+**`processor_response`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Optional. Additional response data from the payment processor.
+
+**`metadata`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Optional. Additional metadata for the payment attempt.
+
+**Returns**
+
+Returns the created Payment object. The payment record is immutable and cannot be modified after creation.
+
+<aside class="notice">
+When status is "succeeded":
+- The invoice payment status is automatically updated to "paid"
+- The subscription becomes active if it was pending payment
+- For first invoices (billing_cycle <= 1), activation sessions are created and activation URLs are returned
+- The subscription billing cycle is incremented for future invoices
+
+For refunds (negative amounts):
+- Refunds are recorded for audit trail purposes but don't change invoice or subscription status
+- Use refund_reason and original_payment_id fields to track refund details
+- Refunds don't trigger activation sessions or subscription updates
+</aside>
+
+<aside class="warning">
+Payment records are immutable for audit trail purposes. Each payment attempt creates a new payment record. To record multiple attempts, create separate payment records for each attempt.
+</aside>
+
+### Get Payment
+
+> Endpoint
+
+```
+GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments/:payment_id
+```
+
+Retrieves details of a specific payment record.
+
+> GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments/:payment_id
+
+```curl
+curl --location 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256/payments/PAY479027832345678912' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic <credentials>'
+``` 
+
+> Response
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+{
+  "payment_id": "PAY479027832345678912",
+  "invoice_id": "INV479027832278880256",
+  "subscription_id": "SUB479027832035610624",
+  "platform_id": "PL468440696748511232",
+  "amount": 1848,
+  "currency": "USD",
+  "status": "succeeded",
+  "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+  "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
+  "error_code": null,
+  "error_message": null,
+  "processor_response": {
+    "last_four": "4242",
+    "brand": "visa",
+    "exp_month": 12,
+    "exp_year": 2028
+  },
+  "metadata": {
+    "source": "web_app",
+    "retry_attempt": 0
+  },
+  "created_ip": "192.168.1.100",
+  "created_at": "2025-08-14T21:15:00.000Z"
+}
+```
+
+\* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**Path Parameters**
+
+**`subscription_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The subscription ID.
+
+**`invoice_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The invoice ID.
+
+**`payment_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The payment ID to retrieve.
+
+**Returns**
+
+Returns the complete Payment object.
+
+### List Payments
+
+> Endpoint
+
+```
+GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
+```
+
+Lists all payment attempts for a specific invoice, sorted by most recent first.
+
+> GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
+
+```curl
+curl --location 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256/payments?limit=25' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic <credentials>'
+``` 
+
+> Response
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+{
+  "payments": [
+    {
+      "payment_id": "PAY479027832345678912",
+      "invoice_id": "INV479027832278880256",
+      "subscription_id": "SUB479027832035610624",
+      "platform_id": "PL468440696748511232",
+      "amount": 1848,
+      "currency": "USD",
+      "status": "succeeded",
+      "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+      "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
+      "created_at": "2025-08-14T21:15:00.000Z"
+    },
+    {
+      "payment_id": "PAY479027832345678911",
+      "invoice_id": "INV479027832278880256",
+      "subscription_id": "SUB479027832035610624",
+      "platform_id": "PL468440696748511232",
+      "amount": 1848,
+      "currency": "USD",
+      "status": "failed",
+      "error_code": "insufficient_funds",
+      "error_message": "Your card has insufficient funds.",
+      "created_at": "2025-08-14T21:10:30.000Z"
+    }
+  ],
+  "lastEvaluatedKey": null
+}
+```
+
+\* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**Path Parameters**
+
+**`subscription_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The subscription ID.
+
+**`invoice_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The invoice ID to list payments for.
+
+**Query Parameters**
+
+**`limit`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+Optional. Number of results to return (1-100, default: 25).
+
+**Returns**
+
+Returns an array of Payment objects, sorted by most recent first. This shows the complete payment history for an invoice, including all successful and failed attempts.
+
+## Activation
+
+The Activation API provides endpoints for managing product activation sessions and validating activation codes. When a subscription is successfully paid, Paket automatically creates activation sessions for bundled services that require user activation.
+
+### Exchange Activation Code
+
+> Endpoint
+
+```
+POST https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/exchange
+```
+
+Validates and exchanges an activation code for product licensing information. Publishers use this endpoint to verify activation codes received from users.
+
+> POST https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/exchange
+
+```curl
+curl --location --request POST 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/exchange' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Basic <credentials>' \
+  --data '{
+    "activation_code": "AC_A3F2B7C9_D4E1F8A2"
+  }'
+``` 
+
+> Response (Successful Exchange)
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+{
+  "activation_session_id": "AS479027832456789123",
+  "app_id": "AP468442205989113856",
+  "product_id": "PR469716925099413504",
+  "subscription_id": "SUB479027832035610624",
+  "platform_id": "PL468440696748511232",
+  "platform_name": "Example Platform",
+  "product": {
+    "product_id": "PR469716925099413504",
+    "product_name": "Disney+ Basic",
+    "name": "Disney+ Basic",
+    "description": "Disney+ Basic With Ads",
+    "status": "active",
+    "product_type": "streaming",
+    "metadata": {
+      "tier": "basic",
+      "ads_supported": true
+    }
+  },
+  "jti": "at_479027832567890234",
+  "exchanged_at": "2025-08-14T21:30:00.000Z",
+  "expires_at": "2025-08-17T21:15:00.000Z"
+}
+```
+
+> Response (Invalid/Expired Code)
+
+```http
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+{
+  "error": "activation_code_not_found",
+  "message": "Activation code not found or expired"
+}
+```
+
+> Response (Already Used)
+
+```http
+HTTP/1.1 409 Conflict
+Content-Type: application/json
+{
+  "error": "activation_code_already_used",
+  "message": "This activation code has already been exchanged"
+}
+```
+
+\* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**Request Body**
+
+**`activation_code`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The activation code to validate and exchange (format: AC_XXXXXXXX_XXXXXXXX).
+
+**Returns**
+
+Returns activation details and product information if the code is valid and unused. The activation code is marked as exchanged and cannot be used again.
+
+**Implementation Notes**
+
+Publishers should:
+1. Exchange the activation code received from the user
+2. Complete user sign-up or sign-in process
+3. Confirm the activation using the Update Activation Status endpoint
+4. Handle error cases (expired, invalid, or already used codes)
+
+<aside class="notice">
+Activation codes are single-use and expire after 7 days for security. Each successful exchange marks the code as used and cannot be reversed.
+</aside>
+
+<aside class="warning">
+Publishers must implement proper error handling for expired or invalid activation codes. Users may need to request new activation codes if theirs have expired.
+</aside>
+
+### Update Activation Status
+
+> Endpoint
+
+```
+PUT https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/:session_id/items/:item_id
+```
+
+Confirms that a user has successfully completed the activation process with the publisher. This endpoint should be called after the publisher has successfully provisioned the service for the user.
+
+> PUT https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/:session_id/items/:item_id
+
+```curl
+curl --location --request PUT 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/AS479027832456789123/items/AP468442205989113856' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Basic <credentials>' \
+  --data '{
+    "status": "activated",
+    "activated_at": "2025-08-14T21:35:00.000Z",
+    "user_id": "publisher_user_123"
+  }'
+``` 
+
+> Response (Successful Update)
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+{
+  "activation_session_id": "AS479027832456789123",
+  "item_id": "AP468442205989113856",
+  "product_id": "PR469716925099413504",
+  "status": "activated",
+  "activated_at": "2025-08-14T21:35:00.000Z",
+  "updated_at": "2025-08-14T21:35:00.000Z"
+}
+```
+
+\* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**Path Parameters**
+
+**`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The activation session ID returned from the exchange endpoint.
+
+**`item_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The app ID for the item being activated.
+
+**Request Body**
+
+**`status`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The activation status. Valid values:
+- `activated` - Successfully activated
+- `failed` - Activation failed
+
+**`activated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Optional. ISO 8601 timestamp of when the activation was completed.
+
+**`user_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Optional. The publisher's internal user ID for tracking.
+
+**`error_reason`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Required if status is `failed`. Reason for activation failure.
+
+**Returns**
+
+Returns the updated activation item confirming the activation status has been recorded.

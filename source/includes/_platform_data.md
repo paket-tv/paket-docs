@@ -6,14 +6,14 @@ To address this requirement, Platforms are able to configure custom app-level sc
 
 For example, a Platform may require a custom app identifier, `custom_app_id`, is returned in API responses. In order to ensure such custom app identifier is provided by a Publisher's service, the Platform will configure this custom attribute from within their Tenant environment in the [Paket Developer Portal](https://developer.paket.tv).
 
-> Example `platform_data` attribute:
+> Example `platform_data` attribute
 
-```
+```json
 {
     ...,
-    platform_data: {
-        custom_app_id: 12345,
-        deep_link: "app://12345/cid12345"
+    "platform_data": {
+        "custom_app_id": 12345,
+        "deep_link": "app://12345/cid12345"
     }
 }
 ```

@@ -16,11 +16,11 @@ Retrieves the API status by making an authenticated `GET` request to the API's r
 
 > The Status Object
 
-```
+```json
 {
     "message": "The API is healthy!",
-    "client_id: "fab3d02606122a08",
-    "app_id: "AP467777522151985152"
+    "client_id": "fab3d02606122a08",
+    "app_id": "AP467777522151985152"
 }
 ```
 
@@ -80,7 +80,7 @@ Ideally, a Session should be indefinitely associated with an end-user's account 
 
 > The Session Object
 
-```
+```json
 {
   "session_id": "759077888463135026",
   "client_id": "907785425416524528",

@@ -2,11 +2,13 @@
 
 Securing API requests is critical to ensure data integrity. The Paket API employs the following methods to ensure that requests made to its API are authenticated and secure:
 
-- **Forced HTTPS**: Connections are strictly enforced over HTTPS at `https://api.paket.tv/v1`.
+## Security Features
+
+- **Forced HTTPS**: Connections are strictly enforced over HTTPS at `https://api.paket.tv/v1`
 - **TLS/SSL**: X.509 server certificates to validate server requests are authenticated as Paket Media, Inc.
-- **Basic Auth**: Basic authentication required for all API requests w/unique Client username and rollable secret keys. 
-- **IP Whitelisting**: Restrict access to API requests to your server IP addresses designated at the Client level.
-- **Encryption-at-rest**: All data stored is encrypted-at-rest.
+- **Basic Auth**: Basic authentication required for all API requests with unique Client username and rollable secret keys
+- **IP Whitelisting**: Restrict access to API requests to your server IP addresses designated at the Client level
+- **Encryption-at-rest**: All data stored is encrypted-at-rest
 
 ## Signing API Requests
 
@@ -28,17 +30,17 @@ If the headers are not present, the request is still accepted (unless signing is
 
 To sign your request, add the following headers:
 
-**`X-Paket-Timestamp`**<br />
+**`X-Paket-Timestamp`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 Unix timestamp in milliseconds
 
-**`X-Paket-Signature`**<br />
+**`X-Paket-Signature`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 `sha256=` followed by HMAC of payload
 
 ### Signature Format
 
 > Example HMAC-SHA256 payload signing (Node.js)
 
-```
+```javascript
 const crypto = require('crypto')
 
 function signPaketRequest(secretKey, body, timestamp) {
@@ -77,7 +79,7 @@ The result should be hex-encoded and prefixed with `sha256=`.
 
 When sending a `DELETE` request (or any request without a body), sign an empty string as the body:
 
-```
+```javascript
 const body = ''  // DELETE usually has no body
 const payload = `${timestamp}.${body}`
 ```
@@ -94,7 +96,7 @@ Webhook endpoints must be secured using TLS/SSL certificates over HTTPS and are 
 
 ![Webhooks Configuration](webhooks.png)
 
-### Verify webhook signature
+### Verify Webhook Signature
 
 The `Paket-Signature` header included in each signed event contains a timestamp and one or more signatures that you must verify. The timestamp is prefixed by `t=`, and each signature is prefixed by a scheme. Schemes start with `v`, followed by an integer. Currently, the only valid live signature scheme is `v1`. To aid with testing, Paket sends an additional signature with a fake `v0` scheme.
 
@@ -113,13 +115,13 @@ You can have multiple signatures with the same scheme-secret pair when you roll 
 
 To create a manual solution for verifying signatures, you must complete the following steps:
 
-**Step 1: Extract the timestamp and signatures from the header**
+#### Step 1: Extract the timestamp and signatures from the header
 
 Split the header using the `,` character as the separator to get a list of elements. Then split each element using the `=` character as the separator to get a prefix and value pair.
 
 The value for the prefix `t` corresponds to the timestamp, and `v1` corresponds to the signature (or signatures). You can discard all other elements.
 
-**Step 2: Prepare the `signed_payload` string**
+#### Step 2: Prepare the `signed_payload` string
 
 > Example  `signed_payload`
 
@@ -133,7 +135,7 @@ The `signed_payload` string is created by concatenating:
 - The character `.`
 - The actual JSON payload (that is, the request body)
 
-**Step 3: Determine the expected signature**
+#### Step 3: Determine the expected signature
 
 > Example Hashed result
 
@@ -143,7 +145,7 @@ f03a63e17d5720d7d01974d115059c8ec05b0f425828a2d0d341020f431bbafa
 
 Compute an HMAC with the SHA256 hash function. Use the endpoint’s signing secret as the key, and use the signed_payload string as the message.
 
-**Step 4: Compare the signatures**
+#### Step 4: Compare the signatures
 
 Compare the signature (or signatures) in the header to the expected signature. For an equality match, compute the difference between the current timestamp and the received timestamp, then decide if the difference is within your tolerance.
 
@@ -163,6 +165,6 @@ Paket IP Addresses:
 - `52.40.235.54`
 - `35.83.22.57`
 
-### Retry behavior
+### Retry Behavior
 
 Paket attempts to deliver a given event to your webhook endpoint up to fifteen (15) times over the course of 3 days with an exponential back off. In the Webhooks logs section of the Paket Publisher Portal, you can view when the next retry will occur as well as the event and event data itself.
