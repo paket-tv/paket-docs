@@ -2244,88 +2244,88 @@ The Context ID to which the Sessions are associated.</p>
 <blockquote>
 <p>The Plan Object</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>{
-  "plan_id": "427944e5ba9e",
-  "name": "Disney+, Hulu, HBO Max Bundle",
-  "plan_type": "sub_bundle",
-  "status": "active",
-  "platform_id": "PL468440696748511232",
-  "free_trial_days": 0,
-  "grace_period_days": 7,
-  "billing_frequency": {
-    "unit": "month",
-    "value": 1
-  },
-  "media": {
-    "promo_4k_1x": "https://media.paket.tv/media/plans/PL468440696748511232/427944e5ba9e/promo_4k@1x.png",
-    "promo_2k_1x": "https://media.paket.tv/media/plans/PL468440696748511232/427944e5ba9e/promo_2k@1x.png"
-  },
-  "prices": {
-    "US": [
-      {
-        "order": 1,
-        "billing_cycles": 3,
-        "price": {
-          "price_in_cents": 1699,
-          "tier_id": "1699",
-          "currency_code": "USD",
-          "price": 16.99
-        }
-      }
-    ]
-  },
-  "localizations": {
-    "en-us": {
-        "description": "The bundle with everything you need",
-        "display_name": "Disney+, Hulu, HBO Max Bundle"
-    }
-  },
-  "plan_items": [
-    {
-        "status": "active",
-        "price_wholesale": {
-            "price": 4.56,
-            "price_in_cents": 456,
-            "currency_code": "USD"
-        },
-        "name": "Disney+ Basic",
-        "app_id": "AP468442205989113856",
-        "product_id": "PR469716925099413504",
-        "localizations": {
-            "en-us": {
-                "description": "Disney+ Basic With Ads",
-                "display_name": "Disney+ Basic"
-            }
-        },
-        "prices": {
-            "US": {
-                "price_in_cents": 999,
-                "tier_id": "999",
-                "currency_code": "USD",
-                "price": 9.99
-            }
-        },
-        "app": {
-            "id": "AP468442205989113856",
-            "name": "Disney+",
-            "media": {
-                "icon_1x": "https://media.paket.tv/media/apps/AP468442205989113856/icon@1x.png",
-                "icon_2x": "https://media.paket.tv/media/apps/AP468442205989113856/icon@2x.png",
-                "icon_3x": "https://media.paket.tv/media/apps/AP468442205989113856/icon@3x.png",
-                "logo_dark_1x": "https://media.paket.tv/media/apps/AP468442205989113856/logo_dark@1x.png",
-                "logo_light_1x": "https://media.paket.tv/media/apps/AP468442205989113856/logo_light@1x.png",
-                "tile_1x": "https://media.paket.tv/media/apps/AP468442205989113856/tile@1x.png",
-                "tile_2x": "https://media.paket.tv/media/apps/AP468442205989113856/tile@2x.png"
-            },
-            "status": "live"
-        }
-    },
-    ...
-  ],
-  "created_at": "2024-01-15T10:30:00.000Z",
-  "updated_at": "2024-01-17T07:28:00.000Z"
-}
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"plan_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"427944e5ba9e"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+, Hulu, HBO Max Bundle"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"plan_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sub_bundle"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"platform_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PL468440696748511232"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"billing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"frequency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"month"</span><span class="p">,</span><span class="w"> </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"free_trial_days"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"grace_period_days"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"media"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"promo_4k_1x"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://media.paket.tv/media/plans/PL468440696748511232/427944e5ba9e/promo_4k@1x.png"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"promo_2k_1x"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://media.paket.tv/media/plans/PL468440696748511232/427944e5ba9e/promo_2k@1x.png"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"US"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"billing_cycles"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"price_in_cents"</span><span class="p">:</span><span class="w"> </span><span class="mi">1699</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"tier_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1699"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"currency_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">16.99</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"localizations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"en-us"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The bundle with everything you need"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+, Hulu, HBO Max Bundle"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"plan_items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"price_wholesale"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">4.56</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"price_in_cents"</span><span class="p">:</span><span class="w"> </span><span class="mi">456</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"currency_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+ Basic"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"app_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AP468442205989113856"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR469716925099413504"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"localizations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"en-us"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+ Basic With Ads"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+ Basic"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"US"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"price_in_cents"</span><span class="p">:</span><span class="w"> </span><span class="mi">999</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"tier_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"999"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"currency_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">9.99</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"app"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AP468442205989113856"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"media"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"icon_1x"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://media.paket.tv/media/apps/AP468442205989113856/icon@1x.png"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"icon_2x"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://media.paket.tv/media/apps/AP468442205989113856/icon@2x.png"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"icon_3x"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://media.paket.tv/media/apps/AP468442205989113856/icon@3x.png"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"logo_dark_1x"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://media.paket.tv/media/apps/AP468442205989113856/logo_dark@1x.png"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"logo_light_1x"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://media.paket.tv/media/apps/AP468442205989113856/logo_light@1x.png"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"tile_1x"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://media.paket.tv/media/apps/AP468442205989113856/tile@1x.png"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"tile_2x"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://media.paket.tv/media/apps/AP468442205989113856/tile@2x.png"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+  </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T10:30:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-17T07:28:00.000Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <p><strong>Attributes</strong></p>
 
 <p><strong><code>plan_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
@@ -2427,52 +2427,57 @@ ISO 8601 timestamp when the plan was last updated.</p>
 <blockquote>
 <p>The Subscription Object</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>{
-  "subscription_id": "SUB479027832035610624",
-  "session_id": "SN468560588960960512",
-  "plan_id": "427944e5ba9e",
-  "plan_name": "Disney+, Hulu, HBO Max Bundle",
-  "plan_type": "sub_bundle",
-  "platform_id": "PL468440696748511232",
-  "status": "active",
-  "activation_status": "pending",
-  "payment_status": "paid",
-  "next_billing_date": "2025-09-14T20:45:35.064Z",
-  "current_period_start": "2025-08-14T20:45:35.065Z",
-  "current_period_end": "2025-09-14T20:45:35.064Z",
-  "current_phase_id": "4282b4cfac23dc38",
-  "billing_cycle_count": 1, 
-  "free_trial_days": 0,
-  "trial_end": null,
-  "grace_period_days": 7,
-  "grace_period_end": "2025-09-21T20:45:35.064Z",
-  "billing_interval_days": 30,
-  "billing_frequency": {
-    "unit": "month",
-    "value": 1
-  },
-  "tax_behavior": "exclusive",
-  "tax_rate": 0.0875,
-  "tax_type": "sales_tax",
-  "tax_jurisdiction": "CA-Los Angeles",
-  "tax_note": "",
-  "payment_method_id": "pm_123",
-  "activation_url": null,
-  "activation_token": null,
-  "metadata": {},
-  "device_info": {},
-  "replaced_subscription_id": null,
-  "change_type": null,
-  "proration_credit": 0,
-  "cancel_at_period_end": false,
-  "canceled_at": null,
-  "ended_at": null,
-  "created_ip": "75.85.168.125",
-  "updated_ip": "75.85.168.125",
-  "created_at": "2025-08-14T20:45:35.065Z",
-  "updated_at": "2025-08-14T21:00:00.000Z"
-}
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"subscription_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUB479027832035610624"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"session_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SN468560588960960512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"plan_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"427944e5ba9e"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"platform_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PL468440696748511232"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"activation_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"payment_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"billing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"next_billing_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-09-14T20:45:35.064Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"frequency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"month"</span><span class="p">,</span><span class="w"> </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"cycle_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"current_phase_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4282b4cfac23dc38"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"grace_period_days"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"grace_period_end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-09-21T20:45:35.064Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"interval_days"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"trial"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"days"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-21T20:45:35.064Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"period"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T20:45:35.065Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-09-14T20:45:35.064Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"tax"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0875</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sales_tax"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"jurisdiction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CA-Los Angeles"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"behavior"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclusive"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"plan"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+, Hulu, HBO Max Bundle"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sub_bundle"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"cancellation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"cancel_at_period_end"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"canceled_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ended_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"payment_method_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pm_123"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"proration_credit"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+  </span><span class="nl">"device_info"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+  </span><span class="nl">"created_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"75.85.168.125"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"updated_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"75.85.168.125"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T20:45:35.065Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T21:00:00.000Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <p><strong>Attributes</strong></p>
 
 <p><strong><code>subscription_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
@@ -2657,56 +2662,68 @@ ISO 8601 timestamp when the subscription was last updated.</p>
 <blockquote>
 <p>The Invoice Object</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>{
-  "invoice_id": "INV479027832278880256",
-  "invoice_number": "INV-2025-78880256",
-  "subscription_id": "SUB479027832035610624",
-  "platform_id": "PL468440696748511232",
-  "invoice_date": "2025-08-14T20:45:35.122Z",
-  "due_date": "2025-09-13T20:45:35.122Z",
-  "status": "open",
-  "payment_status": "unpaid",
-  "subtotal": 1699,
-  "proration_credit": 0,
-  "tax_amount": 149,
-  "total_amount": 1848,
-  "amount_due": 1848,
-  "amount_paid": 0,
-  "currency": "USD",
-  "tax_rate": 0.0875,
-  "tax_type": "sales_tax",
-  "tax_jurisdiction": "CA-Los Angeles",
-  "tax_behavior": "exclusive",
-  "tax_note": "",
-  "payment_method_id": null,
-  "payment_intent_id": null,
-  "payment_date": null,
-  "retry_count": 0,
-  "max_retries": 3,
-  "next_retry_date": null,
-  "last_retry_date": null,
-  "retry_delay_minutes": 60,
-  "session_id": "session_456",
-  "plan_id": "427944e5ba9e",
-  "phase_id": "4282b4cfac23dc38",
-  "phase_order": 1,
-  "billing_cycle": 1,
-  "period_start": "2025-08-14T20:45:35.065Z",
-  "period_end": "2025-09-14T20:45:35.064Z",
-  "region": "US",
-  "plan_name": "Disney+, Hulu, HBO Max Bundle",
-  "plan_type": "recurring",
-  "platform_fee_rate": 0.03,
-  "platform_fee_amount": 51,
-  "metadata": {},
-  "created_ip": "192.168.1.1",
-  "updated_ip": "192.168.1.1",
-  "created_at": "2025-08-14T20:45:35.122Z",
-  "updated_at": "2025-08-14T20:45:35.122Z"
-}
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"invoice_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INV479027832278880256"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"invoice_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INV-2025-78880256"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"subscription_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUB479027832035610624"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"platform_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PL468440696748511232"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"session_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"session_456"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"payment_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unpaid"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"amounts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"subtotal"</span><span class="p">:</span><span class="w"> </span><span class="mi">1699</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"proration_credit"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tax_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">149</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"total_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1848</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"amount_due"</span><span class="p">:</span><span class="w"> </span><span class="mi">1848</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"amount_paid"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"tax"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0875</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sales_tax"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"jurisdiction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CA-Los Angeles"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"behavior"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclusive"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"payment"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"method_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"intent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"date"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"retries"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"max"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"next_date"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"last_date"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"delay_minutes"</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"plan"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"plan_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"427944e5ba9e"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+, Hulu, HBO Max Bundle"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"recurring"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"phase_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4282b4cfac23dc38"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"phase_order"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"billing_cycle"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"platform_fee_rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.03</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"platform_fee_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">51</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"period"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T20:45:35.065Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-09-14T20:45:35.064Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"invoice_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T20:45:35.122Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"due_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-09-13T20:45:35.122Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+  </span><span class="nl">"created_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"192.168.1.1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"updated_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"192.168.1.1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T20:45:35.122Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T20:45:35.122Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <p><strong>Attributes</strong></p>
-
+<h4 id='bento-api-overview-the-invoice-object-core-fields'>Core Fields</h4>
 <p><strong><code>invoice_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
 The unique identifier for the invoice (prefixed with INV).</p>
 
@@ -2715,6 +2732,12 @@ Human-readable invoice number.</p>
 
 <p><strong><code>subscription_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
 The subscription this invoice belongs to.</p>
+
+<p><strong><code>platform_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The platform identifier that created the subscription.</p>
+
+<p><strong><code>session_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+The session identifier associated with this invoice&#39;s subscription.</p>
 
 <p><strong><code>status</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
 Invoice status:
@@ -2732,104 +2755,93 @@ Payment collection status:
 - <code>scheduled</code> - Payment scheduled for future date
 - <code>no_payment_required</code> - No payment needed (e.g., free trial)</p>
 
-<p><strong><code>subtotal</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
-Pre-tax amount in cents.</p>
-
-<p><strong><code>proration_credit</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
-Proration credit applied to this invoice in cents (negative for credits).</p>
-
-<p><strong><code>tax_amount</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
-Tax amount in cents.</p>
-
-<p><strong><code>total_amount</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
-Total amount including tax in cents.</p>
-
 <p><strong><code>currency</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
 Three-letter ISO currency code.</p>
 
-<p><strong><code>tax_rate</code></strong> <span style='margin: 0 5px;font-size:.9em'>number</span><br>
-Applied tax rate (0-1, e.g., 0.0875 for 8.75%).</p>
-
-<p><strong><code>tax_type</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-Type of tax applied:
-- <code>sales_tax</code>
-- <code>vat</code>
-- <code>gst</code>
-- <code>pst</code>
-- <code>hst</code>
-- <code>none</code></p>
-
-<p><strong><code>tax_jurisdiction</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-Tax jurisdiction code (e.g., &quot;CA-Los Angeles&quot;).</p>
-
-<p><strong><code>tax_behavior</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-Specifies whether tax should be collected and how:
-- <code>inclusive</code> - Tax will be included in plan price
-- <code>exclusive</code> - Tax will be added to plan price
-- <code>none</code> - Plan is not taxable</p>
-
-<p><strong><code>tax_note</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-Additional notes pertaining to the invoice tax.</p>
-
-<p><strong><code>payment_method_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-Payment method used for this invoice.</p>
-
-<p><strong><code>payment_intent_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-Payment processor intent identifier.</p>
-
-<p><strong><code>payment_date</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-ISO 8601 timestamp when payment was processed (null if unpaid).</p>
-
-<p><strong><code>retry_count</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
-Number of payment retry attempts made.</p>
-
-<p><strong><code>max_retries</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
-Maximum number of payment retries allowed.</p>
-
-<p><strong><code>next_retry_date</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-ISO 8601 timestamp for next payment retry attempt (null if no retry scheduled).</p>
-
-<p><strong><code>last_retry_date</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-ISO 8601 timestamp of last payment retry attempt (null if no retries made).</p>
-
-<p><strong><code>retry_delay_minutes</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
-Delay in minutes before next retry attempt.</p>
-
-<p><strong><code>session_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-The session identifier associated with this invoice&#39;s subscription.</p>
-
-<p><strong><code>plan_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-The plan identifier for this invoice.</p>
-
-<p><strong><code>subscription_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-The subscription this invoice belongs to.</p>
-
-<p><strong><code>phase_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-The plan phase identifier used for pricing (without PHASE# prefix).</p>
-
-<p><strong><code>phase_order</code></strong> <span style='margin: 0 5px;font-size:.9em'>number</span><br>
-The order number of the phase used for this invoice (1-based).</p>
-
-<p><strong><code>billing_cycle</code></strong> <span style='margin: 0 5px;font-size:.9em'>number</span><br>
-The billing cycle number this invoice represents (0 for trial, 1+ for paid cycles).</p>
-
-<p><strong><code>period_start</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-ISO 8601 timestamp for start of billing period.</p>
-
-<p><strong><code>period_end</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-ISO 8601 timestamp for end of billing period.</p>
-
 <p><strong><code>region</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
 Region code for pricing (e.g., &quot;US&quot;).</p>
+<h4 id='bento-api-overview-the-invoice-object-amounts-object'>Amounts Object</h4>
+<p><strong><code>amounts</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
+Grouped financial amounts:</p>
 
-<p><strong><code>plan_name</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-Display name of the plan.</p>
+<ul>
+<li><strong><code>subtotal</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span> - Pre-tax amount in cents</li>
+<li><strong><code>proration_credit</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span> - Proration credit applied in cents</li>
+<li><strong><code>tax_amount</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span> - Tax amount in cents</li>
+<li><strong><code>total_amount</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span> - Total amount including tax in cents</li>
+<li><strong><code>amount_due</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span> - Amount currently due in cents</li>
+<li><strong><code>amount_paid</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span> - Amount already paid in cents</li>
+</ul>
+<h4 id='bento-api-overview-the-invoice-object-tax-object'>Tax Object</h4>
+<p><strong><code>tax</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
+Grouped tax information:</p>
 
-<p><strong><code>plan_type</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
-Type of plan (e.g., &quot;recurring&quot;, &quot;one-time&quot;).</p>
+<ul>
+<li><strong><code>rate</code></strong> <span style='margin: 0 5px;font-size:.9em'>number</span> - Applied tax rate (0-1, e.g., 0.0875 for 8.75%)</li>
+<li><strong><code>type</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - Type of tax (<code>sales_tax</code>, <code>vat</code>, <code>gst</code>, <code>pst</code>, <code>hst</code>, <code>none</code>)</li>
+<li><strong><code>jurisdiction</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - Tax jurisdiction code (e.g., &quot;CA-Los Angeles&quot;)</li>
+<li><strong><code>behavior</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - Tax collection behavior (<code>inclusive</code>, <code>exclusive</code>, <code>none</code>)</li>
+<li><strong><code>note</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - Additional tax notes</li>
+</ul>
+<h4 id='bento-api-overview-the-invoice-object-payment-object'>Payment Object</h4>
+<p><strong><code>payment</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
+Payment information (only present if payment has been attempted):</p>
 
-<p><strong><code>platform_fee_rate</code></strong> <span style='margin: 0 5px;font-size:.9em'>number</span><br>
-Platform fee rate (0-1, e.g., 0.03 for 3%).</p>
+<ul>
+<li><strong><code>method_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - Payment method identifier</li>
+<li><strong><code>intent_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - Payment processor intent ID</li>
+<li><strong><code>date</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 timestamp of payment</li>
+</ul>
+<h4 id='bento-api-overview-the-invoice-object-retries-object'>Retries Object</h4>
+<p><strong><code>retries</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
+Payment retry information (only present if retries have been attempted):</p>
+
+<ul>
+<li><strong><code>count</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span> - Number of retry attempts made</li>
+<li><strong><code>max</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span> - Maximum retries allowed</li>
+<li><strong><code>next_date</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 timestamp of next retry</li>
+<li><strong><code>last_date</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 timestamp of last retry</li>
+<li><strong><code>delay_minutes</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span> - Delay before next retry</li>
+</ul>
+<h4 id='bento-api-overview-the-invoice-object-plan-object'>Plan Object</h4>
+<p><strong><code>plan</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
+Plan and pricing information:</p>
+
+<ul>
+<li><strong><code>plan_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - Plan identifier</li>
+<li><strong><code>name</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - Display name of the plan</li>
+<li><strong><code>type</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - Plan type (e.g., &quot;recurring&quot;)</li>
+<li><strong><code>phase_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - Active phase identifier</li>
+<li><strong><code>phase_order</code></strong> <span style='margin: 0 5px;font-size:.9em'>number</span> - Phase order number (1-based)</li>
+<li><strong><code>billing_cycle</code></strong> <span style='margin: 0 5px;font-size:.9em'>number</span> - Billing cycle number (0=trial, 1+=paid)</li>
+<li><strong><code>platform_fee_rate</code></strong> <span style='margin: 0 5px;font-size:.9em'>number</span> - Platform fee rate (0-1)</li>
+<li><strong><code>platform_fee_amount</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span> - Platform fee in cents</li>
+</ul>
+<h4 id='bento-api-overview-the-invoice-object-period-object'>Period Object</h4>
+<p><strong><code>period</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
+Billing period dates:</p>
+
+<ul>
+<li><strong><code>start</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 start of billing period</li>
+<li><strong><code>end</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 end of billing period</li>
+<li><strong><code>invoice_date</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 invoice creation date</li>
+<li><strong><code>due_date</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 payment due date</li>
+</ul>
+
+<p><strong><code>metadata</code></strong> <span style='margin: 0 5px;font-size:.9em'>object</span><br>
+Custom metadata key-value pairs.</p>
+
+<p><strong><code>created_ip</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+IP address from which the invoice was created.</p>
+
+<p><strong><code>updated_ip</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+IP address from which the invoice was last updated.</p>
+
+<p><strong><code>created_at</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+ISO 8601 timestamp when the invoice was created.</p>
+
+<p><strong><code>updated_at</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
+ISO 8601 timestamp when the invoice was last updated.</p>
 
 <p><strong><code>platform_fee_amount</code></strong> <span style='margin: 0 5px;font-size:.9em'>integer</span><br>
 Platform fee amount in cents.</p>
@@ -2857,71 +2869,84 @@ ISO 8601 timestamp when the invoice was last updated.</p>
 <blockquote>
 <p>The Payment Object</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>{
-  "payment_id": "PAY479027832345678912",
-  "invoice_id": "INV479027832278880256",
-  "subscription_id": "SUB479027832035610624",
-  "platform_id": "PL468440696748511232",
-  "amount": 1848,
-  "currency": "USD",
-  "status": "succeeded",
-  "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
-  "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
-  "error_code": null,
-  "error_message": null,
-  "processor_response": {
-    "last_four": "4242",
-    "brand": "visa",
-    "exp_month": 12,
-    "exp_year": 2028
-  },
-  "metadata": {
-    "source": "mobile_app",
-    "user_agent": "Mozilla/5.0...",
-    "retry_attempt": 0
-  },
-  "created_ip": "192.168.1.100",
-  "created_at": "2025-08-14T21:15:00.000Z",
-  "activation_urls": [
-    {
-      "app_id": "AP468442205989113856",
-      "app_name": "Disney+",
-      "product_id": "PR469716925099413504",
-      "product_name": "Disney+ Basic",
-      "activation_url": "https://disneyplus.com/activate?token=abc123...",
-      "expires_at": "2025-08-14T21:45:00.000Z"
-    }
-  ]
-}
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"payment"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"payment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAY479027832345678912"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"invoice_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INV479027832278880256"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"subscription_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUB479027832035610624"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"platform_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PL468440696748511232"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"succeeded"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1848</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pm_1NvQsHKyuNiyfQC0M4X0Q8Bq"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"card"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"processor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"intent_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pi_3NvQsHKyuNiyfQC00d9qFQe3"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"last_four"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4242"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"brand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"visa"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"exp_month"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"exp_year"</span><span class="p">:</span><span class="w"> </span><span class="mi">2028</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"error_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"error_message"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mobile_app"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"user_agent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mozilla/5.0..."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"retry_attempt"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"audit"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"created_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"192.168.1.100"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T21:15:00.000Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"activation_urls"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"app_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AP468442205989113856"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"app_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR469716925099413504"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"product_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+ Basic"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"activation_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://disneyplus.com/activate?token=abc123..."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T21:45:00.000Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <p><strong>Refund Example:</strong></p>
-<div class="highlight"><pre class="highlight plaintext"><code>{
-  "payment_id": "PAY479027832345678914",
-  "invoice_id": "INV479027832278880256",
-  "subscription_id": "SUB479027832035610624",
-  "platform_id": "PL468440696748511232",
-  "amount": -1848,
-  "currency": "USD",
-  "status": "refunded",
-  "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
-  "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
-  "refund_reason": "customer_request",
-  "original_payment_id": "PAY479027832345678912",
-  "error_code": null,
-  "error_message": null,
-  "processor_response": {
-    "refund_id": "re_1NvQsHKyuNiyfQC0M4X0Q8Bq",
-    "last_four": "4242",
-    "brand": "visa"
-  },
-  "metadata": {
-    "refund_requested_by": "customer_service",
-    "original_charge_date": "2025-08-14T21:15:00.000Z"
-  },
-  "created_ip": "192.168.1.100",
-  "created_at": "2025-08-15T14:30:00.000Z"
-}
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"payment"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"payment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAY479027832345678914"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"invoice_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INV479027832278880256"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"subscription_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUB479027832035610624"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"platform_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PL468440696748511232"</span><span class="p">,</span><span class="w">
+
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"refunded"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1848</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+
+    </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pm_1NvQsHKyuNiyfQC0M4X0Q8Bq"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"card"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="nl">"processor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"intent_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pi_3NvQsHKyuNiyfQC00d9qFQe3"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"refund_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"re_1NvQsHKyuNiyfQC0M4X0Q8Bq"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_four"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4242"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"brand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"visa"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"refund_requested_by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"customer_service"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"original_charge_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T21:15:00.000Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"created_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"192.168.1.100"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-15T14:30:00.000Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <p><strong>Attributes</strong></p>
 
 <p><strong><code>payment_id</code></strong> <span style='margin: 0 5px;font-size:.9em'>string</span><br>
@@ -2998,30 +3023,35 @@ Optional. Returned for successful payments on first invoices. Contains activatio
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"activation_session_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AS479027832456789123"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"subscription_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUB479027832035610624"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"invoice_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INV479027832278880256"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"session_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"session_456"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"platform_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PL468440696748511232"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"platform_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Example Platform"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"session_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"session_456"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"items_total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"items_activated"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T21:15:00.000Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T21:15:00.000Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-17T21:15:00.000Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"activation_items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="nl">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-21T21:15:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"progress"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"items_total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"items_activated"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"activation_urls"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"app_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AP468442205989113856"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"app_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR469716925099413504"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"product_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+ Basic"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"activation_code_hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a1b2c3d4e5f6..."</span><span class="p">,</span><span class="w">
       </span><span class="nl">"activation_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://disneyplus.com/activate?activation_code=AC_A3F2B7C9_D4E1F8A2"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"jti"</span><span class="p">:</span><span class="w"> </span><span class="s2">"at_479027832567890234"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T21:15:00.000Z"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T22:00:00.000Z"</span><span class="w">
+      </span><span class="nl">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-21T21:15:00.000Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"app_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AP468442205989113857"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"app_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hulu"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR469716925099413505"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"product_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hulu (No Ads)"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"activation_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://hulu.com/activate?code=AC_B4G2K8D1_F5H9L3M6"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-21T21:15:00.000Z"</span><span class="w">
     </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+  </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T21:15:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-08-14T21:15:00.000Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Attributes</strong></p>
