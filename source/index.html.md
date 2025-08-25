@@ -29,9 +29,9 @@ includes:
   - pagination
   - versioning
   - core_api
-  - tvaas_api
-  - upnext_api
   - license_api
+  - upnext_api
+  - tvaas_api
   - webhooks
 
 search: true

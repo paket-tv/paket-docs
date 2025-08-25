@@ -1,8 +1,8 @@
-# Bento API
+# License API (Bento)
 
 ## Overview
 
-The Paket Bento API is a license and subscription orchestration service that enables Platforms and Publishers to offer comprehensive subscription bundles through a unified catalog via their native billing and identity systems. This API provides access to curated plan offerings, subscription management, and invoice management capabilities that power the Paket subscription marketplace.
+The Paket License API (Bento) is a license and subscription orchestration service that enables Platforms and Publishers to offer comprehensive subscription bundles through a unified catalog via their native billing and identity systems. This API provides access to curated plan offerings, subscription management, and invoice management capabilities that power the Paket subscription marketplace.
 
 **For Platforms**, the Bundle API offers a seamless way to integrate third-party subscription services into their ecosystem, providing users with bundled offerings that combine multiple streaming services, apps, and digital content into single, manageable subscriptions.
 
