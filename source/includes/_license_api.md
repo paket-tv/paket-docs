@@ -18,18 +18,17 @@ At the core of the Bundle API is the Plan object, which defines subscription off
 
 > The Plan Object
 
-```
+```json
 {
   "plan_id": "427944e5ba9e",
   "name": "Disney+, Hulu, HBO Max Bundle",
   "plan_type": "sub_bundle",
   "status": "active",
   "platform_id": "PL468440696748511232",
-  "free_trial_days": 0,
-  "grace_period_days": 7,
-  "billing_frequency": {
-    "unit": "month",
-    "value": 1
+  "billing": {
+    "frequency": { "unit": "month", "value": 1 },
+    "free_trial_days": 7,
+    "grace_period_days": 7
   },
   "media": {
     "promo_4k_1x": "https://media.paket.tv/media/plans/PL468440696748511232/427944e5ba9e/promo_4k@1x.png",
@@ -97,6 +96,7 @@ At the core of the Bundle API is the Plan object, which defines subscription off
     },
     ...
   ],
+  "metadata": {},
   "created_at": "2024-01-15T10:30:00.000Z",
   "updated_at": "2024-01-17T07:28:00.000Z"
 }
@@ -186,47 +186,52 @@ The Subscription object represents an active or inactive Subscription to a Plan,
 
 > The Subscription Object
 
-```
+```json
 {
   "subscription_id": "SUB479027832035610624",
   "session_id": "SN468560588960960512",
   "plan_id": "427944e5ba9e",
-  "plan_name": "Disney+, Hulu, HBO Max Bundle",
-  "plan_type": "sub_bundle",
   "platform_id": "PL468440696748511232",
   "status": "active",
   "activation_status": "pending",
   "payment_status": "paid",
-  "next_billing_date": "2025-09-14T20:45:35.064Z",
-  "current_period_start": "2025-08-14T20:45:35.065Z",
-  "current_period_end": "2025-09-14T20:45:35.064Z",
-  "current_phase_id": "4282b4cfac23dc38",
-  "billing_cycle_count": 1, 
-  "free_trial_days": 0,
-  "trial_end": null,
-  "grace_period_days": 7,
-  "grace_period_end": "2025-09-21T20:45:35.064Z",
-  "billing_interval_days": 30,
-  "billing_frequency": {
-    "unit": "month",
-    "value": 1
+  "billing": {
+    "next_billing_date": "2025-09-14T20:45:35.064Z",
+    "frequency": { "unit": "month", "value": 1 },
+    "cycle_count": 1,
+    "current_phase_id": "4282b4cfac23dc38",
+    "grace_period_days": 7,
+    "grace_period_end": "2025-09-21T20:45:35.064Z",
+    "interval_days": 30
   },
-  "tax_behavior": "exclusive",
-  "tax_rate": 0.0875,
-  "tax_type": "sales_tax",
-  "tax_jurisdiction": "CA-Los Angeles",
-  "tax_note": "",
+  "trial": {
+    "days": 7,
+    "end_date": "2025-08-21T20:45:35.064Z"
+  },
+  "period": {
+    "start": "2025-08-14T20:45:35.065Z",
+    "end": "2025-09-14T20:45:35.064Z"
+  },
+  "tax": {
+    "rate": 0.0875,
+    "type": "sales_tax",
+    "jurisdiction": "CA-Los Angeles",
+    "behavior": "exclusive",
+    "note": ""
+  },
+  "plan": {
+    "name": "Disney+, Hulu, HBO Max Bundle",
+    "type": "sub_bundle"
+  },
+  "cancellation": {
+    "cancel_at_period_end": false,
+    "canceled_at": null,
+    "ended_at": null
+  },
   "payment_method_id": "pm_123",
-  "activation_url": null,
-  "activation_token": null,
+  "proration_credit": 0,
   "metadata": {},
   "device_info": {},
-  "replaced_subscription_id": null,
-  "change_type": null,
-  "proration_credit": 0,
-  "cancel_at_period_end": false,
-  "canceled_at": null,
-  "ended_at": null,
   "created_ip": "75.85.168.125",
   "updated_ip": "75.85.168.125",
   "created_at": "2025-08-14T20:45:35.065Z",
@@ -403,48 +408,60 @@ The Invoice object represents a billing statement for a subscription period, tra
 
 > The Invoice Object
 
-```
+```json
 {
   "invoice_id": "INV479027832278880256",
   "invoice_number": "INV-2025-78880256",
   "subscription_id": "SUB479027832035610624",
   "platform_id": "PL468440696748511232",
-  "invoice_date": "2025-08-14T20:45:35.122Z",
-  "due_date": "2025-09-13T20:45:35.122Z",
+  "session_id": "session_456",
   "status": "open",
   "payment_status": "unpaid",
-  "subtotal": 1699,
-  "proration_credit": 0,
-  "tax_amount": 149,
-  "total_amount": 1848,
-  "amount_due": 1848,
-  "amount_paid": 0,
   "currency": "USD",
-  "tax_rate": 0.0875,
-  "tax_type": "sales_tax",
-  "tax_jurisdiction": "CA-Los Angeles",
-  "tax_behavior": "exclusive",
-  "tax_note": "",
-  "payment_method_id": null,
-  "payment_intent_id": null,
-  "payment_date": null,
-  "retry_count": 0,
-  "max_retries": 3,
-  "next_retry_date": null,
-  "last_retry_date": null,
-  "retry_delay_minutes": 60,
-  "session_id": "session_456",
-  "plan_id": "427944e5ba9e",
-  "phase_id": "4282b4cfac23dc38",
-  "phase_order": 1,
-  "billing_cycle": 1,
-  "period_start": "2025-08-14T20:45:35.065Z",
-  "period_end": "2025-09-14T20:45:35.064Z",
   "region": "US",
-  "plan_name": "Disney+, Hulu, HBO Max Bundle",
-  "plan_type": "recurring",
-  "platform_fee_rate": 0.03,
-  "platform_fee_amount": 51,
+  "amounts": {
+    "subtotal": 1699,
+    "proration_credit": 0,
+    "tax_amount": 149,
+    "total_amount": 1848,
+    "amount_due": 1848,
+    "amount_paid": 0
+  },
+  "tax": {
+    "rate": 0.0875,
+    "type": "sales_tax",
+    "jurisdiction": "CA-Los Angeles",
+    "behavior": "exclusive",
+    "note": ""
+  },
+  "payment": {
+    "method_id": null,
+    "intent_id": null,
+    "date": null
+  },
+  "retries": {
+    "count": 0,
+    "max": 3,
+    "next_date": null,
+    "last_date": null,
+    "delay_minutes": 60
+  },
+  "plan": {
+    "plan_id": "427944e5ba9e",
+    "name": "Disney+, Hulu, HBO Max Bundle",
+    "type": "recurring",
+    "phase_id": "4282b4cfac23dc38",
+    "phase_order": 1,
+    "billing_cycle": 1,
+    "platform_fee_rate": 0.03,
+    "platform_fee_amount": 51
+  },
+  "period": {
+    "start": "2025-08-14T20:45:35.065Z",
+    "end": "2025-09-14T20:45:35.064Z",
+    "invoice_date": "2025-08-14T20:45:35.122Z",
+    "due_date": "2025-09-13T20:45:35.122Z"
+  },
   "metadata": {},
   "created_ip": "192.168.1.1",
   "updated_ip": "192.168.1.1",
@@ -455,6 +472,8 @@ The Invoice object represents a billing statement for a subscription period, tra
 
 **Attributes**
 
+#### Core Fields
+
 **`invoice_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The unique identifier for the invoice (prefixed with INV).
 
@@ -463,6 +482,12 @@ Human-readable invoice number.
 
 **`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 The subscription this invoice belongs to.
+
+**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform identifier that created the subscription.
+
+**`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The session identifier associated with this invoice's subscription.
 
 **`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 Invoice status:
@@ -480,104 +505,93 @@ Payment collection status:
 - `scheduled` - Payment scheduled for future date
 - `no_payment_required` - No payment needed (e.g., free trial)
 
-**`subtotal`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Pre-tax amount in cents.
-
-**`proration_credit`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Proration credit applied to this invoice in cents (negative for credits).
-
-**`tax_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Tax amount in cents.
-
-**`total_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Total amount including tax in cents.
-
 **`currency`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 Three-letter ISO currency code.
-
-**`tax_rate`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
-Applied tax rate (0-1, e.g., 0.0875 for 8.75%).
-
-**`tax_type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Type of tax applied:
-- `sales_tax`
-- `vat`
-- `gst`
-- `pst`
-- `hst`
-- `none`
-
-**`tax_jurisdiction`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Tax jurisdiction code (e.g., "CA-Los Angeles").
-
-**`tax_behavior`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Specifies whether tax should be collected and how:
-- `inclusive` - Tax will be included in plan price
-- `exclusive` - Tax will be added to plan price
-- `none` - Plan is not taxable
-
-**`tax_note`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Additional notes pertaining to the invoice tax.
-
-**`payment_method_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Payment method used for this invoice.
-
-**`payment_intent_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Payment processor intent identifier.
-
-**`payment_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when payment was processed (null if unpaid).
-
-**`retry_count`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Number of payment retry attempts made.
-
-**`max_retries`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Maximum number of payment retries allowed.
-
-**`next_retry_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp for next payment retry attempt (null if no retry scheduled).
-
-**`last_retry_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp of last payment retry attempt (null if no retries made).
-
-**`retry_delay_minutes`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Delay in minutes before next retry attempt.
-
-**`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The session identifier associated with this invoice's subscription.
-
-**`plan_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The plan identifier for this invoice.
-
-**`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The subscription this invoice belongs to.
-
-**`phase_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The plan phase identifier used for pricing (without PHASE# prefix).
-
-**`phase_order`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
-The order number of the phase used for this invoice (1-based).
-
-**`billing_cycle`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
-The billing cycle number this invoice represents (0 for trial, 1+ for paid cycles).
-
-**`period_start`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp for start of billing period.
-
-**`period_end`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp for end of billing period.
 
 **`region`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
 Region code for pricing (e.g., "US").
 
-**`plan_name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Display name of the plan.
+#### Amounts Object
 
-**`plan_type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Type of plan (e.g., "recurring", "one-time").
+**`amounts`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Grouped financial amounts:
 
-**`platform_fee_rate`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
-Platform fee rate (0-1, e.g., 0.03 for 3%).
+- **`subtotal`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Pre-tax amount in cents
+- **`proration_credit`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Proration credit applied in cents
+- **`tax_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Tax amount in cents
+- **`total_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Total amount including tax in cents
+- **`amount_due`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Amount currently due in cents
+- **`amount_paid`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Amount already paid in cents
+
+#### Tax Object
+
+**`tax`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Grouped tax information:
+
+- **`rate`** <span style='margin: 0 5px;font-size:.9em'>number</span> - Applied tax rate (0-1, e.g., 0.0875 for 8.75%)
+- **`type`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Type of tax (`sales_tax`, `vat`, `gst`, `pst`, `hst`, `none`)
+- **`jurisdiction`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Tax jurisdiction code (e.g., "CA-Los Angeles")
+- **`behavior`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Tax collection behavior (`inclusive`, `exclusive`, `none`)
+- **`note`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Additional tax notes
+
+#### Payment Object
+
+**`payment`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Payment information (only present if payment has been attempted):
+
+- **`method_id`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Payment method identifier
+- **`intent_id`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Payment processor intent ID
+- **`date`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 timestamp of payment
+
+#### Retries Object
+
+**`retries`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Payment retry information (only present if retries have been attempted):
+
+- **`count`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Number of retry attempts made
+- **`max`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Maximum retries allowed
+- **`next_date`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 timestamp of next retry
+- **`last_date`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 timestamp of last retry
+- **`delay_minutes`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Delay before next retry
+
+#### Plan Object
+
+**`plan`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Plan and pricing information:
+
+- **`plan_id`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Plan identifier
+- **`name`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Display name of the plan
+- **`type`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Plan type (e.g., "recurring")
+- **`phase_id`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Active phase identifier
+- **`phase_order`** <span style='margin: 0 5px;font-size:.9em'>number</span> - Phase order number (1-based)
+- **`billing_cycle`** <span style='margin: 0 5px;font-size:.9em'>number</span> - Billing cycle number (0=trial, 1+=paid)
+- **`platform_fee_rate`** <span style='margin: 0 5px;font-size:.9em'>number</span> - Platform fee rate (0-1)
+- **`platform_fee_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Platform fee in cents
+
+#### Period Object
+
+**`period`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Billing period dates:
+
+- **`start`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 start of billing period
+- **`end`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 end of billing period
+- **`invoice_date`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 invoice creation date
+- **`due_date`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 payment due date
+
+**`metadata`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Custom metadata key-value pairs.
+
+**`created_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+IP address from which the invoice was created.
+
+**`updated_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+IP address from which the invoice was last updated.
+
+**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the invoice was created.
+
+**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the invoice was last updated.
 
 **`platform_fee_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
 Platform fee amount in cents.
@@ -606,32 +620,41 @@ The Payment object represents an immutable payment attempt record for an invoice
 
 > The Payment Object
 
-```
+```json
 {
-  "payment_id": "PAY479027832345678912",
-  "invoice_id": "INV479027832278880256",
-  "subscription_id": "SUB479027832035610624",
-  "platform_id": "PL468440696748511232",
-  "amount": 1848,
-  "currency": "USD",
-  "status": "succeeded",
-  "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
-  "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
-  "error_code": null,
-  "error_message": null,
-  "processor_response": {
-    "last_four": "4242",
-    "brand": "visa",
-    "exp_month": 12,
-    "exp_year": 2028
+  "payment": {
+    "payment_id": "PAY479027832345678912",
+    "invoice_id": "INV479027832278880256",
+    "subscription_id": "SUB479027832035610624",
+    "platform_id": "PL468440696748511232",
+    "status": "succeeded",
+    "amount": 1848,
+    "currency": "USD",
+    "method": {
+      "id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+      "type": "card"
+    },
+    "processor": {
+      "intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
+      "response": {
+        "last_four": "4242",
+        "brand": "visa",
+        "exp_month": 12,
+        "exp_year": 2028
+      },
+      "error_code": null,
+      "error_message": null
+    },
+    "metadata": {
+      "source": "mobile_app",
+      "user_agent": "Mozilla/5.0...",
+      "retry_attempt": 0
+    },
+    "audit": {
+      "created_ip": "192.168.1.100",
+      "created_at": "2025-08-14T21:15:00.000Z"
+    }
   },
-  "metadata": {
-    "source": "mobile_app",
-    "user_agent": "Mozilla/5.0...",
-    "retry_attempt": 0
-  },
-  "created_ip": "192.168.1.100",
-  "created_at": "2025-08-14T21:15:00.000Z",
   "activation_urls": [
     {
       "app_id": "AP468442205989113856",
@@ -647,25 +670,29 @@ The Payment object represents an immutable payment attempt record for an invoice
 
 **Refund Example:**
 
-```
+```json
 {
-  "payment_id": "PAY479027832345678914",
-  "invoice_id": "INV479027832278880256",
-  "subscription_id": "SUB479027832035610624",
-  "platform_id": "PL468440696748511232",
-  "amount": -1848,
-  "currency": "USD",
-  "status": "refunded",
-  "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
-  "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
-  "refund_reason": "customer_request",
-  "original_payment_id": "PAY479027832345678912",
-  "error_code": null,
-  "error_message": null,
-  "processor_response": {
-    "refund_id": "re_1NvQsHKyuNiyfQC0M4X0Q8Bq",
-    "last_four": "4242",
-    "brand": "visa"
+  "payment": {
+    "payment_id": "PAY479027832345678914",
+    "invoice_id": "INV479027832278880256",
+    "subscription_id": "SUB479027832035610624",
+    "platform_id": "PL468440696748511232",
+    
+    "status": "refunded",
+    "amount": -1848,
+    "currency": "USD",
+
+    "method": {
+      "id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+      "type": "card"
+    },
+
+    "processor": {
+      "intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
+      "response": {
+        "refund_id": "re_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+        "last_four": "4242",
+        "brand": "visa"
   },
   "metadata": {
     "refund_requested_by": "customer_service",
@@ -752,30 +779,35 @@ The Activation Session object represents a collection of activation codes genera
 {
   "activation_session_id": "AS479027832456789123",
   "subscription_id": "SUB479027832035610624",
-  "invoice_id": "INV479027832278880256",
-  "session_id": "session_456",
   "platform_id": "PL468440696748511232",
-  "platform_name": "Example Platform",
+  "session_id": "session_456",
   "status": "pending",
-  "items_total": 2,
-  "items_activated": 0,
-  "created_at": "2025-08-14T21:15:00.000Z",
-  "updated_at": "2025-08-14T21:15:00.000Z",
-  "expires_at": "2025-08-17T21:15:00.000Z",
-  "activation_items": [
+  "expires_at": "2025-08-21T21:15:00.000Z",
+  "progress": {
+    "items_total": 3,
+    "items_activated": 1
+  },
+  "activation_urls": [
     {
       "app_id": "AP468442205989113856",
       "app_name": "Disney+",
       "product_id": "PR469716925099413504",
       "product_name": "Disney+ Basic",
-      "status": "pending",
-      "activation_code_hash": "a1b2c3d4e5f6...",
       "activation_url": "https://disneyplus.com/activate?activation_code=AC_A3F2B7C9_D4E1F8A2",
-      "jti": "at_479027832567890234",
-      "created_at": "2025-08-14T21:15:00.000Z",
-      "expires_at": "2025-08-14T22:00:00.000Z"
+      "expires_at": "2025-08-21T21:15:00.000Z"
+    },
+    {
+      "app_id": "AP468442205989113857",
+      "app_name": "Hulu",
+      "product_id": "PR469716925099413505",
+      "product_name": "Hulu (No Ads)",
+      "activation_url": "https://hulu.com/activate?code=AC_B4G2K8D1_F5H9L3M6",
+      "expires_at": "2025-08-21T21:15:00.000Z"
     }
-  ]
+  ],
+  "metadata": {},
+  "created_at": "2025-08-14T21:15:00.000Z",
+  "updated_at": "2025-08-14T21:15:00.000Z"
 }
 ```
 
@@ -847,7 +879,7 @@ Paket's subscription orchestration service works independently of the Platform's
 2. **Invoice Generation**: Paket automatically generates the first invoice for the billing period
 3. **Platform Processes Payment**: Platform collects payment through their payment service provider (PSP)
 4. **Payment Recording**: Platform posts payment result to `POST /v1/catalog/subscriptions/{subscription_id}/invoices/{invoice_id}/payments`
-5. **Subscription Activation**: On successful payment, Paket returns activation URLs and triggers the app activation flow
+5. **Subscription Activation**: On successful payment, Paket returns activation URLs for each of the plan's products and triggers the app activation flow
 6. **Publisher Notification**: Publishers receive webhooks about new subscriptions requiring activation
 
 #### Product Activation
@@ -898,6 +930,33 @@ curl --location --request POST 'https://api.paket.tv/v1/catalog/activation/excha
 After successfully exchanging the activation code and completing user account setup, publishers must confirm the activation by calling PUT /v1/catalog/activation/{session_id}/items/{item_id} to update the activation status.
 </aside>
 
+### Subscription Renewal Flow
+
+Paket handles subscription renewals automatically through its billing orchestration system. The renewal process ensures continuity of service while maintaining proper billing cycles and platform revenue distribution.
+
+1. **Renewal Notification**: Paket sends `billing.renewal.upcoming` webhook to platforms 7 days before the next billing date
+2. **Invoice Generation**: On the billing date, Paket automatically generates a new invoice for the next billing cycle
+3. **Platform Notification**: Platform receives `invoice.created` webhook event with the new invoice details
+4. **Payment Processing**: Platform collects payment through their payment service provider (PSP) 
+5. **Payment Confirmation**: Platform records payment result via `POST /v1/catalog/subscriptions/{subscription_id}/invoices/{invoice_id}/payments`
+6. **Renewal Completion**: On successful payment, subscription billing cycle advances and service continues
+7. **Publisher Updates**: Publishers receive `billing.renewal.processed` webhook confirming successful renewal
+
+### Subscription Cancellation Flow
+
+Subscription cancellations can be initiated by platforms and are handled gracefully to ensure proper service termination and final billing reconciliation.
+
+1. **Cancellation Request**: Platform initiates cancellation via `PUT /v1/catalog/subscriptions/{subscription_id}` with status `"canceled"`
+2. **Final Billing**: Paket calculates any pro-rated charges or credits based on cancellation timing
+3. **Publisher Notification**: Publishers receive `subscription.canceled` webhook event with cancellation details
+4. **Service Termination**: Publishers deactivate services for the canceled subscription
+5. **Grace Period**: Optional grace period allows users to maintain access until the end of the current billing period
+6. **Final Invoice**: If applicable, Paket generates a final invoice for any outstanding charges
+7. **Subscription Closure**: Subscription status changes to `"canceled"` and no future invoices are generated
+
+<aside class="warning">
+Publishers should immediately revoke access to services upon receiving the subscription.canceled webhook, unless the platform implements an end-of-period grace period policy.
+</aside>
 
 ## Plans
 
@@ -908,15 +967,15 @@ Plans define the subscription offerings available through the Paket catalog, inc
 > Endpoint
 
 ```
-GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/plans
+GET https://api.paket.tv/v1/catalog/plans
 ```
 
 Retrieves a list of available Plans from the catalog.
 
-> GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/plans
+> GET https://api.paket.tv/v1/catalog/plans
 
 ```curl
-curl --location 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/plans' \
+curl --location 'https://api.paket.tv/v1/catalog/plans' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
@@ -1002,15 +1061,15 @@ Returns an array of Plan objects (without `plan_items` array) available in the c
 > Endpoint
 
 ```
-GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/plans/:plan_id
+GET https://api.paket.tv/v1/catalog/plans/:plan_id
 ```
 
 Retrieves detailed information about a specific plan.
 
-> GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/plans/:plan_id
+> GET https://api.paket.tv/v1/catalog/plans/:plan_id
 
 ```curl
-curl --location 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/plans/427944e5ba9e' \
+curl --location 'https://api.paket.tv/v1/catalog/plans/427944e5ba9e' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
@@ -1133,15 +1192,15 @@ Subscriptions represent active relationships between users and plans, managing b
 > Endpoint
 
 ```
-POST https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions
+POST https://api.paket.tv/v1/catalog/subscriptions
 ```
 
 Creates a new subscription for a session with automatic invoice generation.
 
-> POST https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions
+> POST https://api.paket.tv/v1/catalog/subscriptions
 
 ```curl
-curl --location 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions?region=US' \
+curl --location 'https://api.paket.tv/v1/catalog/subscriptions?region=US' \
   --header 'Content-Type: application/json' \
   --header 'Authorization: Basic <credentials>'
   --header 'Idempotency-Key: unique-operation-123' \
@@ -1317,15 +1376,15 @@ Creating a subscription automatically generates the first invoice for the billin
 > Endpoint
 
 ```
-PUT https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id
+PUT https://api.paket.tv/v1/catalog/subscriptions/:subscription_id
 ```
 
 Updates an existing subscription's status, payment method, or other properties.
 
-> PUT https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id
+> PUT https://api.paket.tv/v1/catalog/subscriptions/:subscription_id
 
 ```curl
-curl --location --request PUT 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/SUB479027832035610624' \
+curl --location --request PUT 'https://api.paket.tv/v1/catalog/subscriptions/SUB479027832035610624' \
   --header 'Content-Type: application/json' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
@@ -1441,15 +1500,15 @@ Returns the updated Subscription object.
 > Endpoint
 
 ```
-GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id
+GET https://api.paket.tv/v1/catalog/subscriptions/:subscription_id
 ```
 
 Retrieves details of a specific subscription.
 
-> GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id
+> GET https://api.paket.tv/v1/catalog/subscriptions/:subscription_id
 
 ```curl
-curl --location 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/SUB479027832035610624' \
+curl --location 'https://api.paket.tv/v1/catalog/subscriptions/SUB479027832035610624' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
@@ -1512,15 +1571,15 @@ Returns a complete Subscription object.
 > Endpoint
 
 ```
-GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions
+GET https://api.paket.tv/v1/catalog/subscriptions
 ```
 
 Lists subscriptions for a specific session.
 
-> GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions
+> GET https://api.paket.tv/v1/catalog/subscriptions
 
 ```curl
-curl --location 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions?session_id=session_456&limit=50' \
+curl --location 'https://api.paket.tv/v1/catalog/subscriptions?session_id=session_456&limit=50' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
@@ -1587,15 +1646,15 @@ Invoices track billing statements and payment collection for subscription period
 > Endpoint
 
 ```
-PUT https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id
+PUT https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id
 ```
 
 Updates an invoice's payment status and related fields.
 
-> PUT https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id
+> PUT https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id
 
 ```curl
-curl --location --request PUT 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256' \
+curl --location --request PUT 'https://api.paket.tv/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256' \
   --header 'Content-Type: application/json' \
   --header 'Authorization: Basic <credentials>'
   --header 'Idempotency-Key: unique-payment-789' \
@@ -1741,15 +1800,15 @@ When payment_status is set to "paid":
 > Endpoint
 
 ```
-GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id
+GET https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id
 ```
 
 Retrieves details of a specific invoice.
 
-> GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id
+> GET https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id
 
 ```curl
-curl --location 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256' \
+curl --location 'https://api.paket.tv/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
@@ -1812,15 +1871,15 @@ Returns a complete Invoice object.
 > Endpoint
 
 ```
-GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices
+GET https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices
 ```
 
 Lists all invoices for a specific subscription.
 
-> GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices
+> GET https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices
 
 ```curl
-curl --location 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/SUB479027832035610624/invoices?limit=50' \
+curl --location 'https://api.paket.tv/v1/catalog/subscriptions/SUB479027832035610624/invoices?limit=50' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
@@ -1891,15 +1950,15 @@ Payments provide immutable audit trails of all payment attempts for invoices. Un
 > Endpoint
 
 ```
-POST https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
+POST https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
 ```
 
 Creates an immutable payment record for an invoice. Supports both payments (positive amounts) and refunds (negative amounts).
 
-> POST https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
+> POST https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
 
 ```curl
-curl --location --request POST 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256/payments' \
+curl --location --request POST 'https://api.paket.tv/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256/payments' \
   --header 'Content-Type: application/json' \
   --header 'Authorization: Basic <credentials>' \
   --header 'Idempotency-Key: unique-payment-123' \
@@ -2084,15 +2143,15 @@ Payment records are immutable for audit trail purposes. Each payment attempt cre
 > Endpoint
 
 ```
-GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments/:payment_id
+GET https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments/:payment_id
 ```
 
 Retrieves details of a specific payment record.
 
-> GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments/:payment_id
+> GET https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments/:payment_id
 
 ```curl
-curl --location 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256/payments/PAY479027832345678912' \
+curl --location 'https://api.paket.tv/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256/payments/PAY479027832345678912' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
@@ -2156,15 +2215,15 @@ Returns the complete Payment object.
 > Endpoint
 
 ```
-GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
+GET https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
 ```
 
 Lists all payment attempts for a specific invoice, sorted by most recent first.
 
-> GET https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
+> GET https://api.paket.tv/v1/catalog/subscriptions/:subscription_id/invoices/:invoice_id/payments
 
 ```curl
-curl --location 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256/payments?limit=25' \
+curl --location 'https://api.paket.tv/v1/catalog/subscriptions/SUB479027832035610624/invoices/INV479027832278880256/payments?limit=25' \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic <credentials>'
 ``` 
@@ -2238,15 +2297,19 @@ The Activation API provides endpoints for managing product activation sessions a
 > Endpoint
 
 ```
-POST https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/exchange
+POST https://api.paket.tv/v1/catalog/activation/exchange
 ```
 
 Validates and exchanges an activation code for product licensing information. Publishers use this endpoint to verify activation codes received from users.
 
-> POST https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/exchange
+<aside class="warning">
+This endpoint is only accessible to the App tenant (Publisher) to which the respective product belongs.
+</aside>
+
+> POST https://api.paket.tv/v1/catalog/activation/exchange
 
 ```curl
-curl --location --request POST 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/exchange' \
+curl --location --request POST 'https://api.paket.tv/v1/catalog/activation/exchange' \
   --header 'Content-Type: application/json' \
   --header 'Authorization: Basic <credentials>' \
   --data '{
@@ -2316,7 +2379,7 @@ Your API credentials for authentication.
 **Request Body**
 
 **`activation_code`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The activation code to validate and exchange (format: AC_XXXXXXXX_XXXXXXXX).
+The activation code to validate and exchange, taken from the activation URL.
 
 **Returns**
 
@@ -2343,15 +2406,19 @@ Publishers must implement proper error handling for expired or invalid activatio
 > Endpoint
 
 ```
-PUT https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/:session_id/items/:item_id
+PUT https://api.paket.tv/v1/catalog/activation/:session_id/items/:item_id
 ```
 
-Confirms that a user has successfully completed the activation process with the publisher. This endpoint should be called after the publisher has successfully provisioned the service for the user.
+Confirms that a user has successfully completed the activation process. This endpoint should be called after the service has been successfully provisioned for the user.
 
-> PUT https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/:session_id/items/:item_id
+<aside class="notice">
+This endpoint is accessible to both Publishers and Platforms. <strong>Publishers primary use case</strong>: Confirm successful user activation after account setup. <strong>Platforms</strong>: Administrative use, update activation status for support purposes
+</aside>
+
+> PUT https://api.paket.tv/v1/catalog/activation/:session_id/items/:item_id
 
 ```curl
-curl --location --request PUT 'https://b3vevnva7a.execute-api.us-west-2.amazonaws.com/dev/v1/catalog/activation/AS479027832456789123/items/AP468442205989113856' \
+curl --location --request PUT 'https://api.paket.tv/v1/catalog/activation/AS479027832456789123/items/AP468442205989113856' \
   --header 'Content-Type: application/json' \
   --header 'Authorization: Basic <credentials>' \
   --data '{
@@ -2410,3 +2477,108 @@ Required if status is `failed`. Reason for activation failure.
 **Returns**
 
 Returns the updated activation item confirming the activation status has been recorded.
+
+### Regenerate Activation Codes
+
+> Endpoint
+
+```
+POST https://api.paket.tv/v1/catalog/activation/:session_id/regenerate
+```
+
+Regenerates expired activation codes for a subscription. This endpoint allows platforms to generate new activation codes when the original codes have expired after 7 days.
+
+<aside class="warning">
+This endpoint is only accessible to the Platform tenant (Platform) from which the subscription was created.
+</aside>
+
+> POST https://api.paket.tv/v1/catalog/activation/:session_id/regenerate
+
+```curl
+curl --location --request POST 'https://api.paket.tv/v1/catalog/activation/AS479027832456789123/regenerate' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Basic <credentials>' \
+  --data '{
+    "regenerate_all": false,
+    "app_ids": ["AP468442205989113856"]
+  }'
+``` 
+
+> Response (Successful Regeneration)
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+{
+  "activation_session_id": "AS479027832456789123",
+  "subscription_id": "SUB479027832035610624",
+  "regenerated_count": 1,
+  "activation_urls": [
+    {
+      "app_id": "AP468442205989113856",
+      "app_name": "Disney+",
+      "product_id": "PR469716925099413504",
+      "product_name": "Disney+ Basic",
+      "activation_url": "https://disneyplus.com/activate?activation_code=AC_B4G7K2L9_M3N5P8Q1",
+      "expires_at": "2025-08-21T21:15:00.000Z"
+    }
+  ]
+}
+```
+
+> Response (Session Not Found)
+
+```http
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+{
+  "error": "activation_session_not_found",
+  "message": "Activation session not found or expired"
+}
+```
+
+> Response (Codes Still Valid)
+
+```http
+HTTP/1.1 409 Conflict
+Content-Type: application/json
+{
+  "error": "codes_still_valid",
+  "message": "Existing activation codes are still valid and have not expired"
+}
+```
+
+\* required
+
+**Headers**
+
+**`Authorization`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Your API credentials for authentication.
+
+**Path Parameters**
+
+**`session_id`*** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The activation session ID for which to regenerate codes.
+
+**Request Body**
+
+**`regenerate_all`** <span style='margin: 0 5px;font-size:.9em'>boolean</span>  
+Optional. If true, regenerates codes for all products in the session. Default: false.
+
+**`app_ids`** <span style='margin: 0 5px;font-size:.9em'>array</span>  
+Optional. Array of app IDs for which to regenerate codes. Required if `regenerate_all` is false.
+
+**`force`** <span style='margin: 0 5px;font-size:.9em'>boolean</span>  
+Optional. If true, regenerates codes even if existing codes haven't expired. Default: false.
+
+**Returns**
+
+Returns the activation session with new activation URLs containing fresh codes valid for another 7 days.
+
+<aside class="notice">
+New codes will be generated with a 7-day expiration period. The original codes will be invalidated and cannot be used after regeneration.
+</aside>
+
+<aside class="warning">
+Regenerating codes will invalidate any existing unused codes. Users who have already received the old codes will need to be provided with the new activation URLs.
+</aside>
