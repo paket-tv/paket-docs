@@ -1,871 +1,16 @@
-# License API (Bento)
+# Bento (Bento)
 
 ## Overview
 
 The Paket License API (Bento) is a license and subscription orchestration service that enables Platforms and Publishers to offer comprehensive subscription bundles through a unified catalog via their native billing and identity systems. This API provides access to curated plan offerings, subscription management, and invoice management capabilities that power the Paket subscription marketplace.
 
-**For Platforms**, the Bundle API offers a seamless way to integrate third-party subscription services into their ecosystem, providing users with bundled offerings that combine multiple streaming services, apps, and digital content into single, manageable subscriptions.
+**For Platforms**, Bento offers a seamless way to integrate third-party subscription services into their ecosystem, providing users with bundled offerings that combine multiple streaming services, apps, and digital content into single, manageable subscriptions.
 
-**For Publishers**, the Bundle API ensures consistent subscription management across all Paket-integrated platforms, with unified billing, activation workflows, and revenue distribution handled automatically through the Paket infrastructure.
+**For Publishers**, Bento ensures consistent subscription management across all Paket-integrated platforms, with unified billing, activation workflows, and revenue distribution handled automatically through the Paket infrastructure.
 
 To get started, a Publisher must first configure their service via the Paket Publisher Portal. There, Publishers will be able to set up webhook endpoints, security, and API clients through which the service will communicate with the Paket service. It is in the Publisher Portal where Publishers will be able to set up product licenses and assign them for sale through approved Platform partners.
 
 It is also in the Paket Publisher Portal where Platforms will configure API clients and configure plans and bundles for sale via the Paket API. 
-
-### The Plan Object
-
-At the core of the Bundle API is the Plan object, which defines subscription offerings with comprehensive pricing, billing cycles, and bundled services configuration.
-
-> The Plan Object
-
-```json
-{
-  "plan_id": "427944e5ba9e",
-  "name": "Disney+, Hulu, HBO Max Bundle",
-  "plan_type": "sub_bundle",
-  "status": "active",
-  "platform_id": "PL468440696748511232",
-  "billing": {
-    "frequency": { "unit": "month", "value": 1 },
-    "free_trial_days": 7,
-    "grace_period_days": 7
-  },
-  "media": {
-    "promo_4k_1x": "https://media.paket.tv/media/plans/PL468440696748511232/427944e5ba9e/promo_4k@1x.png",
-    "promo_2k_1x": "https://media.paket.tv/media/plans/PL468440696748511232/427944e5ba9e/promo_2k@1x.png"
-  },
-  "prices": {
-    "US": [
-      {
-        "order": 1,
-        "billing_cycles": 3,
-        "price": {
-          "price_in_cents": 1699,
-          "tier_id": "1699",
-          "currency_code": "USD",
-          "price": 16.99
-        }
-      }
-    ]
-  },
-  "localizations": {
-    "en-us": {
-        "description": "The bundle with everything you need",
-        "display_name": "Disney+, Hulu, HBO Max Bundle"
-    }
-  },
-  "plan_items": [
-    {
-        "status": "active",
-        "price_wholesale": {
-            "price": 4.56,
-            "price_in_cents": 456,
-            "currency_code": "USD"
-        },
-        "name": "Disney+ Basic",
-        "app_id": "AP468442205989113856",
-        "product_id": "PR469716925099413504",
-        "localizations": {
-            "en-us": {
-                "description": "Disney+ Basic With Ads",
-                "display_name": "Disney+ Basic"
-            }
-        },
-        "prices": {
-            "US": {
-                "price_in_cents": 999,
-                "tier_id": "999",
-                "currency_code": "USD",
-                "price": 9.99
-            }
-        },
-        "app": {
-            "id": "AP468442205989113856",
-            "name": "Disney+",
-            "media": {
-                "icon_1x": "https://media.paket.tv/media/apps/AP468442205989113856/icon@1x.png",
-                "icon_2x": "https://media.paket.tv/media/apps/AP468442205989113856/icon@2x.png",
-                "icon_3x": "https://media.paket.tv/media/apps/AP468442205989113856/icon@3x.png",
-                "logo_dark_1x": "https://media.paket.tv/media/apps/AP468442205989113856/logo_dark@1x.png",
-                "logo_light_1x": "https://media.paket.tv/media/apps/AP468442205989113856/logo_light@1x.png",
-                "tile_1x": "https://media.paket.tv/media/apps/AP468442205989113856/tile@1x.png",
-                "tile_2x": "https://media.paket.tv/media/apps/AP468442205989113856/tile@2x.png"
-            },
-            "status": "live"
-        }
-    },
-    ...
-  ],
-  "metadata": {},
-  "created_at": "2024-01-15T10:30:00.000Z",
-  "updated_at": "2024-01-17T07:28:00.000Z"
-}
-```
-
-**Attributes**
-
-**`plan_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The unique identifier for the plan.
-
-**`name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The internal name of the plan.
-
-**`plan_type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The type of plan, which can be one of the following enum values:
-
-- `sub_bundle` - Multiple subscription services bundled together
-- `sub_single` - Single subscription service
-
-**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The current status of the plan:
-
-- `active` - Available for new subscriptions
-- `inactive` - Not available for new subscriptions
-- `deprecated` - Being phased out
-
-**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The platform identifier associated with this plan.
-
-**`free_trial_days`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Number of free trial days offered (0 if no trial).
-
-**`grace_period_days`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Number of days after payment failure before subscription suspension.
-
-**`billing_frequency`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-The billing cycle configuration with `unit` (month, year) and `value` (1, 3, 6, 12).
-
-**`media`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-URLs to promotional media assets for the plan:
-
-- `promo_4k_1x` - 4K promotional image
-- `promo_2k_1x` - 2K promotional image
-
-**`prices`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Regional pricing information organized by country code. Each region contains an array of pricing phases with:
-
-- `order` - The sequence order of the pricing phase
-- `billing_cycles` - Number of cycles this price applies to (omitted if null or indefinite)
-- `price` - Price object containing:
-  - `price_in_cents` - Price in cents as a integer
-  - `tier_id` - Pricing tier identifier
-  - `currency_code` - Three-letter ISO currency code
-  - `price` - Price as a decimal
-
-**`localizations`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Localized content organized by language code (e.g., "en-us"). Each localization contains:
-
-- `description` - Localized description of the plan
-- `display_name` - Localized display name for the plan
-
-**`plan_items`** <span style='margin: 0 5px;font-size:.9em'>array</span>  
-Array of products or entitlements included in the plan. Each item contains:
-
-- `status` - Item status (active/inactive)
-- `price_wholesale` - Wholesale pricing information with price, price_in_cents, and currency_code
-- `name` - Internal name of the product
-- `app_id` - Associated app identifier
-- `product_id` - Unique product identifier
-- `localizations` - Localized content for the product (description and display_name)
-- `prices` - Regional retail pricing by country
-- `app` - App object containing:
-  - `id` - App identifier
-  - `name` - App name
-  - `media` - App media assets (icons, logos, tiles)
-  - `status` - App status (live/inactive)
-
-**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the plan was created.
-
-**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the plan was last updated.
-
-### The Subscription Object
-
-The Subscription object represents an active or inactive Subscription to a Plan, tracking billing cycles, payment status, and activation state.
-
-> The Subscription Object
-
-```json
-{
-  "subscription_id": "SUB479027832035610624",
-  "session_id": "SN468560588960960512",
-  "plan_id": "427944e5ba9e",
-  "platform_id": "PL468440696748511232",
-  "status": "active",
-  "activation_status": "pending",
-  "payment_status": "paid",
-  "billing": {
-    "next_billing_date": "2025-09-14T20:45:35.064Z",
-    "frequency": { "unit": "month", "value": 1 },
-    "cycle_count": 1,
-    "current_phase_id": "4282b4cfac23dc38",
-    "grace_period_days": 7,
-    "grace_period_end": "2025-09-21T20:45:35.064Z",
-    "interval_days": 30
-  },
-  "trial": {
-    "days": 7,
-    "end_date": "2025-08-21T20:45:35.064Z"
-  },
-  "period": {
-    "start": "2025-08-14T20:45:35.065Z",
-    "end": "2025-09-14T20:45:35.064Z"
-  },
-  "tax": {
-    "rate": 0.0875,
-    "type": "sales_tax",
-    "jurisdiction": "CA-Los Angeles",
-    "behavior": "exclusive",
-    "note": ""
-  },
-  "plan": {
-    "name": "Disney+, Hulu, HBO Max Bundle",
-    "type": "sub_bundle"
-  },
-  "cancellation": {
-    "cancel_at_period_end": false,
-    "canceled_at": null,
-    "ended_at": null
-  },
-  "payment_method_id": "pm_123",
-  "proration_credit": 0,
-  "metadata": {},
-  "device_info": {},
-  "created_ip": "75.85.168.125",
-  "updated_ip": "75.85.168.125",
-  "created_at": "2025-08-14T20:45:35.065Z",
-  "updated_at": "2025-08-14T21:00:00.000Z"
-}
-```
-
-**Attributes**
-
-**`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The unique identifier for the subscription (prefixed with SUB).
-
-**`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The session identifier associated with this subscription.
-
-**`plan_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The plan identifier this subscription is for.
-
-**`plan_name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The plan name.
-
-**`plan_type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The plan type, one of:
-
-- `sub_bundle` - Plan with multiple associated products
-- `sub_single` - Plan with a single associated product
-
-**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The platform identifier issuing the plan.
-
-**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Current subscription status:
-
-- `trialing` - In free trial period
-- `active` - Active and paid
-- `past_due` - Payment failed but in grace period
-- `canceled` - Canceled by user
-- `unpaid` - Payment required
-- `paused` - Temporarily paused
-
-**`activation_status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Publisher activation status:
-
-- `pending` - Awaiting activation
-- `partial` - Partially activated (some services activated but not all)
-- `completed` - Successfully activated
-- `failed` - Activation failed
-
-**`payment_status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Current payment status:
-
-- `paid` - Fully paid
-- `unpaid` - Payment pending
-- `scheduled` - Payment scheduled
-- `no_payment_required` - Free or trial period
-- `processing` - Payment in progress
-- `failed` - Payment failed
-- `canceled` - Payment canceled
-
-**`next_billing_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp of the next billing date.
-
-**`current_period_start`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp of the current billing period start.
-
-**`current_period_end`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp of the current billing period end.
-
-**`current_phase_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The current phase price identifier.
-
-**`billing_cycle_count`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
-Total number of completed billing cycles.
-
-**`free_trial_days`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
-Days included in free trial, if any.
-
-**`trial_end`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp of the current trial period end.
-
-**`grace_period_days`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
-Grace period during which subscription will remain active after failed payment.
-
-**`grace_period_end`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp of the current grace period end.
-
-**`billing_interval_days`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
-Billing interval in days.
-
-**`billing_frequency`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Billing interval configuration.
-
-- `unit` <span style='margin: 0 5px;font-size:.9em'>string</span> - Time unit. Values: `"month"`, `"day"`, `"year"`
-- `value` <span style='margin: 0 5px;font-size:.9em'>integer</span> - Number of units between billing cycles
-
-**`tax_behavior`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Specifies whether tax should be collected and how:
-
-- `inclusive` - Tax will be included in plan price
-- `exclusive` - Tax will be added to plan price
-- `none` - Plan is not taxable
-
-**`tax_rate`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
-Applied tax rate (0-1, e.g., 0.0875 for 8.75%).
-
-**`tax_type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Type of tax applied:
-
-- `sales_tax`
-- `vat`
-- `gst`
-- `pst`
-- `hst`
-- `none`
-
-**`tax_jurisdiction`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Jurisdiction governing the applied tax.
-
-**`tax_note`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Additional notes pertaining to the subscription tax.
-
-**`payment_method_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Payment method identifier used for this subscription.
-
-**`activation_url`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-URL provided by the publisher for activating bundled services.
-
-**`activation_token`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Token used for activation process with the publisher.
-
-**`metadata`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Additional custom metadata for the subscription.
-
-**`device_info`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Additional device metadata for the subscription.
-
-**`replaced_subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Identifier of replaced subscription, if an upgrade or downgrade.
-
-**`change_type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Reason for change of subscription:
-
-- `upgrade`
-- `downgrade`
-- `reactivation`
-
-**`proration_credit`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
-Amount to credit or add to first invoice if mid-cycle upgrade or downgrade.
-
-**`cancel_at_period_end`** <span style='margin: 0 5px;font-size:.9em'>boolean</span>  
-Whether to cancel subscription at end of current period.
-
-**`canceled_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp of date on which subscription was canceled.
-
-**`ended_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp of the subscription end date.
-
-**`created_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The IP address from where the subscription was created.
-
-**`updated_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The IP address from where subscription was last updated.
-
-**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the subscription was created.
-
-**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the subscription was last updated.
-
-### The Invoice Object
-
-The Invoice object represents a billing statement for a subscription period, tracking amounts, payment status, and retry logic.
-
-> The Invoice Object
-
-```json
-{
-  "invoice_id": "INV479027832278880256",
-  "invoice_number": "INV-2025-78880256",
-  "subscription_id": "SUB479027832035610624",
-  "platform_id": "PL468440696748511232",
-  "session_id": "session_456",
-  "status": "open",
-  "payment_status": "unpaid",
-  "currency": "USD",
-  "region": "US",
-  "amounts": {
-    "subtotal": 1699,
-    "proration_credit": 0,
-    "tax_amount": 149,
-    "total_amount": 1848,
-    "amount_due": 1848,
-    "amount_paid": 0
-  },
-  "tax": {
-    "rate": 0.0875,
-    "type": "sales_tax",
-    "jurisdiction": "CA-Los Angeles",
-    "behavior": "exclusive",
-    "note": ""
-  },
-  "payment": {
-    "method_id": null,
-    "intent_id": null,
-    "date": null
-  },
-  "retries": {
-    "count": 0,
-    "max": 3,
-    "next_date": null,
-    "last_date": null,
-    "delay_minutes": 60
-  },
-  "plan": {
-    "plan_id": "427944e5ba9e",
-    "name": "Disney+, Hulu, HBO Max Bundle",
-    "type": "recurring",
-    "phase_id": "4282b4cfac23dc38",
-    "phase_order": 1,
-    "billing_cycle": 1,
-    "platform_fee_rate": 0.03,
-    "platform_fee_amount": 51
-  },
-  "period": {
-    "start": "2025-08-14T20:45:35.065Z",
-    "end": "2025-09-14T20:45:35.064Z",
-    "invoice_date": "2025-08-14T20:45:35.122Z",
-    "due_date": "2025-09-13T20:45:35.122Z"
-  },
-  "metadata": {},
-  "created_ip": "192.168.1.1",
-  "updated_ip": "192.168.1.1",
-  "created_at": "2025-08-14T20:45:35.122Z",
-  "updated_at": "2025-08-14T20:45:35.122Z"
-}
-```
-
-**Attributes**
-
-#### Core Fields
-
-**`invoice_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The unique identifier for the invoice (prefixed with INV).
-
-**`invoice_number`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Human-readable invoice number.
-
-**`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The subscription this invoice belongs to.
-
-**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The platform identifier that created the subscription.
-
-**`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The session identifier associated with this invoice's subscription.
-
-**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Invoice status:
-- `open` - Awaiting payment
-- `paid` - Fully paid
-- `draft` - Not yet finalized
-
-**`payment_status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Payment collection status:
-- `unpaid` - Not yet paid
-- `paid` - Successfully paid
-- `failed` - Payment failed
-- `processing` - Payment in progress
-- `canceled` - Payment canceled
-- `scheduled` - Payment scheduled for future date
-- `no_payment_required` - No payment needed (e.g., free trial)
-
-**`currency`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Three-letter ISO currency code.
-
-**`region`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Region code for pricing (e.g., "US").
-
-#### Amounts Object
-
-**`amounts`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Grouped financial amounts:
-
-- **`subtotal`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Pre-tax amount in cents
-- **`proration_credit`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Proration credit applied in cents
-- **`tax_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Tax amount in cents
-- **`total_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Total amount including tax in cents
-- **`amount_due`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Amount currently due in cents
-- **`amount_paid`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Amount already paid in cents
-
-#### Tax Object
-
-**`tax`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Grouped tax information:
-
-- **`rate`** <span style='margin: 0 5px;font-size:.9em'>number</span> - Applied tax rate (0-1, e.g., 0.0875 for 8.75%)
-- **`type`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Type of tax (`sales_tax`, `vat`, `gst`, `pst`, `hst`, `none`)
-- **`jurisdiction`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Tax jurisdiction code (e.g., "CA-Los Angeles")
-- **`behavior`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Tax collection behavior (`inclusive`, `exclusive`, `none`)
-- **`note`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Additional tax notes
-
-#### Payment Object
-
-**`payment`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Payment information (only present if payment has been attempted):
-
-- **`method_id`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Payment method identifier
-- **`intent_id`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Payment processor intent ID
-- **`date`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 timestamp of payment
-
-#### Retries Object
-
-**`retries`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Payment retry information (only present if retries have been attempted):
-
-- **`count`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Number of retry attempts made
-- **`max`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Maximum retries allowed
-- **`next_date`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 timestamp of next retry
-- **`last_date`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 timestamp of last retry
-- **`delay_minutes`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Delay before next retry
-
-#### Plan Object
-
-**`plan`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Plan and pricing information:
-
-- **`plan_id`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Plan identifier
-- **`name`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Display name of the plan
-- **`type`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Plan type (e.g., "recurring")
-- **`phase_id`** <span style='margin: 0 5px;font-size:.9em'>string</span> - Active phase identifier
-- **`phase_order`** <span style='margin: 0 5px;font-size:.9em'>number</span> - Phase order number (1-based)
-- **`billing_cycle`** <span style='margin: 0 5px;font-size:.9em'>number</span> - Billing cycle number (0=trial, 1+=paid)
-- **`platform_fee_rate`** <span style='margin: 0 5px;font-size:.9em'>number</span> - Platform fee rate (0-1)
-- **`platform_fee_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span> - Platform fee in cents
-
-#### Period Object
-
-**`period`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Billing period dates:
-
-- **`start`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 start of billing period
-- **`end`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 end of billing period
-- **`invoice_date`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 invoice creation date
-- **`due_date`** <span style='margin: 0 5px;font-size:.9em'>string</span> - ISO 8601 payment due date
-
-**`metadata`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Custom metadata key-value pairs.
-
-**`created_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-IP address from which the invoice was created.
-
-**`updated_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-IP address from which the invoice was last updated.
-
-**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the invoice was created.
-
-**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the invoice was last updated.
-
-**`platform_fee_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Platform fee amount in cents.
-
-**`metadata`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Additional metadata associated with the invoice.
-
-**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The platform identifier that created this invoice's subscription.
-
-**`created_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-IP address from which the invoice was created.
-
-**`updated_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-IP address from which the invoice was last updated.
-
-**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the invoice was created.
-
-**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the invoice was last updated.
-
-### The Payment Object
-
-The Payment object represents an immutable payment attempt record for an invoice, providing a complete audit trail of all payment processing activities. Please note that Paket does not natively process payments, rather it is a store of a payment attempts made via a Platform's PSP. As such, it is encumbant on the Platform processing a payment to post payment responsese to this API to ensure an immutable audit trail of payment attemps exists for each Invoice
-
-> The Payment Object
-
-```json
-{
-  "payment": {
-    "payment_id": "PAY479027832345678912",
-    "invoice_id": "INV479027832278880256",
-    "subscription_id": "SUB479027832035610624",
-    "platform_id": "PL468440696748511232",
-    "status": "succeeded",
-    "amount": 1848,
-    "currency": "USD",
-    "method": {
-      "id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
-      "type": "card"
-    },
-    "processor": {
-      "intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
-      "response": {
-        "last_four": "4242",
-        "brand": "visa",
-        "exp_month": 12,
-        "exp_year": 2028
-      },
-      "error_code": null,
-      "error_message": null
-    },
-    "metadata": {
-      "source": "mobile_app",
-      "user_agent": "Mozilla/5.0...",
-      "retry_attempt": 0
-    },
-    "audit": {
-      "created_ip": "192.168.1.100",
-      "created_at": "2025-08-14T21:15:00.000Z"
-    }
-  },
-  "activation_urls": [
-    {
-      "app_id": "AP468442205989113856",
-      "app_name": "Disney+",
-      "product_id": "PR469716925099413504",
-      "product_name": "Disney+ Basic",
-      "activation_url": "https://disneyplus.com/activate?token=abc123...",
-      "expires_at": "2025-08-14T21:45:00.000Z"
-    }
-  ]
-}
-```
-
-**Refund Example:**
-
-```json
-{
-  "payment": {
-    "payment_id": "PAY479027832345678914",
-    "invoice_id": "INV479027832278880256",
-    "subscription_id": "SUB479027832035610624",
-    "platform_id": "PL468440696748511232",
-    
-    "status": "refunded",
-    "amount": -1848,
-    "currency": "USD",
-
-    "method": {
-      "id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
-      "type": "card"
-    },
-
-    "processor": {
-      "intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
-      "response": {
-        "refund_id": "re_1NvQsHKyuNiyfQC0M4X0Q8Bq",
-        "last_four": "4242",
-        "brand": "visa"
-  },
-  "metadata": {
-    "refund_requested_by": "customer_service",
-    "original_charge_date": "2025-08-14T21:15:00.000Z"
-  },
-  "created_ip": "192.168.1.100",
-  "created_at": "2025-08-15T14:30:00.000Z"
-}
-```
-
-**Attributes**
-
-**`payment_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The unique identifier for the payment record (prefixed with PAY).
-
-**`invoice_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The invoice this payment attempt was made for.
-
-**`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The subscription associated with this payment.
-
-**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The platform identifier that initiated this payment.
-
-**`amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Payment amount in cents. Positive values represent payments, negative values represent refunds.
-
-**`currency`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Three-letter ISO currency code.
-
-**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Payment processing status:
-
-- `succeeded` - Payment completed successfully
-- `failed` - Payment failed to process
-- `processing` - Payment is being processed
-- `canceled` - Payment was canceled
-- `requires_action` - Payment requires additional user action
-- `refunded` - Full refund processed successfully
-- `partially_refunded` - Partial refund processed successfully
-- `refund_failed` - Refund attempt failed
-- `refund_pending` - Refund is being processed
-
-**`payment_method_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Payment processor's payment method identifier.
-
-**`payment_intent_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Payment processor's intent identifier.
-
-**`refund_reason`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Reason for refund (only present for refund records).
-
-**`original_payment_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Reference to the original payment being refunded (only present for refund records).
-
-**`error_code`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Error code if payment failed (null for successful payments).
-
-**`error_message`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Human-readable error message if payment failed (null for successful payments).
-
-**`processor_response`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Payment processor's response data (card details, processor-specific metadata).
-
-**`metadata`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
-Additional metadata associated with the payment attempt.
-
-**`created_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-IP address from which the payment was initiated.
-
-**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the payment record was created.
-
-**`activation_urls`** <span style='margin: 0 5px;font-size:.9em'>array</span>  
-Optional. Returned for successful payments on first invoices. Contains activation URLs for bundled services requiring activation.
-
-### The Activation Session Object
-
-The Activation Session object represents a collection of activation codes generated for a paid subscription, tracking the activation status of each bundled product.
-
-> The Activation Session Object
-
-```json
-{
-  "activation_session_id": "AS479027832456789123",
-  "subscription_id": "SUB479027832035610624",
-  "platform_id": "PL468440696748511232",
-  "session_id": "session_456",
-  "status": "pending",
-  "expires_at": "2025-08-21T21:15:00.000Z",
-  "progress": {
-    "items_total": 3,
-    "items_activated": 1
-  },
-  "activation_urls": [
-    {
-      "app_id": "AP468442205989113856",
-      "app_name": "Disney+",
-      "product_id": "PR469716925099413504",
-      "product_name": "Disney+ Basic",
-      "activation_url": "https://disneyplus.com/activate?activation_code=AC_A3F2B7C9_D4E1F8A2",
-      "expires_at": "2025-08-21T21:15:00.000Z"
-    },
-    {
-      "app_id": "AP468442205989113857",
-      "app_name": "Hulu",
-      "product_id": "PR469716925099413505",
-      "product_name": "Hulu (No Ads)",
-      "activation_url": "https://hulu.com/activate?code=AC_B4G2K8D1_F5H9L3M6",
-      "expires_at": "2025-08-21T21:15:00.000Z"
-    }
-  ],
-  "metadata": {},
-  "created_at": "2025-08-14T21:15:00.000Z",
-  "updated_at": "2025-08-14T21:15:00.000Z"
-}
-```
-
-**Attributes**
-
-**`activation_session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The unique identifier for the activation session (prefixed with AS).
-
-**`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The subscription that triggered this activation session.
-
-**`invoice_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The invoice that was paid to trigger activation.
-
-**`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The user session associated with the subscription.
-
-**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-The platform identifier that created the subscription.
-
-**`platform_name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Display name of the platform.
-
-**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-Overall activation session status:
-- `pending` - Awaiting activation for one or more items
-- `partial` - Some items activated but not all
-- `completed` - All items successfully activated
-- `failed` - Activation failed for one or more items
-- `expired` - Session expired before completion
-
-**`items_total`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Total number of products requiring activation.
-
-**`items_activated`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
-Number of products successfully activated.
-
-**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the activation session was created.
-
-**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the activation session was last updated.
-
-**`expires_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
-ISO 8601 timestamp when the activation session expires.
-
-**`activation_items`** <span style='margin: 0 5px;font-size:.9em'>array</span>  
-Array of activation items for each product in the subscription. Each item contains:
-- `app_id` - The app/publisher identifier
-- `app_name` - Display name of the app
-- `product_id` - The product being activated
-- `product_name` - Display name of the product
-- `status` - Item activation status (pending, activated, failed, expired)
-- `activation_code_hash` - SHA-256 hash of the activation code (for validation)
-- `activation_url` - Complete URL for user activation
-- `jti` - Unique JWT identifier for the activation token
-- `created_at` - When this activation item was created
-- `expires_at` - When this activation code expires (typically 7 days)
 
 ### Subscription Activation Flow
 
@@ -972,6 +117,224 @@ Publishers should immediately revoke access to services upon receiving the subsc
 ## Plans
 
 Plans define the subscription offerings available through the Paket catalog, including pricing, billing cycles, and bundled services.
+
+### The Plan Object
+
+The Plan object represents the template from which a Subcription is created. It itemizes which licenses are include in the plan, pricing, availability, localizations, billing cycles, bundled services configuration, and more. 
+
+> The Plan Object
+
+```json
+{
+  "plan_id": "427944e5ba9e",
+  "name": "Disney+, Hulu, HBO Max Bundle",
+  "plan_type": "sub_bundle",
+  "status": "active",
+  "platform_id": "PL468440696748511232",
+  "billing_frequency": { 
+    "unit": "month", 
+    "value": 1 
+  },
+  "free_trial_days": 7,
+  "grace_period_days": 7,
+  "media": {
+    "promo_4k_1x": "https://media.paket.tv/media/plans/PL468440696748511232/427944e5ba9e/promo_4k@1x.png",
+    "promo_2k_1x": "https://media.paket.tv/media/plans/PL468440696748511232/427944e5ba9e/promo_2k@1x.png"
+  },
+  "prices": {
+    "US": [
+      {
+        "order": 1,
+        "billing_cycles": 3,
+        "price": {
+          "price_in_cents": 1699,
+          "tier_id": "1699",
+          "currency_code": "USD",
+          "price": 16.99
+        }
+      }
+    ]
+  },
+  "localizations": {
+    "en-us": {
+        "description": "The bundle with everything you need",
+        "display_name": "Disney+, Hulu, HBO Max Bundle"
+    }
+  },
+  "plan_items": [
+    {
+        "status": "active",
+        "price_wholesale": {
+            "price": 4.56,
+            "price_in_cents": 456,
+            "currency_code": "USD"
+        },
+        "name": "Disney+ Basic",
+        "app_id": "AP468442205989113856",
+        "product_id": "PR469716925099413504",
+        "localizations": {
+            "en-us": {
+                "description": "Disney+ Basic With Ads",
+                "display_name": "Disney+ Basic"
+            }
+        },
+        "prices": {
+            "US": {
+                "price_in_cents": 999,
+                "tier_id": "999",
+                "currency_code": "USD",
+                "price": 9.99
+            }
+        },
+        "app": {
+            "id": "AP468442205989113856",
+            "name": "Disney+",
+            "media": {
+                "icon_1x": "https://media.paket.tv/media/apps/AP468442205989113856/icon@1x.png",
+                "icon_2x": "https://media.paket.tv/media/apps/AP468442205989113856/icon@2x.png",
+                "icon_3x": "https://media.paket.tv/media/apps/AP468442205989113856/icon@3x.png",
+                "logo_dark_1x": "https://media.paket.tv/media/apps/AP468442205989113856/logo_dark@1x.png",
+                "logo_light_1x": "https://media.paket.tv/media/apps/AP468442205989113856/logo_light@1x.png",
+                "tile_1x": "https://media.paket.tv/media/apps/AP468442205989113856/tile@1x.png",
+                "tile_2x": "https://media.paket.tv/media/apps/AP468442205989113856/tile@2x.png"
+            },
+            "status": "live"
+        }
+    },
+    ...
+  ],
+  "metadata": {},
+  "created_at": "2024-01-15T10:30:00.000Z",
+  "updated_at": "2024-01-17T07:28:00.000Z"
+}
+```
+
+**Attributes**
+
+**`plan_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The unique identifier for the plan.
+
+**`name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The internal name of the plan.
+
+**`plan_type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The type of plan, which can be one of the following enum values:
+
+- `sub_bundle` - Multiple subscription services bundled together
+- `sub_single` - Single subscription service
+
+**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The current status of the plan:
+
+- `active` - Available for new subscriptions
+- `inactive` - Not available for new subscriptions
+- `deprecated` - Being phased out
+
+**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform identifier associated with this plan.
+
+**`billing_frequency`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+The billing cycle configuration:
+
+&nbsp;&nbsp;&nbsp;**`unit`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Billing unit (`month`, `year`)
+
+&nbsp;&nbsp;&nbsp;**`value`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Billing frequency value (1, 3, 6, 12)
+
+**`free_trial_days`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+Number of free trial days offered (0 if no trial).
+
+**`grace_period_days`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+Number of days after payment failure before subscription suspension.
+
+**`media`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+URLs to promotional media assets for the plan:
+
+&nbsp;&nbsp;&nbsp;**`promo_4k_1x`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;4K promotional image URL
+
+&nbsp;&nbsp;&nbsp;**`promo_2k_1x`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;2K promotional image URL
+
+**`prices`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Regional pricing information organized by country code. Each region contains an array of pricing phases:
+
+&nbsp;&nbsp;&nbsp;**`order`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;The sequence order of the pricing phase
+
+&nbsp;&nbsp;&nbsp;**`billing_cycles`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Number of cycles this price applies to (null if indefinite)
+
+&nbsp;&nbsp;&nbsp;**`price`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+&nbsp;&nbsp;&nbsp;Price object containing:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**`price_in_cents`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price in cents as an integer
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**`tier_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pricing tier identifier
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**`currency_code`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Three-letter ISO currency code
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**`price`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price as a decimal
+
+**`localizations`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Localized content organized by language code (e.g., "en-us"):
+
+&nbsp;&nbsp;&nbsp;**`description`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Localized description of the plan
+
+&nbsp;&nbsp;&nbsp;**`display_name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Localized display name for the plan
+
+**`plan_items`** <span style='margin: 0 5px;font-size:.9em'>array</span>  
+Array of products or entitlements included in the plan. Each item contains:
+
+&nbsp;&nbsp;&nbsp;**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Item status (`active`, `inactive`)
+
+&nbsp;&nbsp;&nbsp;**`price_wholesale`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+&nbsp;&nbsp;&nbsp;Wholesale pricing information with price, price_in_cents, and currency_code
+
+&nbsp;&nbsp;&nbsp;**`name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Internal name of the product
+
+&nbsp;&nbsp;&nbsp;**`app_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Associated app identifier
+
+&nbsp;&nbsp;&nbsp;**`product_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Unique product identifier
+
+&nbsp;&nbsp;&nbsp;**`localizations`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+&nbsp;&nbsp;&nbsp;Localized content for the product (description and display_name)
+
+&nbsp;&nbsp;&nbsp;**`prices`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+&nbsp;&nbsp;&nbsp;Regional retail pricing by country
+
+&nbsp;&nbsp;&nbsp;**`app`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+&nbsp;&nbsp;&nbsp;App object containing:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**`id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;App identifier
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**`name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;App name
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**`media`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;App media assets (icons, logos, tiles)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;App status (`live`, `inactive`)
+
+**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the plan was created.
+
+**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the plan was last updated.
+
 
 ### List Plans
 
@@ -1196,7 +559,210 @@ Returns a detailed Plan object with complete pricing, plan items, and phase info
 
 ## Subscriptions
 
-Subscriptions represent active relationships between users and plans, managing billing cycles, activation, and payment status. In a typical configuration, Paket operates exclusively as the orchestration layer and the Platform acts as the Merchant of Record, determining when and if an invoice is taxable, in which juristiction, at what amount, and whether the tax should be applied exclusive or inclusive of the plan price. 
+Subscriptions represent a relationship between users and plans, managing billing cycles, activation, invoices, and payments. In a typical configuration, Paket operates exclusively as the orchestration layer and the Platform acts as the Merchant of Record, determining when and if an invoice is taxable, in which juristiction, at what amount, and whether the tax should be applied exclusive or inclusive of the plan price. 
+
+### The Subscription Object
+
+The Subscription object represents an active or inactive Subscription to a Plan, tracking billing cycles, payment status, and activation state.
+
+> The Subscription Object
+
+```json
+{
+  "subscription_id": "SUB479027832035610624",
+  "session_id": "SN468560588960960512",
+  "plan_id": "427944e5ba9e",
+  "platform_id": "PL468440696748511232",
+  "status": "active",
+  "activation_status": "pending",
+  "payment_status": "paid",
+  "billing": {
+    "next_billing_date": "2025-09-14T20:45:35.064Z",
+    "frequency": { "unit": "month", "value": 1 },
+    "cycle_count": 1,
+    "current_phase_id": "4282b4cfac23dc38",
+    "grace_period_days": 7,
+    "grace_period_end": "2025-09-21T20:45:35.064Z",
+    "interval_days": 30
+  },
+  "trial": {
+    "days": 7,
+    "end_date": "2025-08-21T20:45:35.064Z"
+  },
+  "period": {
+    "start": "2025-08-14T20:45:35.065Z",
+    "end": "2025-09-14T20:45:35.064Z"
+  },
+  "tax": {
+    "rate": 0.0875,
+    "type": "sales_tax",
+    "jurisdiction": "CA-Los Angeles",
+    "behavior": "exclusive",
+    "note": ""
+  },
+  "plan": {
+    "name": "Disney+, Hulu, HBO Max Bundle",
+    "type": "sub_bundle"
+  },
+  "cancellation": {
+    "cancel_at_period_end": false,
+    "canceled_at": null,
+    "ended_at": null
+  },
+  "proration_credit": 0,
+  "metadata": {},
+  "device_info": {},
+  "created_ip": "75.85.168.125",
+  "updated_ip": "75.85.168.125",
+  "created_at": "2025-08-14T20:45:35.065Z",
+  "updated_at": "2025-08-14T21:00:00.000Z"
+}
+```
+
+**Attributes**
+
+**`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The unique identifier for the subscription (prefixed with SUB).
+
+**`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The session identifier associated with this subscription.
+
+**`plan_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The plan identifier this subscription is for.
+
+**`billing`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Billing information:
+
+&nbsp;&nbsp;&nbsp;**`next_billing_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 timestamp of the next billing date
+
+&nbsp;&nbsp;&nbsp;**`frequency`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+&nbsp;&nbsp;&nbsp;Billing frequency configuration with `unit` and `value`
+
+&nbsp;&nbsp;&nbsp;**`cycle_count`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+&nbsp;&nbsp;&nbsp;Total number of completed billing cycles
+
+&nbsp;&nbsp;&nbsp;**`current_phase_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;The current phase price identifier
+
+&nbsp;&nbsp;&nbsp;**`grace_period_days`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+&nbsp;&nbsp;&nbsp;Grace period during which subscription remains active after failed payment
+
+&nbsp;&nbsp;&nbsp;**`grace_period_end`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 timestamp of the current grace period end
+
+&nbsp;&nbsp;&nbsp;**`interval_days`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+&nbsp;&nbsp;&nbsp;Billing interval in days
+
+**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform identifier issuing the plan.
+
+**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Current subscription status:
+
+- `trialing` - In free trial period
+- `active` - Active and paid
+- `past_due` - Payment failed but in grace period
+- `canceled` - Canceled by user
+- `unpaid` - Payment required
+- `paused` - Temporarily paused
+
+**`activation_status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Publisher activation status:
+
+- `pending` - Awaiting activation
+- `partial` - Partially activated (some services activated but not all)
+- `completed` - Successfully activated
+- `failed` - Activation failed
+
+**`payment_status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Current payment status:
+
+- `paid` - Fully paid
+- `unpaid` - Payment pending
+- `scheduled` - Payment scheduled
+- `no_payment_required` - Free or trial period
+- `processing` - Payment in progress
+- `failed` - Payment failed
+- `canceled` - Payment canceled
+
+**`trial`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Trial information (only present if trial exists):
+
+&nbsp;&nbsp;&nbsp;**`days`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+&nbsp;&nbsp;&nbsp;Days included in free trial
+
+&nbsp;&nbsp;&nbsp;**`end_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 timestamp of the trial period end
+
+**`period`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Billing period dates:
+
+&nbsp;&nbsp;&nbsp;**`start`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 start of current billing period
+
+&nbsp;&nbsp;&nbsp;**`end`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 end of current billing period
+
+**`tax`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Tax information:
+
+&nbsp;&nbsp;&nbsp;**`rate`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+&nbsp;&nbsp;&nbsp;Applied tax rate (0-1, e.g., 0.0875 for 8.75%)
+
+&nbsp;&nbsp;&nbsp;**`type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Type of tax (`sales_tax`, `vat`, `gst`, `pst`, `hst`, `none`)
+
+&nbsp;&nbsp;&nbsp;**`jurisdiction`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Tax jurisdiction code
+
+&nbsp;&nbsp;&nbsp;**`behavior`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Tax collection behavior (`inclusive`, `exclusive`, `none`)
+
+&nbsp;&nbsp;&nbsp;**`note`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Additional tax notes
+
+**`plan`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Plan information:
+
+&nbsp;&nbsp;&nbsp;**`name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;The plan name
+
+&nbsp;&nbsp;&nbsp;**`type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Plan type (`sub_bundle`, `sub_single`)
+
+**`cancellation`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Cancellation information:
+
+&nbsp;&nbsp;&nbsp;**`cancel_at_period_end`** <span style='margin: 0 5px;font-size:.9em'>boolean</span>  
+&nbsp;&nbsp;&nbsp;Whether to cancel subscription at end of current period
+
+&nbsp;&nbsp;&nbsp;**`canceled_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 timestamp of cancellation date (null if not canceled)
+
+&nbsp;&nbsp;&nbsp;**`ended_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 timestamp of subscription end date (null if not ended)
+
+**`proration_credit`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+Amount to credit or add to first invoice if mid-cycle upgrade or downgrade.
+
+**`metadata`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Additional custom metadata for the subscription.
+
+**`device_info`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Additional device metadata for the subscription.
+
+**`created_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The IP address from where the subscription was created.
+
+**`updated_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The IP address from where subscription was last updated.
+
+**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the subscription was created.
+
+**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the subscription was last updated.
 
 ### Create Subscription
 
@@ -1244,33 +810,47 @@ Content-Type: application/json
     "subscription_id": "SUB479027832035610624",
     "session_id": "session_456",
     "plan_id": "427944e5ba9e",
-    "plan_name": "Disney+, Hulu, HBO Max Bundle",
-    "plan_type": "sub_bundle",
+    "platform_id": "PL468440696748511232",
     "status": "pending",
     "activation_status": "pending",
     "payment_status": "unpaid",
-    "next_billing_date": "2025-09-14T20:45:35.064Z",
-    "current_period_start": "2025-08-14T20:45:35.065Z",
-    "current_period_end": "2025-09-14T20:45:35.064Z",
-    "trial_end": null,
-    "grace_period_days": 7,
-    "grace_period_end": "2025-09-21T20:45:35.064Z",
-    "billing_frequency": {
-      "unit": "month",
-      "value": 1
+    "billing": {
+      "next_billing_date": "2025-09-14T20:45:35.064Z",
+      "frequency": { "unit": "month", "value": 1 },
+      "cycle_count": 0,
+      "current_phase_id": "4282b4cfac23dc38",
+      "grace_period_days": 7,
+      "grace_period_end": "2025-09-21T20:45:35.064Z",
+      "interval_days": 30
     },
-    "free_trial_days": 0,
-    "tax_rate": 0.0875,
-    "tax_type": "sales_tax",
-    "tax_jurisdiction": "CA-Los Angeles",
-    "tax_behavior": "exclusive",
-    "tax_note": "",
-    "cancel_at_period_end": false,
-    "canceled_at": null,
-    "payment_method_id": null,
-    "activation_url": null,
-    "activation_token": null,
-    "platform_id": "PL468440696748511232",
+    "trial": {
+      "days": 0,
+      "end_date": null
+    },
+    "period": {
+      "start": "2025-08-14T20:45:35.065Z",
+      "end": "2025-09-14T20:45:35.064Z"
+    },
+    "tax": {
+      "rate": 0.0875,
+      "type": "sales_tax",
+      "jurisdiction": "CA-Los Angeles",
+      "behavior": "exclusive",
+      "note": ""
+    },
+    "plan": {
+      "name": "Disney+, Hulu, HBO Max Bundle",
+      "type": "sub_bundle"
+    },
+    "cancellation": {
+      "cancel_at_period_end": false,
+      "canceled_at": null,
+      "ended_at": null
+    },
+    "activation": {
+      "url": null,
+      "token": null
+    },
     "metadata": {
       "source": "homepage_banner",
       "campaign": "summer_promo"
@@ -1279,6 +859,8 @@ Content-Type: application/json
       "device_type": "roku",
       "device_id": "FA1234567890"
     },
+    "created_ip": "75.85.168.125",
+    "updated_ip": "75.85.168.125",
     "created_at": "2025-08-14T20:45:35.065Z",
     "updated_at": "2025-08-14T20:45:35.065Z"
   },
@@ -1286,33 +868,54 @@ Content-Type: application/json
     "invoice_id": "INV479027832278880256",
     "invoice_number": "INV-2025-78880256",
     "subscription_id": "SUB479027832035610624",
-    "invoice_date": "2025-08-14T20:45:35.122Z",
-    "due_date": "2025-09-13T20:45:35.122Z",
+    "session_id": "session_456",
     "status": "open",
     "payment_status": "unpaid",
-    "subtotal": 1699,
-    "tax_amount": 149,
-    "total_amount": 1848,
-    "amount_due": 1848,
-    "amount_paid": 0,
     "currency": "USD",
-    "tax_rate": 0.0875,
-    "tax_type": "sales_tax",
-    "tax_jurisdiction": "CA-Los Angeles",
-    "tax_behavior": "exclusive",
-    "tax_note": "",
-    "period_start": "2025-08-14T20:45:35.065Z",
-    "period_end": "2025-09-14T20:45:35.064Z",
-    "plan_id": "427944e5ba9e",
-    "plan_name": "Disney+, Hulu, HBO Max Bundle",
-    "plan_type": "sub_bundle",
-    "session_id": "session_456",
-    "platform_id": "PL468440696748511232",
-    "retry_count": 0,
-    "max_retries": 3,
-    "payment_method_id": null,
-    "payment_intent_id": null,
-    "created_at": "2025-08-14T20:45:35.122Z"
+    "region": "US",
+    "amounts": {
+      "subtotal": 1699,
+      "proration_credit": 0,
+      "tax_amount": 149,
+      "total_amount": 1848,
+      "amount_due": 1848,
+      "amount_paid": 0
+    },
+    "tax": {
+      "rate": 0.0875,
+      "type": "sales_tax",
+      "jurisdiction": "CA-Los Angeles",
+      "behavior": "exclusive",
+      "note": ""
+    },
+    "plan": {
+      "plan_id": "427944e5ba9e",
+      "name": "Disney+, Hulu, HBO Max Bundle",
+      "type": "sub_bundle",
+      "phase_id": "4282b4cfac23dc38",
+      "phase_order": 1,
+      "billing_cycle": 1,
+      "platform_fee_rate": 0.15,
+      "platform_fee_amount": 255
+    },
+    "period": {
+      "start": "2025-08-14T20:45:35.065Z",
+      "end": "2025-09-14T20:45:35.064Z",
+      "invoice_date": "2025-08-14T20:45:35.122Z",
+      "due_date": "2025-09-13T20:45:35.122Z"
+    },
+    "retries": {
+      "count": 0,
+      "max": 3,
+      "next_date": null,
+      "last_date": null,
+      "delay_minutes": 60
+    },
+    "metadata": {},
+    "created_ip": "75.85.168.125",
+    "updated_ip": "75.85.168.125",
+    "created_at": "2025-08-14T20:45:35.122Z",
+    "updated_at": "2025-08-14T20:45:35.122Z"
   }
 }
 ```
@@ -1415,23 +1018,50 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 {
   "subscription_id": "SUB479027832035610624",
-  "status": "active",
-  "payment_status": "paid",
+  "session_id": "session_456",
   "plan_id": "427944e5ba9e",
-  "plan_name": "Disney+, Hulu, HBO Max Bundle",
-  "next_billing_date": "2025-09-14T20:45:35.064Z",
-  "current_period_start": "2025-08-14T20:45:35.065Z",
-  "current_period_end": "2025-09-14T20:45:35.064Z",
-  "billing_frequency": {
-    "unit": "month",
-    "value": 1
+  "platform_id": "PL468440696748511232",
+  "status": "active",
+  "activation_status": "pending",
+  "payment_status": "paid",
+  "billing": {
+    "next_billing_date": "2025-09-14T20:45:35.064Z",
+    "frequency": { "unit": "month", "value": 1 },
+    "cycle_count": 1,
+    "current_phase_id": "4282b4cfac23dc38",
+    "grace_period_days": 7,
+    "grace_period_end": null,
+    "interval_days": 30
   },
-  "tax_rate": 0.0875,
-  "tax_type": "sales_tax",
-  "cancel_at_period_end": false,
-  "payment_method_id": "pm_123",
-  "activation_url": "https://activate.disney.com/paket/abc123",
-  "activation_token": "token_xyz789",
+  "period": {
+    "start": "2025-08-14T20:45:35.065Z",
+    "end": "2025-09-14T20:45:35.064Z"
+  },
+  "tax": {
+    "rate": 0.0875,
+    "type": "sales_tax",
+    "jurisdiction": "CA-Los Angeles",
+    "behavior": "exclusive",
+    "note": ""
+  },
+  "plan": {
+    "name": "Disney+, Hulu, HBO Max Bundle",
+    "type": "sub_bundle"
+  },
+  "cancellation": {
+    "cancel_at_period_end": false,
+    "canceled_at": null,
+    "ended_at": null
+  },
+  "activation": {
+    "url": "https://activate.disney.com/paket/abc123",
+    "token": "token_xyz789"
+  },
+  "metadata": {},
+  "device_info": {},
+  "created_ip": "75.85.168.125",
+  "updated_ip": "75.85.168.125",
+  "created_at": "2025-08-14T20:45:35.065Z",
   "updated_at": "2025-08-14T21:00:00.000Z"
 }
 ```
@@ -1533,29 +1163,47 @@ Content-Type: application/json
   "subscription_id": "SUB479027832035610624",
   "session_id": "session_456",
   "plan_id": "427944e5ba9e",
-  "plan_name": "Disney+, Hulu, HBO Max Bundle",
-  "plan_type": "sub_bundle",
+  "platform_id": "PL468440696748511232",
   "status": "active",
   "activation_status": "pending",
   "payment_status": "paid",
-  "next_billing_date": "2025-09-14T20:45:35.064Z",
-  "current_period_start": "2025-08-14T20:45:35.065Z",
-  "current_period_end": "2025-09-14T20:45:35.064Z",
-  "trial_end": null,
-  "grace_period_days": 7,
-  "billing_frequency": {
-    "unit": "month",
-    "value": 1
+  "billing": {
+    "next_billing_date": "2025-09-14T20:45:35.064Z",
+    "frequency": { "unit": "month", "value": 1 },
+    "cycle_count": 1,
+    "current_phase_id": "4282b4cfac23dc38",
+    "grace_period_days": 7,
+    "grace_period_end": null,
+    "interval_days": 30
   },
-  "free_trial_days": 0,
-  "tax_rate": 0.0875,
-  "tax_type": "sales_tax",
-  "tax_jurisdiction": "CA-Los Angeles",
-  "cancel_at_period_end": false,
-  "canceled_at": null,
-  "payment_method_id": "pm_123",
-  "platform_id": "783203561062490278320",
+  "trial": {
+    "days": 0,
+    "end_date": null
+  },
+  "period": {
+    "start": "2025-08-14T20:45:35.065Z",
+    "end": "2025-09-14T20:45:35.064Z"
+  },
+  "tax": {
+    "rate": 0.0875,
+    "type": "sales_tax",
+    "jurisdiction": "CA-Los Angeles",
+    "behavior": "exclusive",
+    "note": ""
+  },
+  "plan": {
+    "name": "Disney+, Hulu, HBO Max Bundle",
+    "type": "sub_bundle"
+  },
+  "cancellation": {
+    "cancel_at_period_end": false,
+    "canceled_at": null,
+    "ended_at": null
+  },
   "metadata": {},
+  "device_info": {},
+  "created_ip": "75.85.168.125",
+  "updated_ip": "75.85.168.125",
   "created_at": "2025-08-14T20:45:35.065Z",
   "updated_at": "2025-08-14T21:00:00.000Z"
 }
@@ -1650,7 +1298,260 @@ Returns an array of summarized Subscription objects.
 
 ## Invoices
 
-Invoices track billing statements and payment collection for subscription periods.
+Invoices track billing statements for subscription periods.
+
+### The Invoice Object
+
+The Invoice object represents a billing statement for a subscription period, tracking amounts, payment status, and retry logic.
+
+> The Invoice Object
+
+```json
+{
+  "invoice_id": "INV479027832278880256",
+  "invoice_number": "INV-2025-78880256",
+  "subscription_id": "SUB479027832035610624",
+  "platform_id": "PL468440696748511232",
+  "session_id": "session_456",
+  "status": "open",
+  "payment_status": "unpaid",
+  "currency": "USD",
+  "region": "US",
+  "amounts": {
+    "subtotal": 1699,
+    "proration_credit": 0,
+    "tax_amount": 149,
+    "total_amount": 1848,
+    "amount_due": 1848,
+    "amount_paid": 0
+  },
+  "tax": {
+    "rate": 0.0875,
+    "type": "sales_tax",
+    "jurisdiction": "CA-Los Angeles",
+    "behavior": "exclusive",
+    "note": ""
+  },
+  "payment": {
+    "method_id": null,
+    "intent_id": null,
+    "date": null
+  },
+  "retries": {
+    "count": 0,
+    "max": 3,
+    "next_date": null,
+    "last_date": null,
+    "delay_minutes": 60
+  },
+  "plan": {
+    "plan_id": "427944e5ba9e",
+    "name": "Disney+, Hulu, HBO Max Bundle",
+    "type": "recurring",
+    "phase_id": "4282b4cfac23dc38",
+    "phase_order": 1,
+    "billing_cycle": 1,
+    "platform_fee_rate": 0.03,
+    "platform_fee_amount": 51
+  },
+  "period": {
+    "start": "2025-08-14T20:45:35.065Z",
+    "end": "2025-09-14T20:45:35.064Z",
+    "invoice_date": "2025-08-14T20:45:35.122Z",
+    "due_date": "2025-09-13T20:45:35.122Z"
+  },
+  "metadata": {},
+  "created_ip": "192.168.1.1",
+  "updated_ip": "192.168.1.1",
+  "created_at": "2025-08-14T20:45:35.122Z",
+  "updated_at": "2025-08-14T20:45:35.122Z"
+}
+```
+
+**Attributes**
+
+#### Core Fields
+
+**`invoice_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The unique identifier for the invoice (prefixed with INV).
+
+**`invoice_number`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Human-readable invoice number.
+
+**`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The subscription this invoice belongs to.
+
+**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform identifier that created the subscription.
+
+**`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The session identifier associated with this invoice's subscription.
+
+**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Invoice status:
+- `open` - Awaiting payment
+- `paid` - Fully paid
+- `draft` - Not yet finalized
+
+**`payment_status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Payment collection status:
+- `unpaid` - Not yet paid
+- `paid` - Successfully paid
+- `failed` - Payment failed
+- `processing` - Payment in progress
+- `canceled` - Payment canceled
+- `scheduled` - Payment scheduled for future date
+- `no_payment_required` - No payment needed (e.g., free trial)
+
+**`currency`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Three-letter ISO currency code.
+
+**`region`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Region code for pricing (e.g., "US").
+
+**`amounts`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Grouped financial amounts:
+
+&nbsp;&nbsp;&nbsp;**`subtotal`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Pre-tax amount in cents
+
+&nbsp;&nbsp;&nbsp;**`proration_credit`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Proration credit applied in cents
+
+&nbsp;&nbsp;&nbsp;**`tax_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Tax amount in cents
+
+&nbsp;&nbsp;&nbsp;**`total_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Total amount including tax in cents
+
+&nbsp;&nbsp;&nbsp;**`amount_due`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Amount currently due in cents
+
+&nbsp;&nbsp;&nbsp;**`amount_paid`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Amount already paid in cents
+
+**`tax`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Grouped tax information:
+
+&nbsp;&nbsp;&nbsp;**`rate`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+&nbsp;&nbsp;&nbsp;Applied tax rate (0-1, e.g., 0.0875 for 8.75%)
+
+&nbsp;&nbsp;&nbsp;**`type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Type of tax (`sales_tax`, `vat`, `gst`, `pst`, `hst`, `none`)
+
+&nbsp;&nbsp;&nbsp;**`jurisdiction`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Tax jurisdiction code (e.g., "CA-Los Angeles")
+
+&nbsp;&nbsp;&nbsp;**`behavior`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Tax collection behavior (`inclusive`, `exclusive`, `none`)
+
+&nbsp;&nbsp;&nbsp;**`note`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Additional tax notes
+
+**`payment_method_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Payment method identifier (only present if payment has been attempted).
+
+**`payment_intent_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Payment processor intent identifier (only present if payment has been attempted).
+
+**`payment_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp of payment (only present if payment has been attempted).
+
+**`retries`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Payment retry information (only present if retries have been attempted):
+
+&nbsp;&nbsp;&nbsp;**`count`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Number of retry attempts made
+
+&nbsp;&nbsp;&nbsp;**`max`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Maximum retries allowed
+
+&nbsp;&nbsp;&nbsp;**`next_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 timestamp of next retry
+
+&nbsp;&nbsp;&nbsp;**`last_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 timestamp of last retry
+
+&nbsp;&nbsp;&nbsp;**`delay_minutes`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Delay before next retry
+
+**`plan`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Plan and pricing information:
+
+&nbsp;&nbsp;&nbsp;**`plan_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Plan identifier
+
+&nbsp;&nbsp;&nbsp;**`name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Display name of the plan
+
+&nbsp;&nbsp;&nbsp;**`type`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Plan type (e.g., "recurring")
+
+&nbsp;&nbsp;&nbsp;**`phase_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Active phase identifier
+
+&nbsp;&nbsp;&nbsp;**`phase_order`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+&nbsp;&nbsp;&nbsp;Phase order number (1-based)
+
+&nbsp;&nbsp;&nbsp;**`billing_cycle`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+&nbsp;&nbsp;&nbsp;Billing cycle number (0=trial, 1+=paid)
+
+&nbsp;&nbsp;&nbsp;**`platform_fee_rate`** <span style='margin: 0 5px;font-size:.9em'>number</span>  
+&nbsp;&nbsp;&nbsp;Platform fee rate (0-1)
+
+&nbsp;&nbsp;&nbsp;**`platform_fee_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Platform fee in cents
+
+**`period`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Billing period dates:
+
+&nbsp;&nbsp;&nbsp;**`start`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 start of billing period
+
+&nbsp;&nbsp;&nbsp;**`end`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 end of billing period
+
+&nbsp;&nbsp;&nbsp;**`invoice_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 invoice creation date
+
+&nbsp;&nbsp;&nbsp;**`due_date`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 payment due date
+
+**`metadata`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Custom metadata key-value pairs.
+
+**`created_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+IP address from which the invoice was created.
+
+**`updated_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+IP address from which the invoice was last updated.
+
+**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the invoice was created.
+
+**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the invoice was last updated.
+
+**`platform_fee_amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+Platform fee amount in cents.
+
+**`metadata`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Additional metadata associated with the invoice.
+
+**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform identifier that created this invoice's subscription.
+
+**`created_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+IP address from which the invoice was created.
+
+**`updated_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+IP address from which the invoice was last updated.
+
+**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the invoice was created.
+
+**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the invoice was last updated.
 
 ### Update Invoice
 
@@ -1685,18 +1586,56 @@ Content-Type: application/json
   "invoice_id": "INV479027832278880256",
   "invoice_number": "INV-2025-78880256",
   "subscription_id": "SUB479027832035610624",
+  "session_id": "session_456",
   "status": "paid",
   "payment_status": "paid",
-  "subtotal": 1699,
-  "tax_amount": 149,
-  "total_amount": 1848,
-  "amount_paid": 1848,
-  "amount_due": 0,
   "currency": "USD",
+  "region": "US",
+  "amounts": {
+    "subtotal": 1699,
+    "proration_credit": 0,
+    "tax_amount": 149,
+    "total_amount": 1848,
+    "amount_due": 0,
+    "amount_paid": 1848
+  },
+  "tax": {
+    "rate": 0.0875,
+    "type": "sales_tax",
+    "jurisdiction": "CA-Los Angeles",
+    "behavior": "exclusive",
+    "note": ""
+  },
+  "plan": {
+    "plan_id": "427944e5ba9e",
+    "name": "Disney+, Hulu, HBO Max Bundle",
+    "type": "sub_bundle",
+    "phase_id": "4282b4cfac23dc38",
+    "phase_order": 1,
+    "billing_cycle": 1,
+    "platform_fee_rate": 0.15,
+    "platform_fee_amount": 255
+  },
+  "period": {
+    "start": "2025-08-14T20:45:35.065Z",
+    "end": "2025-09-14T20:45:35.064Z",
+    "invoice_date": "2025-08-14T20:45:35.122Z",
+    "due_date": "2025-09-13T20:45:35.122Z"
+  },
   "payment_method_id": "pm_123",
   "payment_intent_id": "pi_456",
   "payment_date": "2025-08-14T21:15:00.000Z",
-  "retry_count": 0,
+  "retries": {
+    "count": 0,
+    "max": 3,
+    "next_date": null,
+    "last_date": null,
+    "delay_minutes": 60
+  },
+  "metadata": {},
+  "created_ip": "75.85.168.125",
+  "updated_ip": "75.85.168.125",
+  "created_at": "2025-08-14T20:45:35.122Z",
   "updated_at": "2025-08-14T21:15:00.000Z"
 }
 ```
@@ -1710,18 +1649,56 @@ Content-Type: application/json
   "invoice_id": "INV479027832278880256",
   "invoice_number": "INV-2025-78880256",
   "subscription_id": "SUB479027832035610624",
+  "session_id": "session_456",
   "status": "paid",
   "payment_status": "paid",
-  "billing_cycle": 1,
-  "subtotal": 1699,
-  "tax_amount": 149,
-  "total_amount": 1848,
-  "amount_paid": 1848,
-  "amount_due": 0,
   "currency": "USD",
+  "region": "US",
+  "amounts": {
+    "subtotal": 1699,
+    "proration_credit": 0,
+    "tax_amount": 149,
+    "total_amount": 1848,
+    "amount_due": 0,
+    "amount_paid": 1848
+  },
+  "tax": {
+    "rate": 0.0875,
+    "type": "sales_tax",
+    "jurisdiction": "CA-Los Angeles",
+    "behavior": "exclusive",
+    "note": ""
+  },
+  "plan": {
+    "plan_id": "427944e5ba9e",
+    "name": "Disney+, Hulu, HBO Max Bundle",
+    "type": "sub_bundle",
+    "phase_id": "4282b4cfac23dc38",
+    "phase_order": 1,
+    "billing_cycle": 1,
+    "platform_fee_rate": 0.15,
+    "platform_fee_amount": 255
+  },
+  "period": {
+    "start": "2025-08-14T20:45:35.065Z",
+    "end": "2025-09-14T20:45:35.064Z",
+    "invoice_date": "2025-08-14T20:45:35.122Z",
+    "due_date": "2025-09-13T20:45:35.122Z"
+  },
   "payment_method_id": "pm_123",
   "payment_intent_id": "pi_456",
   "payment_date": "2025-08-14T21:15:00.000Z",
+  "retries": {
+    "count": 0,
+    "max": 3,
+    "next_date": null,
+    "last_date": null,
+    "delay_minutes": 60
+  },
+  "metadata": {},
+  "created_ip": "75.85.168.125",
+  "updated_ip": "75.85.168.125",
+  "created_at": "2025-08-14T20:45:35.122Z",
   "updated_at": "2025-08-14T21:15:00.000Z",
   "activation_urls": [
     {
@@ -1833,29 +1810,55 @@ Content-Type: application/json
   "invoice_id": "INV479027832278880256",
   "invoice_number": "INV-2025-78880256",
   "subscription_id": "SUB479027832035610624",
-  "invoice_date": "2025-08-14T20:45:35.122Z",
-  "due_date": "2025-09-13T20:45:35.122Z",
+  "session_id": "session_456",
   "status": "open",
   "payment_status": "unpaid",
-  "subtotal": 1699,
-  "tax_amount": 149,
-  "total_amount": 1848,
-  "amount_due": 1848,
-  "amount_paid": 0,
   "currency": "USD",
-  "tax_rate": 0.0875,
-  "tax_type": "sales_tax",
-  "tax_jurisdiction": "CA-Los Angeles",
-  "period_start": "2025-08-14T20:45:35.065Z",
-  "period_end": "2025-09-14T20:45:35.064Z",
-  "plan_id": "427944e5ba9e",
-  "plan_name": "Disney+, Hulu, HBO Max Bundle",
-  "retry_count": 0,
-  "max_retries": 3,
-  "next_retry_date": null,
-  "session_id": "session_456",
-  "platform_id": "783203561062490278320",
-  "created_at": "2025-08-14T20:45:35.122Z"
+  "region": "US",
+  "amounts": {
+    "subtotal": 1699,
+    "proration_credit": 0,
+    "tax_amount": 149,
+    "total_amount": 1848,
+    "amount_due": 1848,
+    "amount_paid": 0
+  },
+  "tax": {
+    "rate": 0.0875,
+    "type": "sales_tax",
+    "jurisdiction": "CA-Los Angeles",
+    "behavior": "exclusive",
+    "note": ""
+  },
+  "plan": {
+    "plan_id": "427944e5ba9e",
+    "name": "Disney+, Hulu, HBO Max Bundle",
+    "type": "sub_bundle",
+    "phase_id": "4282b4cfac23dc38",
+    "phase_order": 1,
+    "billing_cycle": 1,
+    "platform_fee_rate": 0.15,
+    "platform_fee_amount": 255
+  },
+  "period": {
+    "start": "2025-08-14T20:45:35.065Z",
+    "end": "2025-09-14T20:45:35.064Z",
+    "invoice_date": "2025-08-14T20:45:35.122Z",
+    "due_date": "2025-09-13T20:45:35.122Z"
+  },
+  "retries": {
+    "count": 0,
+    "max": 3,
+    "next_date": null,
+    "last_date": null,
+    "delay_minutes": 60
+  },
+  "metadata": {},
+  "platform_id": "PL468440696748511232",
+  "created_ip": "75.85.168.125",
+  "updated_ip": "75.85.168.125",
+  "created_at": "2025-08-14T20:45:35.122Z",
+  "updated_at": "2025-08-14T20:45:35.122Z"
 }
 ```
 \* required
@@ -1955,6 +1958,177 @@ Returns an array of summarized Invoice objects, sorted by most recent first.
 ## Payments
 
 Payments provide immutable audit trails of all payment attempts for invoices. Unlike invoices which can be updated, payment records are never modified once created, ensuring complete payment history and compliance.
+
+### The Payment Object
+
+The Payment object represents an immutable payment attempt record for an invoice, providing a complete audit trail of all payment processing activities. Please note that Paket does not natively process payments, rather it is a store of a payment attempts made via a Platform's PSP. As such, it is encumbant on the Platform processing a payment to post payment responsese to this API to ensure an immutable audit trail of payment attemps exists for each Invoice
+
+> The Payment Object
+
+```json
+{
+  "payment_id": "PAY479027832345678912",
+  "invoice_id": "INV479027832278880256",
+  "subscription_id": "SUB479027832035610624",
+  "platform_id": "PL468440696748511232",
+  "amount": 1848,
+  "currency": "USD",
+  "status": "succeeded",
+  "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+  "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
+  "error_code": null,
+  "error_message": null,
+  "processor_response": {
+    "last_four": "4242",
+    "brand": "visa",
+    "exp_month": 12,
+    "exp_year": 2028
+  },
+  "metadata": {
+    "source": "web_app",
+    "retry_attempt": 0
+  },
+  "created_ip": "192.168.1.100",
+  "created_at": "2025-08-14T21:15:00.000Z",
+  "activation_urls": [
+    {
+      "app_id": "AP468442205989113856",
+      "app_name": "Disney+",
+      "product_id": "PR469716925099413504",
+      "product_name": "Disney+ Basic",
+      "activation_url": "https://disneyplus.com/activate?token=abc123...",
+      "expires_at": "2025-08-14T21:45:00.000Z"
+    }
+  ]
+}
+```
+
+**Refund Example:**
+
+```json
+{
+  "payment_id": "PAY479027832345678912",
+  "invoice_id": "INV479027832278880256",
+  "subscription_id": "SUB479027832035610624",
+  "platform_id": "PL468440696748511232",
+  "amount": -1848,
+  "currency": "USD",
+  "status": "succeeded",
+  "refund_reason": "Duplicate charge",
+  "payment_method_id": "pm_1NvQsHKyuNiyfQC0M4X0Q8Bq",
+  "payment_intent_id": "pi_3NvQsHKyuNiyfQC00d9qFQe3",
+  "error_code": null,
+  "error_message": null,
+  "processor_response": {
+    "last_four": "4242",
+    "brand": "visa",
+    "exp_month": 12,
+    "exp_year": 2028
+  },
+  "metadata": {
+    "refund_requested_by": "customer_service",
+    "original_charge_date": "2025-08-14T21:15:00.000Z"
+  },
+  "created_ip": "192.168.1.100",
+  "created_at": "2025-08-15T14:30:00.000Z"
+}
+```
+
+**Attributes**
+
+**`payment_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The unique identifier for the payment record (prefixed with PAY).
+
+**`invoice_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The invoice this payment attempt was made for.
+
+**`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The subscription associated with this payment.
+
+**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform identifier that initiated this payment.
+
+**`amount`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+Payment amount in cents. Positive values represent payments, negative values represent refunds.
+
+**`currency`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Three-letter ISO currency code.
+
+**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Payment processing status:
+
+- `succeeded` - Payment completed successfully
+- `failed` - Payment failed to process
+- `processing` - Payment is being processed
+- `canceled` - Payment was canceled
+- `requires_action` - Payment requires additional user action
+- `refunded` - Full refund processed successfully
+- `partially_refunded` - Partial refund processed successfully
+- `refund_failed` - Refund attempt failed
+- `refund_pending` - Refund is being processed
+
+**`payment_method_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Payment processor's payment method identifier.
+
+**`payment_intent_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Payment processor's intent identifier.
+
+**`refund_reason`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Reason for refund (only present for refund records).
+
+**`original_payment_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Reference to the original payment being refunded (only present for refund records).
+
+**`error_code`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Error code if payment failed (null for successful payments).
+
+**`error_message`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Human-readable error message if payment failed (null for successful payments).
+
+**`processor_response`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Payment processor's response data:
+
+&nbsp;&nbsp;&nbsp;**`last_four`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Last four digits of payment method
+
+&nbsp;&nbsp;&nbsp;**`brand`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Payment method brand (e.g., "visa", "mastercard")
+
+&nbsp;&nbsp;&nbsp;**`exp_month`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Expiration month
+
+&nbsp;&nbsp;&nbsp;**`exp_year`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+&nbsp;&nbsp;&nbsp;Expiration year
+
+**`metadata`** <span style='margin: 0 5px;font-size:.9em'>object</span>  
+Additional metadata associated with the payment attempt.
+
+**`created_ip`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+IP address from which the payment was initiated.
+
+**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the payment record was created.
+
+**`activation_urls`** <span style='margin: 0 5px;font-size:.9em'>array</span>  
+Optional. Returned for successful payments on first invoices. Contains activation URLs for bundled services requiring activation:
+
+&nbsp;&nbsp;&nbsp;**`app_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;App identifier requiring activation
+
+&nbsp;&nbsp;&nbsp;**`app_name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;App display name
+
+&nbsp;&nbsp;&nbsp;**`product_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Product identifier to activate
+
+&nbsp;&nbsp;&nbsp;**`product_name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;Product display name
+
+&nbsp;&nbsp;&nbsp;**`activation_url`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;URL for user to complete activation
+
+&nbsp;&nbsp;&nbsp;**`expires_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+&nbsp;&nbsp;&nbsp;ISO 8601 timestamp when activation expires
 
 ### Create Payment
 
@@ -2302,6 +2476,104 @@ Returns an array of Payment objects, sorted by most recent first. This shows the
 ## Activation
 
 The Activation API provides endpoints for managing product activation sessions and validating activation codes. When a subscription is successfully paid, Paket automatically creates activation sessions for bundled services that require user activation.
+
+### The Activation Session Object
+
+The Activation Session object represents a collection of activation codes generated for a paid subscription, tracking the activation status of each bundled product.
+
+> The Activation Session Object
+
+```json
+{
+  "activation_session_id": "AS479027832456789123",
+  "subscription_id": "SUB479027832035610624",
+  "platform_id": "PL468440696748511232",
+  "session_id": "session_456",
+  "status": "pending",
+  "expires_at": "2025-08-21T21:15:00.000Z",
+  "progress": {
+    "items_total": 3,
+    "items_activated": 1
+  },
+  "activation_urls": [
+    {
+      "app_id": "AP468442205989113856",
+      "app_name": "Disney+",
+      "product_id": "PR469716925099413504",
+      "product_name": "Disney+ Basic",
+      "activation_url": "https://disneyplus.com/activate?activation_code=AC_A3F2B7C9_D4E1F8A2",
+      "expires_at": "2025-08-21T21:15:00.000Z"
+    },
+    {
+      "app_id": "AP468442205989113857",
+      "app_name": "Hulu",
+      "product_id": "PR469716925099413505",
+      "product_name": "Hulu (No Ads)",
+      "activation_url": "https://hulu.com/activate?code=AC_B4G2K8D1_F5H9L3M6",
+      "expires_at": "2025-08-21T21:15:00.000Z"
+    }
+  ],
+  "metadata": {},
+  "created_at": "2025-08-14T21:15:00.000Z",
+  "updated_at": "2025-08-14T21:15:00.000Z"
+}
+```
+
+**Attributes**
+
+**`activation_session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The unique identifier for the activation session (prefixed with AS).
+
+**`subscription_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The subscription that triggered this activation session.
+
+**`invoice_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The invoice that was paid to trigger activation.
+
+**`session_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The user session associated with the subscription.
+
+**`platform_id`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+The platform identifier that created the subscription.
+
+**`platform_name`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Display name of the platform.
+
+**`status`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+Overall activation session status:
+- `pending` - Awaiting activation for one or more items
+- `partial` - Some items activated but not all
+- `completed` - All items successfully activated
+- `failed` - Activation failed for one or more items
+- `expired` - Session expired before completion
+
+**`items_total`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+Total number of products requiring activation.
+
+**`items_activated`** <span style='margin: 0 5px;font-size:.9em'>integer</span>  
+Number of products successfully activated.
+
+**`created_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the activation session was created.
+
+**`updated_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the activation session was last updated.
+
+**`expires_at`** <span style='margin: 0 5px;font-size:.9em'>string</span>  
+ISO 8601 timestamp when the activation session expires.
+
+**`activation_items`** <span style='margin: 0 5px;font-size:.9em'>array</span>  
+Array of activation items for each product in the subscription. Each item contains:
+- `app_id` - The app/publisher identifier
+- `app_name` - Display name of the app
+- `product_id` - The product being activated
+- `product_name` - Display name of the product
+- `status` - Item activation status (pending, activated, failed, expired)
+- `activation_code_hash` - SHA-256 hash of the activation code (for validation)
+- `activation_url` - Complete URL for user activation
+- `jti` - Unique JWT identifier for the activation token
+- `created_at` - When this activation item was created
+- `expires_at` - When this activation code expires (typically 7 days)
 
 ### Exchange Activation Code
 
