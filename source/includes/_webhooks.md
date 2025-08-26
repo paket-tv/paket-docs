@@ -81,33 +81,53 @@ Occurs when a Context is removed from a Session.
 Occurs when a Context user removes or hides an item from their List via the Platform.  
 <span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) that own the hidden item</span>
 
-**`subscription.created`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
+**`subscription.status.created`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
 Occurs when a platform creates a subscription that includes a publisher's product.  
 <span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products are included in the subscription</span>
 
-**`subscription.activated`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
-Occurs when all products in a subscription are successfully activated.  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Platforms that created the subscription</span>
+**`subscription.status.renewed`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
+Occurs when a platform successfully renews a subscription that includes a publisher's product.  
+<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products are included in the subscription</span>
 
-**`subscription.canceled`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
-Occurs when a platform cancels a subscription.  
+**`subscription.status.cancels_on`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
+Occurs when a subscription is scheduled to cancel at the end of the current period.  
+<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products are included in the subscription</span>
+
+**`subscription.status.canceled`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
+Occurs when a subscription is actually canceled (immediately or at period end) by platform or due to non payment.
 <span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products were included in the canceled subscription</span>
 
-**`subscription.paused`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
+**`subscription.status.paused`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
 Occurs when a platform pauses a subscription.  
 <span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products are included in the paused subscription</span>
 
-**`subscription.resumed`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
-Occurs when a platform resumes a paused subscription.  
+**`subscription.status.resumed`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
+Occurs when a platform resumes a paused subscription or reactivates a subscription scheduled for cancellation.  
 <span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products are included in the resumed subscription</span>
+
+**`subscription.invoice.created`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is an [invoice](#license-api-invoices-the-invoice-object)</span>  
+Occurs when a new invoice is generated for a subscription (renewal or initial billing).  
+<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Platforms that created the subscription receiving the invoice</span>
+
+**`subscription.invoice.past_due`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
+Occurs when subscription enters grace period after non payment or payment failure.  
+<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products are included in the subscription entering grace period</span>
 
 **`activation.session.created`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is an [activation session](#license-api-activation-activation-session-object)</span>  
 Occurs when payment succeeds and activation session is created.  
 <span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products require activation in the session</span>
 
-**`activation.code.exchanged`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is activation exchange details</span>  
-Occurs when a publisher successfully exchanges an activation code.  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Platforms that created the subscription containing the exchanged code</span>
+**`activation.code.reissued`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is activation exchange details</span>  
+Occurs when a platform regenerates or reissues a new activation code.  
+<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products require activation in the session</span>
+
+**`activation.code.expired`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is activation exchange details</span>  
+Occurs when an activation code expires or is invalidated. 
+<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products require activation in the session</span>
+
+**`activation.item.failed`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is activation item details</span>  
+Occurs when an activation attempt fails (before code expiration).  
+<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Platforms that created the subscription containing the failed activation item</span>
 
 **`activation.item.completed`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is activation item details</span>  
 Occurs when a publisher confirms successful activation via the Update Activation Status endpoint.  
@@ -120,43 +140,3 @@ Occurs when all items in an activation session are activated.
 **`activation.session.expired`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is an [activation session](#license-api-activation-activation-session-object)</span>  
 Occurs when activation session expires after 7 days without completion.  
 <span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Platforms that created the subscription with the expired activation session</span>
-
-**`activation.codes.regenerated`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is regeneration details</span>  
-Occurs when a platform regenerates activation codes.  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose activation codes were regenerated</span>
-
-**`payment.succeeded`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [payment](#license-api-payments-the-payment-object)</span>  
-Occurs when a payment is successfully processed.  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Platforms that created the subscription receiving the payment</span>
-
-**`payment.failed`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [payment](#license-api-payments-the-payment-object)</span>  
-Occurs when a payment attempt fails.  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Platforms that created the subscription with the failed payment</span>
-
-**`invoice.created`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is an [invoice](#license-api-invoices-the-invoice-object)</span>  
-Occurs when a new invoice is generated for a subscription (renewal or initial billing).  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Platforms that created the subscription receiving the invoice</span>
-
-**`invoice.paid`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is an [invoice](#license-api-invoices-the-invoice-object)</span>  
-Occurs when an invoice is marked as paid (first invoice only for activation flow).  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products are included in the paid invoice</span>
-
-**`invoice.payment_failed`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is an [invoice](#license-api-invoices-the-invoice-object)</span>  
-Occurs when payment fails after grace period.  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products are included in the unpaid invoice</span>
-
-**`billing.renewal.upcoming`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
-Occurs 7 days before next billing date.  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Platforms that created the subscription approaching renewal</span>
-
-**`billing.renewal.processed`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
-Occurs when renewal payment is processed.  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Platforms that created the renewed subscription</span>
-
-**`billing.grace_period.entered`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
-Occurs when subscription enters grace period after payment failure.  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products are included in the subscription entering grace period</span>
-
-**`billing.grace_period.expired`** <span style='margin: 0 5px;font-size:.8em'>`data.object` is a [subscription](#license-api-subscriptions-the-subscription-object)</span>  
-Occurs when grace period ends without payment.  
-<span style='margin: 0 5px;font-size:.8em;color:#666'>**Recipients**: Publishers (Apps) whose products are included in the subscription with expired grace period</span>

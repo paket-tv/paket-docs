@@ -2153,7 +2153,9 @@ Array of activation items for each product in the subscription. Each item contai
 <h3 id='license-api-bento-overview-subscription-activation-flow'>Subscription Activation Flow</h3>
 <p>Paket&#39;s subscription orchestration service works independently of the Platform&#39;s payment and identity services and the app Publishers&#39; respective identity services. This affords both Platform and Publisher direct ownership of the respective user&#39;s accounts and enhanced privacy for the end user.</p>
 
-<p><img src="images/paket_create_sub_seq_diagram-e36f6da7.jpg" alt="Create Sub Sequence Diagram" /></p>
+<p style="margin-top:20px;margin-bottom:20px">
+  <img src="images/paket_create_sub_seq_diagram-4efa0ad2.jpg" alt="Create Sub Sequence Diagram" style="padding:20px; background:#fff; border-radius:8px;"/>
+</p>
 <h4 id='license-api-bento-overview-subscription-activation-flow-create-new-subscription'>Create New Subscription</h4>
 <ol>
 <li><strong>Platform Creates Subscription</strong>: Platform calls <code>POST /v1/catalog/subscriptions</code> with user&#39;s session ID and selected plan</li>
@@ -2161,14 +2163,14 @@ Array of activation items for each product in the subscription. Each item contai
 <li><strong>Platform Processes Payment</strong>: Platform collects payment through their payment service provider (PSP)</li>
 <li><strong>Payment Recording</strong>: Platform posts payment result to <code>POST /v1/catalog/subscriptions/{subscription_id}/invoices/{invoice_id}/payments</code></li>
 <li><strong>Subscription Activation</strong>: On successful payment, Paket returns activation URLs for each of the plan&#39;s products and triggers the app activation flow</li>
-<li><strong>Publisher Notification</strong>: Publishers receive webhooks about new subscriptions requiring activation</li>
+<li><strong>Publisher Notification</strong>: Publishers receive <code>activation.session.created</code> webhooks for new subscriptions requiring activation. The webhook includes a <code>jti</code> (JWT identifier) for security validation.</li>
 </ol>
 <h4 id='license-api-bento-overview-subscription-activation-flow-product-activation'>Product Activation</h4>
 <ol>
 <li><strong>User Arrives</strong>: User visits activation URL with their unique activation code</li>
-<li><strong>Code Validation</strong>: Publisher validates the activation code via <code>POST /v1/catalog/activation/exchange</code></li>
-<li><strong>Account Setup</strong>: Publisher completes user sign-up or sign-in process</li>
-<li><strong>Activation Confirmation</strong>: Publisher calls <code>PUT /v1/catalog/activation/{session_id}/items/{item_id}</code> to confirm activation</li>
+<li><strong>Code Validation</strong>: Publisher validates the activation code via <code>POST /v1/catalog/activation/exchange</code>, which returns the purchased product details and the <code>jti</code> for cross-reference validation.</li>
+<li><strong>Account Setup</strong>: Publisher validates the product and completes user sign-up or sign-in process</li>
+<li><strong>Activation Confirmation</strong>: Publisher calls <code>PUT /v1/catalog/activation/{session_id}/items/{item_id}</code> to confirm activation.</li>
 <li><strong>Service Provisioning</strong>: Publisher provisions the service for the activated user</li>
 </ol>
 
@@ -2191,6 +2193,7 @@ Array of activation items for each product in the subscription. Each item contai
   </span><span class="nl">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR469716925099413504"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"subscription_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUB479027832035610624"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"platform_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PL468440696748511232"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"jti"</span><span class="p">:</span><span class="w"> </span><span class="s2">"at_479027832567890234"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR469716925099413504"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"product_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disney+ Basic"</span><span class="p">,</span><span class="w">
@@ -2209,19 +2212,26 @@ Array of activation items for each product in the subscription. Each item contai
 After successfully exchanging the activation code and completing user account setup, publishers must confirm the activation by calling PUT /v1/catalog/activation/{session_id}/items/{item_id} to update the activation status.
 </aside>
 <h3 id='license-api-bento-overview-subscription-renewal-flow'>Subscription Renewal Flow</h3>
-<p>Paket handles subscription renewals automatically through its billing orchestration system. The renewal process ensures continuity of service while maintaining proper billing cycles and platform revenue distribution.</p>
+<p>Paket handles subscription renewals automatically through its billing orchestration system. The renewal process ensures continuity of service and a single source of truth while maintaining proper billing cycles and platform revenue distribution.</p>
+
+<p style="margin-top:20px;margin-bottom:20px">
+  <img src="images/paket_renewal_seq_diagram-c3d99ad8.jpg" alt="Renew Sub Sequence Diagram" style="padding:20px; background:#fff; border-radius:8px;"/>
+</p>
 
 <ol>
-<li><strong>Renewal Notification</strong>: Paket sends <code>billing.renewal.upcoming</code> webhook to platforms 7 days before the next billing date</li>
 <li><strong>Invoice Generation</strong>: On the billing date, Paket automatically generates a new invoice for the next billing cycle</li>
-<li><strong>Platform Notification</strong>: Platform receives <code>invoice.created</code> webhook event with the new invoice details</li>
+<li><strong>Platform Notification</strong>: Platform receives notification about the new invoice</li>
 <li><strong>Payment Processing</strong>: Platform collects payment through their payment service provider (PSP) </li>
 <li><strong>Payment Confirmation</strong>: Platform records payment result via <code>POST /v1/catalog/subscriptions/{subscription_id}/invoices/{invoice_id}/payments</code></li>
 <li><strong>Renewal Completion</strong>: On successful payment, subscription billing cycle advances and service continues</li>
-<li><strong>Publisher Updates</strong>: Publishers receive <code>billing.renewal.processed</code> webhook confirming successful renewal</li>
+<li><strong>Publisher Updates</strong>: Publishers receive <code>subscription.renewed</code> webhook confirming successful renewal</li>
 </ol>
 <h3 id='license-api-bento-overview-subscription-cancellation-flow'>Subscription Cancellation Flow</h3>
-<p>Subscription cancellations can be initiated by platforms and are handled gracefully to ensure proper service termination and final billing reconciliation.</p>
+<p>Subscription cancellations can be initiated either by platforms (e.g., at user&#39;s request) or programmatically when an unpaid invoice lapses its grace period and are handled gracefully to ensure proper service termination and final billing reconciliation.</p>
+
+<p style="margin-top:20px;margin-bottom:20px">
+  <img src="images/paket_cancel_seq_diagram-c6960b90.jpg" alt="Cancel Sub Sequence Diagram" style="padding:20px; background:#fff; border-radius:8px;"/>
+</p>
 
 <ol>
 <li><strong>Cancellation Request</strong>: Platform initiates cancellation via <code>PUT /v1/catalog/subscriptions/{subscription_id}</code> with status <code>&quot;canceled&quot;</code></li>
@@ -4815,33 +4825,53 @@ Occurs when a Context is removed from a Session.<br>
 Occurs when a Context user removes or hides an item from their List via the Platform.<br>
 <span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) that own the hidden item</span></p>
 
-<p><strong><code>subscription.created</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
+<p><strong><code>subscription.status.created</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
 Occurs when a platform creates a subscription that includes a publisher&#39;s product.<br>
 <span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products are included in the subscription</span></p>
 
-<p><strong><code>subscription.activated</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
-Occurs when all products in a subscription are successfully activated.<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Platforms that created the subscription</span></p>
+<p><strong><code>subscription.status.renewed</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
+Occurs when a platform successfully renews a subscription that includes a publisher&#39;s product.<br>
+<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products are included in the subscription</span></p>
 
-<p><strong><code>subscription.canceled</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
-Occurs when a platform cancels a subscription.<br>
+<p><strong><code>subscription.status.cancels_on</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
+Occurs when a subscription is scheduled to cancel at the end of the current period.<br>
+<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products are included in the subscription</span></p>
+
+<p><strong><code>subscription.status.canceled</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
+Occurs when a subscription is actually canceled (immediately or at period end) by platform or due to non payment.
 <span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products were included in the canceled subscription</span></p>
 
-<p><strong><code>subscription.paused</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
+<p><strong><code>subscription.status.paused</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
 Occurs when a platform pauses a subscription.<br>
 <span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products are included in the paused subscription</span></p>
 
-<p><strong><code>subscription.resumed</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
-Occurs when a platform resumes a paused subscription.<br>
+<p><strong><code>subscription.status.resumed</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
+Occurs when a platform resumes a paused subscription or reactivates a subscription scheduled for cancellation.<br>
 <span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products are included in the resumed subscription</span></p>
+
+<p><strong><code>subscription.invoice.created</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is an <a href="#license-api-invoices-the-invoice-object">invoice</a></span><br>
+Occurs when a new invoice is generated for a subscription (renewal or initial billing).<br>
+<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Platforms that created the subscription receiving the invoice</span></p>
+
+<p><strong><code>subscription.invoice.past_due</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
+Occurs when subscription enters grace period after non payment or payment failure.<br>
+<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products are included in the subscription entering grace period</span></p>
 
 <p><strong><code>activation.session.created</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is an <a href="#license-api-activation-activation-session-object">activation session</a></span><br>
 Occurs when payment succeeds and activation session is created.<br>
 <span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products require activation in the session</span></p>
 
-<p><strong><code>activation.code.exchanged</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is activation exchange details</span><br>
-Occurs when a publisher successfully exchanges an activation code.<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Platforms that created the subscription containing the exchanged code</span></p>
+<p><strong><code>activation.code.reissued</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is activation exchange details</span><br>
+Occurs when a platform regenerates or reissues a new activation code.<br>
+<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products require activation in the session</span></p>
+
+<p><strong><code>activation.code.expired</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is activation exchange details</span><br>
+Occurs when an activation code expires or is invalidated. 
+<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products require activation in the session</span></p>
+
+<p><strong><code>activation.item.failed</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is activation item details</span><br>
+Occurs when an activation attempt fails (before code expiration).<br>
+<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Platforms that created the subscription containing the failed activation item</span></p>
 
 <p><strong><code>activation.item.completed</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is activation item details</span><br>
 Occurs when a publisher confirms successful activation via the Update Activation Status endpoint.<br>
@@ -4854,46 +4884,6 @@ Occurs when all items in an activation session are activated.<br>
 <p><strong><code>activation.session.expired</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is an <a href="#license-api-activation-activation-session-object">activation session</a></span><br>
 Occurs when activation session expires after 7 days without completion.<br>
 <span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Platforms that created the subscription with the expired activation session</span></p>
-
-<p><strong><code>activation.codes.regenerated</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is regeneration details</span><br>
-Occurs when a platform regenerates activation codes.<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose activation codes were regenerated</span></p>
-
-<p><strong><code>payment.succeeded</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-payments-the-payment-object">payment</a></span><br>
-Occurs when a payment is successfully processed.<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Platforms that created the subscription receiving the payment</span></p>
-
-<p><strong><code>payment.failed</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-payments-the-payment-object">payment</a></span><br>
-Occurs when a payment attempt fails.<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Platforms that created the subscription with the failed payment</span></p>
-
-<p><strong><code>invoice.created</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is an <a href="#license-api-invoices-the-invoice-object">invoice</a></span><br>
-Occurs when a new invoice is generated for a subscription (renewal or initial billing).<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Platforms that created the subscription receiving the invoice</span></p>
-
-<p><strong><code>invoice.paid</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is an <a href="#license-api-invoices-the-invoice-object">invoice</a></span><br>
-Occurs when an invoice is marked as paid (first invoice only for activation flow).<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products are included in the paid invoice</span></p>
-
-<p><strong><code>invoice.payment_failed</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is an <a href="#license-api-invoices-the-invoice-object">invoice</a></span><br>
-Occurs when payment fails after grace period.<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products are included in the unpaid invoice</span></p>
-
-<p><strong><code>billing.renewal.upcoming</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
-Occurs 7 days before next billing date.<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Platforms that created the subscription approaching renewal</span></p>
-
-<p><strong><code>billing.renewal.processed</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
-Occurs when renewal payment is processed.<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Platforms that created the renewed subscription</span></p>
-
-<p><strong><code>billing.grace_period.entered</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
-Occurs when subscription enters grace period after payment failure.<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products are included in the subscription entering grace period</span></p>
-
-<p><strong><code>billing.grace_period.expired</code></strong> <span style='margin: 0 5px;font-size:.8em'><code>data.object</code> is a <a href="#license-api-subscriptions-the-subscription-object">subscription</a></span><br>
-Occurs when grace period ends without payment.<br>
-<span style='margin: 0 5px;font-size:.8em;color:#666'><strong>Recipients</strong>: Publishers (Apps) whose products are included in the subscription with expired grace period</span></p>
 
       </div>
       <div class="dark-box">

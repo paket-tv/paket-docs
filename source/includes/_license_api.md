@@ -871,7 +871,9 @@ Array of activation items for each product in the subscription. Each item contai
 
 Paket's subscription orchestration service works independently of the Platform's payment and identity services and the app Publishers' respective identity services. This affords both Platform and Publisher direct ownership of the respective user's accounts and enhanced privacy for the end user.
 
-![Create Sub Sequence Diagram](paket_create_sub_seq_diagram.jpg)
+<p style="margin-top:20px;margin-bottom:20px">
+  <img src="../images/paket_create_sub_seq_diagram.jpg" alt="Create Sub Sequence Diagram" style="padding:20px; background:#fff; border-radius:8px;"/>
+</p>
 
 #### Create New Subscription
 
@@ -880,14 +882,15 @@ Paket's subscription orchestration service works independently of the Platform's
 3. **Platform Processes Payment**: Platform collects payment through their payment service provider (PSP)
 4. **Payment Recording**: Platform posts payment result to `POST /v1/catalog/subscriptions/{subscription_id}/invoices/{invoice_id}/payments`
 5. **Subscription Activation**: On successful payment, Paket returns activation URLs for each of the plan's products and triggers the app activation flow
-6. **Publisher Notification**: Publishers receive webhooks about new subscriptions requiring activation
+6. **Publisher Notification**: Publishers receive `activation.session.created` webhooks for new subscriptions requiring activation. The webhook includes a `jti` (JWT identifier) for security validation.
+
 
 #### Product Activation
 
 1. **User Arrives**: User visits activation URL with their unique activation code
-3. **Code Validation**: Publisher validates the activation code via `POST /v1/catalog/activation/exchange`
-4. **Account Setup**: Publisher completes user sign-up or sign-in process
-5. **Activation Confirmation**: Publisher calls `PUT /v1/catalog/activation/{session_id}/items/{item_id}` to confirm activation
+3. **Code Validation**: Publisher validates the activation code via `POST /v1/catalog/activation/exchange`, which returns the purchased product details and the `jti` for cross-reference validation.
+4. **Account Setup**: Publisher validates the product and completes user sign-up or sign-in process
+5. **Activation Confirmation**: Publisher calls `PUT /v1/catalog/activation/{session_id}/items/{item_id}` to confirm activation.
 6. **Service Provisioning**: Publisher provisions the service for the activated user
 
 
@@ -911,6 +914,7 @@ curl --location --request POST 'https://api.paket.tv/v1/catalog/activation/excha
   "product_id": "PR469716925099413504",
   "subscription_id": "SUB479027832035610624",
   "platform_id": "PL468440696748511232",
+  "jti": "at_479027832567890234",
   "product": {
     "product_id": "PR469716925099413504",
     "product_name": "Disney+ Basic",
@@ -932,19 +936,26 @@ After successfully exchanging the activation code and completing user account se
 
 ### Subscription Renewal Flow
 
-Paket handles subscription renewals automatically through its billing orchestration system. The renewal process ensures continuity of service while maintaining proper billing cycles and platform revenue distribution.
+Paket handles subscription renewals automatically through its billing orchestration system. The renewal process ensures continuity of service and a single source of truth while maintaining proper billing cycles and platform revenue distribution.
 
-1. **Renewal Notification**: Paket sends `billing.renewal.upcoming` webhook to platforms 7 days before the next billing date
-2. **Invoice Generation**: On the billing date, Paket automatically generates a new invoice for the next billing cycle
-3. **Platform Notification**: Platform receives `invoice.created` webhook event with the new invoice details
-4. **Payment Processing**: Platform collects payment through their payment service provider (PSP) 
-5. **Payment Confirmation**: Platform records payment result via `POST /v1/catalog/subscriptions/{subscription_id}/invoices/{invoice_id}/payments`
-6. **Renewal Completion**: On successful payment, subscription billing cycle advances and service continues
-7. **Publisher Updates**: Publishers receive `billing.renewal.processed` webhook confirming successful renewal
+<p style="margin-top:20px;margin-bottom:20px">
+  <img src="../images/paket_renewal_seq_diagram.jpg" alt="Renew Sub Sequence Diagram" style="padding:20px; background:#fff; border-radius:8px;"/>
+</p>
+
+1. **Invoice Generation**: On the billing date, Paket automatically generates a new invoice for the next billing cycle
+2. **Platform Notification**: Platform receives notification about the new invoice
+3. **Payment Processing**: Platform collects payment through their payment service provider (PSP) 
+4. **Payment Confirmation**: Platform records payment result via `POST /v1/catalog/subscriptions/{subscription_id}/invoices/{invoice_id}/payments`
+5. **Renewal Completion**: On successful payment, subscription billing cycle advances and service continues
+6. **Publisher Updates**: Publishers receive `subscription.renewed` webhook confirming successful renewal
 
 ### Subscription Cancellation Flow
 
-Subscription cancellations can be initiated by platforms and are handled gracefully to ensure proper service termination and final billing reconciliation.
+Subscription cancellations can be initiated either by platforms (e.g., at user's request) or programmatically when an unpaid invoice lapses its grace period and are handled gracefully to ensure proper service termination and final billing reconciliation.
+
+<p style="margin-top:20px;margin-bottom:20px">
+  <img src="../images/paket_cancel_seq_diagram.jpg" alt="Cancel Sub Sequence Diagram" style="padding:20px; background:#fff; border-radius:8px;"/>
+</p>
 
 1. **Cancellation Request**: Platform initiates cancellation via `PUT /v1/catalog/subscriptions/{subscription_id}` with status `"canceled"`
 2. **Final Billing**: Paket calculates any pro-rated charges or credits based on cancellation timing
