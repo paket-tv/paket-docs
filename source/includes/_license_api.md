@@ -1,12 +1,12 @@
-# Bento (Bento)
+# Catalog API
 
 ## Overview
 
-The Paket License API (Bento) is a license and subscription orchestration service that enables Platforms and Publishers to offer comprehensive subscription bundles through a unified catalog via their native billing and identity systems. This API provides access to curated plan offerings, subscription management, and invoice management capabilities that power the Paket subscription marketplace.
+The Paket Catalog API is a entitlements and subscription orchestration service that enables Platforms and Publishers to offer comprehensive subscription bundles through a unified catalog via their native billing and identity systems. This API provides access to curated plan offerings, subscription management, and invoice management capabilities that power the Paket subscription marketplace.
 
-**For Platforms**, Bento offers a seamless way to integrate third-party subscription services into their ecosystem, providing users with bundled offerings that combine multiple streaming services, apps, and digital content into single, manageable subscriptions.
+**For Platforms**, the Catalog API offers a seamless way to integrate third-party subscription services into their ecosystem, providing users with bundled offerings that combine multiple streaming services, apps, and digital content into single, manageable subscriptions.
 
-**For Publishers**, Bento ensures consistent subscription management across all Paket-integrated platforms, with unified billing, activation workflows, and revenue distribution handled automatically through the Paket infrastructure.
+**For Publishers**, the Catalog API ensures consistent subscription management across all Paket-integrated platforms, with unified billing, activation workflows, and revenue distribution handled automatically through the Paket infrastructure.
 
 To get started, a Publisher must first configure their service via the Paket Publisher Portal. There, Publishers will be able to set up webhook endpoints, security, and API clients through which the service will communicate with the Paket service. It is in the Publisher Portal where Publishers will be able to set up product licenses and assign them for sale through approved Platform partners.
 
