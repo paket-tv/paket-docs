@@ -837,13 +837,14 @@ Test keys allow you to safely test your integration without affecting live data 
 <li><strong>Forced HTTPS</strong>: Connections are strictly enforced over HTTPS at <code>https://api.paket.tv/v1</code></li>
 <li><strong>TLS/SSL</strong>: X.509 server certificates to validate server requests are authenticated as Paket Media, Inc.</li>
 <li><strong>Basic Auth</strong>: Basic authentication required for all API requests with unique Client username and rollable secret keys</li>
+<li><strong>HMAC-SHA256 payload signing</strong>: Required for making API requests</li>
 <li><strong>IP Whitelisting</strong>: Restrict access to API requests to your server IP addresses designated at the Client level</li>
 <li><strong>Encryption-at-rest</strong>: All data stored is encrypted-at-rest</li>
 </ul>
 <h2 id='security-signing-api-requests'>Signing API Requests</h2>
-<p>In addition to Basic Authentication and IP whitelisting, Paket supports optional <strong>HMAC-SHA256 payload signing</strong> to ensure the integrity and authenticity of the request body. This feature is recommended for clients who want to protect against tampering or replay attacks at the payload level.</p>
+<p>The Paket API requires <strong>HMAC-SHA256 payload signing</strong> to ensure the integrity and authenticity of the request body. This feature helps protect against tampering or replay attacks at the payload level.</p>
 <h3 id='security-signing-api-requests-how-it-works'>How It Works</h3>
-<p>Each API client uses its existing secret key (provided with the client credentials) to compute an HMAC signature of the request payload. Paket will verify the signature if present, but does not require it unless enforced at the client level.</p>
+<p>Each API client uses its existing secret key (provided with the client credentials) to compute an HMAC signature of the request payload. </p>
 
 <p>When a signed request is received, Paket will:</p>
 
@@ -852,8 +853,6 @@ Test keys allow you to safely test your integration without affecting live data 
 <li>Ensure the request timestamp is within a 5-minute tolerance window.</li>
 <li>Log the signature status for audit and observability purposes.</li>
 </ul>
-
-<p>If the headers are not present, the request is still accepted (unless signing is explicitly required for that client).</p>
 <h3 id='security-signing-api-requests-headers-to-include'>Headers To Include</h3>
 <p>To sign your request, add the following headers:</p>
 

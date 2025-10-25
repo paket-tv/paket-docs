@@ -7,24 +7,23 @@ Securing API requests is critical to ensure data integrity. The Paket API employ
 - **Forced HTTPS**: Connections are strictly enforced over HTTPS at `https://api.paket.tv/v1`
 - **TLS/SSL**: X.509 server certificates to validate server requests are authenticated as Paket Media, Inc.
 - **Basic Auth**: Basic authentication required for all API requests with unique Client username and rollable secret keys
+- **HMAC-SHA256 payload signing**: Required for making API requests
 - **IP Whitelisting**: Restrict access to API requests to your server IP addresses designated at the Client level
 - **Encryption-at-rest**: All data stored is encrypted-at-rest
 
 ## Signing API Requests
 
-In addition to Basic Authentication and IP whitelisting, Paket supports optional **HMAC-SHA256 payload signing** to ensure the integrity and authenticity of the request body. This feature is recommended for clients who want to protect against tampering or replay attacks at the payload level.
+The Paket API requires **HMAC-SHA256 payload signing** to ensure the integrity and authenticity of the request body. This feature helps protect against tampering or replay attacks at the payload level.
 
 ### How It Works
 
-Each API client uses its existing secret key (provided with the client credentials) to compute an HMAC signature of the request payload. Paket will verify the signature if present, but does not require it unless enforced at the client level.
+Each API client uses its existing secret key (provided with the client credentials) to compute an HMAC signature of the request payload. 
 
 When a signed request is received, Paket will:
 
 - Verify the signature matches the body and timestamp using the shared secret key.
 - Ensure the request timestamp is within a 5-minute tolerance window.
 - Log the signature status for audit and observability purposes.
-
-If the headers are not present, the request is still accepted (unless signing is explicitly required for that client).
 
 ### Headers To Include
 
